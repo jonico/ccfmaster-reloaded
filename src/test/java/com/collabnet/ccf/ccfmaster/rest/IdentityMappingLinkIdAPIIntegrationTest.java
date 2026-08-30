@@ -231,8 +231,8 @@ public class IdentityMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegrat
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 IdentityMapping.class);
-        org.junit.jupiter.api.Assertions.assertFalse("source artifact id should be immutable", "foo".equals(obj.getSourceArtifactId()));
-        org.junit.jupiter.api.Assertions.assertFalse("target artifact id should be immutable", "bar".equals(obj.getTargetArtifactId()));
+        org.junit.jupiter.api.Assertions.assertFalse("foo".equals(obj.getSourceArtifactId()), "source artifact id should be immutable");
+        org.junit.jupiter.api.Assertions.assertFalse("bar".equals(obj.getTargetArtifactId()), "target artifact id should be immutable");
         org.junit.jupiter.api.Assertions.assertTrue(currentDate.equals(obj.getTargetLastModificationTime()), "last modification time should be changeable");
     }
 

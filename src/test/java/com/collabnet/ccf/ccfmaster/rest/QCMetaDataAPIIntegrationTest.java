@@ -47,8 +47,8 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showDefectFields" + landscape + domain + project + qcURL
-                        + qcUser + qcPassword);
+        org.junit.jupiter.api.Assertions.assertEquals("showDefectFields" + landscape + domain + project + qcURL
+                        + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
@@ -77,8 +77,8 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showRequirementTypes" + landscape + domain + project + qcURL
-                        + qcUser + qcPassword);
+        org.junit.jupiter.api.Assertions.assertEquals("showRequirementTypes" + landscape + domain + project + qcURL
+                        + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
@@ -90,7 +90,7 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showVisibleDomains" + landscape + qcURL + qcUser + qcPassword);
+        org.junit.jupiter.api.Assertions.assertEquals("showVisibleDomains" + landscape + qcURL + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
@@ -102,8 +102,8 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + qcUser + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showVisibleProjectsInDomain" + landscape + domain + qcURL
-                        + qcUser + qcPassword);
+        org.junit.jupiter.api.Assertions.assertEquals("showVisibleProjectsInDomain" + landscape + domain + qcURL
+                        + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
@@ -115,8 +115,8 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + "?qcUser=" + qcUser + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "validateDomainAndProject" + landscape + domain + project
-                        + qcURL + qcUser + qcPassword);
+        org.junit.jupiter.api.Assertions.assertEquals("validateDomainAndProject" + landscape + domain + project
+                        + qcURL + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
@@ -129,9 +129,9 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "validateDomainAndProjectAndRequirementType" + landscape
+        org.junit.jupiter.api.Assertions.assertEquals("validateDomainAndProjectAndRequirementType" + landscape
                         + domain + project + requirementType + qcURL + qcURL
-                        + qcPassword);
+                        + qcPassword, result, "returned string did not match expectations");
     }
 
 }

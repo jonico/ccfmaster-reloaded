@@ -368,9 +368,9 @@ public class HospitalEntryLinkIdAPIIntegrationTest extends AbstractAPIIntegratio
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 HospitalEntry.class);
-        org.junit.jupiter.api.Assertions.assertFalse("adaptor name should be immutable", "foo".equals(obj.getAdaptorName()));
-        org.junit.jupiter.api.Assertions.assertFalse("artifact id should be immutable", "bar".equals(obj.getSourceArtifactId()));
-        org.junit.jupiter.api.Assertions.assertTrue("error code should be changeable", "foobar".equals(obj.getErrorCode()));
+        org.junit.jupiter.api.Assertions.assertFalse("foo".equals(obj.getAdaptorName()), "adaptor name should be immutable");
+        org.junit.jupiter.api.Assertions.assertFalse("bar".equals(obj.getSourceArtifactId()), "artifact id should be immutable");
+        org.junit.jupiter.api.Assertions.assertTrue("foobar".equals(obj.getErrorCode()), "error code should be changeable");
     }
 
 }
