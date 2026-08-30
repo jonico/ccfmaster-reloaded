@@ -55,7 +55,7 @@ public class DirectionConfig implements ConfigItem, PersistableConfigItem<Direct
     private String    val;
 
     public static long countDirectionConfigsByDirection(Direction direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = DirectionConfig.entityManager();

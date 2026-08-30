@@ -57,13 +57,13 @@ privileged aspect Participant_Roo_Entity {
     
     @Transactional
     public void Participant.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void Participant.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect Participant_Roo_Entity {
     
     @Transactional
     public void Participant.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void Participant.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public Participant Participant.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         Participant merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect Participant_Roo_Entity {
     
     public static final EntityManager Participant.entityManager() {
         EntityManager em = new Participant().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect Participant_Roo_Entity {
     }
     
     public static Participant Participant.findParticipant(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(Participant.class, id);
     }
     

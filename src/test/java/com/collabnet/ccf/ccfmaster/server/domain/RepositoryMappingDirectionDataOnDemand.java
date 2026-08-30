@@ -21,14 +21,14 @@ public class RepositoryMappingDirectionDataOnDemand {
         obj.setDirection(com.collabnet.ccf.ccfmaster.server.domain.Directions.class
                 .getEnumConstants()[index % 2]);
         java.lang.String lastSourceArtifactId = "lastSourceArtifactId_" + index;
-        if (lastSourceArtifactId.length() > 128) {
+        if (128 < lastSourceArtifactId.length()) {
             lastSourceArtifactId = lastSourceArtifactId.substring(0, 128);
         }
         obj.setLastSourceArtifactId(lastSourceArtifactId);
         obj.setLastSourceArtifactModificationDate(new java.util.Date());
         java.lang.String lastSourceArtifactVersion = "lastSourceArtifactVersion_"
                 + index;
-        if (lastSourceArtifactVersion.length() > 128) {
+        if (128 < lastSourceArtifactVersion.length()) {
             lastSourceArtifactVersion = lastSourceArtifactVersion.substring(0,
                     128);
         }
@@ -41,7 +41,7 @@ public class RepositoryMappingDirectionDataOnDemand {
     public void init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection
                 .findRepositoryMappingDirectionEntries(0, 10);
-        if (data == null)
+        if (null == data)
             throw new IllegalStateException(
                     "Find entries implementation for 'RepositoryMappingDirection' illegally returned null");
         if (!data.isEmpty()) {

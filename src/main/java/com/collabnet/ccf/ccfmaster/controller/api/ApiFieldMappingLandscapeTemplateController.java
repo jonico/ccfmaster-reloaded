@@ -59,7 +59,7 @@ public class ApiFieldMappingLandscapeTemplateController extends AbstractApiContr
 
     private void validateRequestBody(Long id,
             FieldMappingLandscapeTemplate requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

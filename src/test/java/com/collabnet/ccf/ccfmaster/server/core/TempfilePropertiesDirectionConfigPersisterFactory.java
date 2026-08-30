@@ -25,7 +25,7 @@ public class TempfilePropertiesDirectionConfigPersisterFactory implements Direct
                     ".properties");
             newFile.deleteOnExit();
             File cacheFile = fileCache.putIfAbsent(direction, newFile);
-            if (cacheFile == null) {
+            if (null == cacheFile) {
                 return new PropertiesConfigItemPersister<DirectionConfig>(
                         newFile);
             } else {

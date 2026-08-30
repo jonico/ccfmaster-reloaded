@@ -68,7 +68,7 @@ privileged aspect FieldMappingRuleDataOnDemand_Roo_DataOnDemand {
     
     private void FieldMappingRuleDataOnDemand.setCondition(FieldMappingRule obj, int index) {
         java.lang.String condition = "condition_" + index;
-        if (condition.length() > 1024) {
+        if (1024 < condition.length()) {
             condition = condition.substring(0, 1024);
         }
         obj.setCondition(condition);
@@ -81,7 +81,7 @@ privileged aspect FieldMappingRuleDataOnDemand_Roo_DataOnDemand {
     
     private void FieldMappingRuleDataOnDemand.setXmlContent(FieldMappingRule obj, int index) {
         java.lang.String xmlContent = "xmlContent_" + index;
-        if (xmlContent.length() > 10485760) {
+        if (10485760 < xmlContent.length()) {
             xmlContent = xmlContent.substring(0, 10485760);
         }
         obj.setXmlContent(xmlContent);
@@ -89,7 +89,7 @@ privileged aspect FieldMappingRuleDataOnDemand_Roo_DataOnDemand {
     
     public FieldMappingRule FieldMappingRuleDataOnDemand.getSpecificFieldMappingRule(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         FieldMappingRule obj = data.get(index);
         return FieldMappingRule.findFieldMappingRule(obj.getId());
@@ -107,7 +107,7 @@ privileged aspect FieldMappingRuleDataOnDemand_Roo_DataOnDemand {
     
     public void FieldMappingRuleDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule.findFieldMappingRuleEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'FieldMappingRule' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'FieldMappingRule' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

@@ -109,7 +109,7 @@ public class FileUploadHandler extends MultiAction implements Serializable {
             }
         } catch (IOException ignored) {
         }
-        if (czf != null && czf.validate()) {
+        if (null != czf && czf.validate()) {
             context.getFlowScope().put(CORE_ZIP_FILE_CONTEXT_ATTR, czf);
             return success();
         } else {

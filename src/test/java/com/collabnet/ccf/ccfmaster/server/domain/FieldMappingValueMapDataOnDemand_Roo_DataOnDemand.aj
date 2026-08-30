@@ -41,7 +41,7 @@ privileged aspect FieldMappingValueMapDataOnDemand_Roo_DataOnDemand {
     
     public FieldMappingValueMap FieldMappingValueMapDataOnDemand.getSpecificFieldMappingValueMap(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         FieldMappingValueMap obj = data.get(index);
         return FieldMappingValueMap.findFieldMappingValueMap(obj.getId());
@@ -59,7 +59,7 @@ privileged aspect FieldMappingValueMapDataOnDemand_Roo_DataOnDemand {
     
     public void FieldMappingValueMapDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMapEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'FieldMappingValueMap' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'FieldMappingValueMap' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

@@ -76,7 +76,7 @@ public class CCFXsltTransformer {
         DocumentSource source = new DocumentSource(d);
         DocumentResult result = new DocumentResult();
         // TODO: Allow the user to specify stylesheet parameters?
-        if (transformer != null)
+        if (null != transformer)
             transformer.transform(source, result);
         return result.getDocument();
     }

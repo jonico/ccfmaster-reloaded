@@ -72,7 +72,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
     }
 
     private void validateFieldMapping(FieldMapping requestBody) {
-        if (requestBody == null) {
+        if (null == requestBody) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }
@@ -84,7 +84,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
     }
 
     private void validateRequestBody(Long id, FieldMapping requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

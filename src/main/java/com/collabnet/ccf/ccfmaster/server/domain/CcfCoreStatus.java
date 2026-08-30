@@ -239,7 +239,7 @@ public class CcfCoreStatus {
     public static CcfCoreStatus findCcfCoreStatus(Long id) {
         final Direction direction = Direction.findDirection(id);
         CcfCoreStatus ccs = null, res = null;
-        if (direction != null) {
+        if (null != direction) {
             ccs = new CcfCoreStatus();
             ccs.setId(id);
             ccs.setCurrentStatus(STOPPED);
@@ -337,7 +337,7 @@ public class CcfCoreStatus {
             @Override
             public List<CcfCoreStatus> getResultList() {
                 CcfCoreStatus res = findCcfCoreStatus(direction.getId());
-                if (res == null)
+                if (null == res)
                     return Collections.emptyList();
                 else
                     return Arrays.asList(res);

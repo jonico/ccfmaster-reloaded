@@ -139,13 +139,13 @@ public class ApiQCMetaDataController {
     Landscape populateLandscape(
             @PathVariable("landscapeId") Landscape landscape,
             @PathVariable("landscapeId") String landscapeId, Model uiModel) {
-        if (landscape == null) {
+        if (null == landscape) {
             throw new BadRequestException(String.format(
                     "Could not find landscape with id (%s)", landscapeId));
         }
         // now examine participant
         Participant participant = landscape.getParticipant();
-        if (participant.getSystemKind() != SystemKind.QC) {
+        if (SystemKind.QC != participant.getSystemKind()) {
             throw new BadRequestException(String.format(
                     "Landscape with id (%s) does not talk to a QC system",
                     landscapeId));

@@ -68,7 +68,7 @@ public class ApiRepositoryMappingController extends AbstractApiController<Reposi
     }
 
     private void validateRequestBody(Long id, RepositoryMapping requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

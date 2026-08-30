@@ -35,7 +35,7 @@ privileged aspect FieldMappingLandscapeTemplateDataOnDemand_Roo_DataOnDemand {
     
     public FieldMappingLandscapeTemplate FieldMappingLandscapeTemplateDataOnDemand.getSpecificFieldMappingLandscapeTemplate(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         FieldMappingLandscapeTemplate obj = data.get(index);
         return FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(obj.getId());
@@ -53,7 +53,7 @@ privileged aspect FieldMappingLandscapeTemplateDataOnDemand_Roo_DataOnDemand {
     
     public void FieldMappingLandscapeTemplateDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplateEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'FieldMappingLandscapeTemplate' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'FieldMappingLandscapeTemplate' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

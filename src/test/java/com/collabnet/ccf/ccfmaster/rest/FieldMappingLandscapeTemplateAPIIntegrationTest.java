@@ -115,7 +115,7 @@ public class FieldMappingLandscapeTemplateAPIIntegrationTest extends AbstractAPI
         obj = restTemplate.getForObject(ccfAPIUrl
                 + "/fieldmappinglandscapetemplates/" + id,
                 FieldMappingLandscapeTemplate.class);
-        if (obj.getKind() != FieldMappingKind.MAPPING_RULES) {
+        if (FieldMappingKind.MAPPING_RULES != obj.getKind()) {
             Assertions.assertFalse(obj.getRules().isEmpty());
         }
         org.junit.jupiter.api.Assertions

@@ -21,8 +21,8 @@ public class ParticipantSettingsValidator implements Validator {
                 .getSystemKind();
         if (participantKind.equals(SystemKind.QC)
                 || participantKind.equals(SystemKind.SWP)) {
-            if (participantSettingsModel
-                    .getParticipantUserNameLandscapeConfig().getVal() == "") {
+            if ("" == participantSettingsModel
+                    .getParticipantUserNameLandscapeConfig().getVal()) {
                 errors.rejectValue("participantUserNameLandscapeConfig.val",
                         ControllerConstants.ERROR_PARTICIPANTPASSWORD_VALIDATE);
             }
@@ -35,19 +35,19 @@ public class ParticipantSettingsValidator implements Validator {
             }
         }
         if (participantKind.equals(SystemKind.SWP)) {
-            if (participantSettingsModel
-                    .getParticipantPasswordLandscapeConfig().getVal() == "") {
+            if ("" == participantSettingsModel
+                    .getParticipantPasswordLandscapeConfig().getVal()) {
                 errors.rejectValue("participantPasswordLandscapeConfig.val",
                         ControllerConstants.ERROR_SWPPASSWORD_VALIDATE);
             }
-            if (participantSettingsModel
-                    .getParticipantResyncUserNameLandscapeConfig().getVal() == "") {
+            if ("" == participantSettingsModel
+                    .getParticipantResyncUserNameLandscapeConfig().getVal()) {
                 errors.rejectValue(
                         "participantResyncUserNameLandscapeConfig.val",
                         ControllerConstants.ERROR_SWPRESYNCUSERNAME_VALIDATE);
             }
-            if (participantSettingsModel
-                    .getParticipantResyncPasswordLandscapeConfig().getVal() == "") {
+            if ("" == participantSettingsModel
+                    .getParticipantResyncPasswordLandscapeConfig().getVal()) {
                 errors.rejectValue(
                         "participantResyncPasswordLandscapeConfig.val",
                         ControllerConstants.ERROR_SWPRESYNCPASSWORD_VALIDATE);

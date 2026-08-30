@@ -57,13 +57,13 @@ privileged aspect ExternalApp_Roo_Entity {
     
     @Transactional
     public void ExternalApp.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void ExternalApp.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect ExternalApp_Roo_Entity {
     
     @Transactional
     public void ExternalApp.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void ExternalApp.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public ExternalApp ExternalApp.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         ExternalApp merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect ExternalApp_Roo_Entity {
     
     public static final EntityManager ExternalApp.entityManager() {
         EntityManager em = new ExternalApp().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect ExternalApp_Roo_Entity {
     }
     
     public static ExternalApp ExternalApp.findExternalApp(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(ExternalApp.class, id);
     }
     

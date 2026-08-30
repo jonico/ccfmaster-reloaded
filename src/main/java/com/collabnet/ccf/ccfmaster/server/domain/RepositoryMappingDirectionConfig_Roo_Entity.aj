@@ -57,13 +57,13 @@ privileged aspect RepositoryMappingDirectionConfig_Roo_Entity {
     
     @Transactional
     public void RepositoryMappingDirectionConfig.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void RepositoryMappingDirectionConfig.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect RepositoryMappingDirectionConfig_Roo_Entity {
     
     @Transactional
     public void RepositoryMappingDirectionConfig.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void RepositoryMappingDirectionConfig.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public RepositoryMappingDirectionConfig RepositoryMappingDirectionConfig.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         RepositoryMappingDirectionConfig merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect RepositoryMappingDirectionConfig_Roo_Entity {
     
     public static final EntityManager RepositoryMappingDirectionConfig.entityManager() {
         EntityManager em = new RepositoryMappingDirectionConfig().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect RepositoryMappingDirectionConfig_Roo_Entity {
     }
     
     public static RepositoryMappingDirectionConfig RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfig(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(RepositoryMappingDirectionConfig.class, id);
     }
     

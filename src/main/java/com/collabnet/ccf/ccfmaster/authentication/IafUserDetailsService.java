@@ -50,9 +50,9 @@ public class IafUserDetailsService implements AuthenticationUserDetailsService {
         String oneTimeToken = token.getPrincipal().toString();
         final Builder connectionBuilder = Connection.builder(serverUrl)
                 .oneTimeToken(oneTimeToken);
-        if (proxy != null)
+        if (null != proxy)
             connectionBuilder.proxy(proxy);
-        if (httpAuthUser != null && httpAuthPass != null)
+        if (null != httpAuthUser && null != httpAuthPass)
             connectionBuilder.httpAuth(httpAuthUser, httpAuthPass);
         Connection connection = connectionBuilder.build();
         FirstRequestCredentials credentials = (FirstRequestCredentials) token

@@ -145,10 +145,10 @@ public class CreateRMDHelper {
 
     public void validateRMD(RMDModel rmdmodel, BindingResult bindingResult,
             Model model) {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             IGenericParticipantRMDValidator rmdValidator = genericParticipant
                     .getGenericParticipantRMDFactory().getCustomRMDValidator();
-            if (rmdValidator != null) {
+            if (null != rmdValidator) {
                 rmdValidator.validate(rmdmodel, bindingResult);
             }
         }
@@ -156,7 +156,7 @@ public class CreateRMDHelper {
 
     protected ExternalApp getExternalApp(Landscape landscape, String projectId,
             String linkId, Connection connection) throws RemoteException {
-        if (linkId != null) {
+        if (null != linkId) {
             List<ExternalApp> externalApps = ExternalApp
                     .findExternalAppsByLinkIdEquals(linkId).getResultList();
             if (externalApps.isEmpty()) {
@@ -236,7 +236,7 @@ public class CreateRMDHelper {
                         repoMappingDirection,
                         FieldMappingScope.REPOSITORY_MAPPING_DIRECTION)
                 .getResultList();
-        if (fieldMappingLandscapeTemplate != null && fieldMappingList.isEmpty()) {
+        if (null != fieldMappingLandscapeTemplate && fieldMappingList.isEmpty()) {
             FieldMapping fieldMapping = new FieldMapping();
             fieldMapping.setKind(fieldMappingLandscapeTemplate.getKind());
             fieldMapping.setName(fieldMappingLandscapeTemplate.getName());
@@ -257,11 +257,11 @@ public class CreateRMDHelper {
 
     private String getParticipantRepoId(RMDModel rmdmodel) {
         String participantRepoId = "";
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             ICustomizeRMDParticipant customizeParticipantRMDInfo = genericParticipant
                     .getGenericParticipantRMDFactory()
                     .getCustomParticipantRMD();
-            if (customizeParticipantRMDInfo != null) {
+            if (null != customizeParticipantRMDInfo) {
                 participantRepoId = customizeParticipantRMDInfo
                         .getParticipantRepositoryId(rmdmodel);
             }
@@ -333,7 +333,7 @@ public class CreateRMDHelper {
     private String getTeamForgeTrackerId(String teamForgeTrackerInfo) {
         if (teamForgeTrackerInfo.contains("|")) {
             String[] trackerInfo = StringUtils.split(teamForgeTrackerInfo, "|");
-            if (trackerInfo.length > 0) {
+            if (0 < trackerInfo.length) {
                 return trackerInfo[1];
             }
         }
@@ -343,7 +343,7 @@ public class CreateRMDHelper {
     private void mergeRepositoryMappingDirection(
             RepositoryMappingDirection repoMappingDirection,
             FieldMapping fieldMapping) {
-        if (fieldMapping != null) {
+        if (null != fieldMapping) {
             repoMappingDirection.setActiveFieldMapping(fieldMapping);
             repoMappingDirection.merge();
         }

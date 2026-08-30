@@ -49,8 +49,8 @@ public class ProjectRMDController extends AbstractProjectController {
             + UIPathConstants.PROJECT_RMD_CONFIGURE_PARTICIPANT_SETTINGS, method = RequestMethod.POST)
     public String intializeParticipantSettings(Model model,
             @ModelAttribute(value = "rmdModel") RMDModel rmdmodel) {
-        if (genericParticipant != null
-                && rmdmodel.getParticipantSelectorFieldList() == null) {
+        if (null != genericParticipant
+                && null == rmdmodel.getParticipantSelectorFieldList()) {
             rmdmodel.setParticipantSelectorFieldList(genericParticipant
                     .getGenericParticipantRMDFactory()
                     .getParticipantSelectorFieldList());
@@ -127,11 +127,11 @@ public class ProjectRMDController extends AbstractProjectController {
 
     @ModelAttribute(value = "gpConflictPolicies")
     protected String[] getParticipantConfilictPolicies() {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             ICustomizeRMDParticipant customizeParticipantRMDInfo = genericParticipant
                     .getGenericParticipantRMDFactory()
                     .getCustomParticipantRMD();
-            if (customizeParticipantRMDInfo != null) {
+            if (null != customizeParticipantRMDInfo) {
                 return customizeParticipantRMDInfo
                         .getCustomConflictResolutionPolicy();
             }

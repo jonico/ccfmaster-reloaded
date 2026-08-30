@@ -26,7 +26,7 @@ public class IconUploader {
 
     public void updateIAFIcon() throws RemoteException {
         Landscape landscape = ControllerHelper.findLandscape();
-        if (landscape != null) {
+        if (null != landscape) {
             Builder connectionBuilder = Connection.builder(getTFUrl(landscape));
             Connection tfConnection = connectionBuilder
                     .userNamePassword(getTFUserName(landscape),
@@ -37,7 +37,7 @@ public class IconUploader {
             PluggableComponentDO plugDO = integratedAppClient
                     .getIntegratedApplicationByName(landscape.getName());
             String iconKey = plugDO.getIconKey();
-            if (iconKey == null && com.collabnet.ccf.compat.TeamForgeCompat.supports65(tfConnection)) {
+            if (null == iconKey && com.collabnet.ccf.compat.TeamForgeCompat.supports65(tfConnection)) {
                 loadIcon(plugDO.getId(), tfConnection.getFileStorageClient(),
                         integratedAppClient);
             }
@@ -71,7 +71,7 @@ public class IconUploader {
             IntegratedApplicationClient integratedAppClient) {
         File fileIcon = new File("ccf.png");
         try {
-            if (plugId != null) {
+            if (null != plugId) {
                 File tempIconFile = new File(FileUtils.getTempDirectory()
                         + File.separator + fileIcon);
                 FileUtils.copyInputStreamToFile(

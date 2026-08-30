@@ -59,7 +59,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setSourceArtifactId(IdentityMapping obj, int index) {
         java.lang.String sourceArtifactId = "sourceArtifactId_" + index;
-        if (sourceArtifactId.length() > 128) {
+        if (128 < sourceArtifactId.length()) {
             sourceArtifactId = sourceArtifactId.substring(0, 128);
         }
         obj.setSourceArtifactId(sourceArtifactId);
@@ -67,7 +67,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setTargetArtifactId(IdentityMapping obj, int index) {
         java.lang.String targetArtifactId = "targetArtifactId_" + index;
-        if (targetArtifactId.length() > 128) {
+        if (128 < targetArtifactId.length()) {
             targetArtifactId = targetArtifactId.substring(0, 128);
         }
         obj.setTargetArtifactId(targetArtifactId);
@@ -85,7 +85,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setSourceArtifactVersion(IdentityMapping obj, int index) {
         java.lang.String sourceArtifactVersion = "sourceArtifactVersion_" + index;
-        if (sourceArtifactVersion.length() > 128) {
+        if (128 < sourceArtifactVersion.length()) {
             sourceArtifactVersion = sourceArtifactVersion.substring(0, 128);
         }
         obj.setSourceArtifactVersion(sourceArtifactVersion);
@@ -93,7 +93,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setTargetArtifactVersion(IdentityMapping obj, int index) {
         java.lang.String targetArtifactVersion = "targetArtifactVersion_" + index;
-        if (targetArtifactVersion.length() > 128) {
+        if (128 < targetArtifactVersion.length()) {
             targetArtifactVersion = targetArtifactVersion.substring(0, 128);
         }
         obj.setTargetArtifactVersion(targetArtifactVersion);
@@ -101,7 +101,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setArtifactType(IdentityMapping obj, int index) {
         java.lang.String artifactType = "artifactType_" + index;
-        if (artifactType.length() > 128) {
+        if (128 < artifactType.length()) {
             artifactType = artifactType.substring(0, 128);
         }
         obj.setArtifactType(artifactType);
@@ -109,7 +109,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildSourceArtifactId(IdentityMapping obj, int index) {
         java.lang.String depChildSourceArtifactId = "depChildSourceArtifactId_" + index;
-        if (depChildSourceArtifactId.length() > 128) {
+        if (128 < depChildSourceArtifactId.length()) {
             depChildSourceArtifactId = depChildSourceArtifactId.substring(0, 128);
         }
         obj.setDepChildSourceArtifactId(depChildSourceArtifactId);
@@ -117,7 +117,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildSourceRepositoryId(IdentityMapping obj, int index) {
         java.lang.String depChildSourceRepositoryId = "depChildSourceRepositoryId_" + index;
-        if (depChildSourceRepositoryId.length() > 128) {
+        if (128 < depChildSourceRepositoryId.length()) {
             depChildSourceRepositoryId = depChildSourceRepositoryId.substring(0, 128);
         }
         obj.setDepChildSourceRepositoryId(depChildSourceRepositoryId);
@@ -125,7 +125,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildSourceRepositoryKind(IdentityMapping obj, int index) {
         java.lang.String depChildSourceRepositoryKind = "depChildSourceRepositoryKind_" + index;
-        if (depChildSourceRepositoryKind.length() > 128) {
+        if (128 < depChildSourceRepositoryKind.length()) {
             depChildSourceRepositoryKind = depChildSourceRepositoryKind.substring(0, 128);
         }
         obj.setDepChildSourceRepositoryKind(depChildSourceRepositoryKind);
@@ -133,7 +133,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildTargetArtifactId(IdentityMapping obj, int index) {
         java.lang.String depChildTargetArtifactId = "depChildTargetArtifactId_" + index;
-        if (depChildTargetArtifactId.length() > 128) {
+        if (128 < depChildTargetArtifactId.length()) {
             depChildTargetArtifactId = depChildTargetArtifactId.substring(0, 128);
         }
         obj.setDepChildTargetArtifactId(depChildTargetArtifactId);
@@ -141,7 +141,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildTargetRepositoryId(IdentityMapping obj, int index) {
         java.lang.String depChildTargetRepositoryId = "depChildTargetRepositoryId_" + index;
-        if (depChildTargetRepositoryId.length() > 128) {
+        if (128 < depChildTargetRepositoryId.length()) {
             depChildTargetRepositoryId = depChildTargetRepositoryId.substring(0, 128);
         }
         obj.setDepChildTargetRepositoryId(depChildTargetRepositoryId);
@@ -149,7 +149,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepChildTargetRepositoryKind(IdentityMapping obj, int index) {
         java.lang.String depChildTargetRepositoryKind = "depChildTargetRepositoryKind_" + index;
-        if (depChildTargetRepositoryKind.length() > 128) {
+        if (128 < depChildTargetRepositoryKind.length()) {
             depChildTargetRepositoryKind = depChildTargetRepositoryKind.substring(0, 128);
         }
         obj.setDepChildTargetRepositoryKind(depChildTargetRepositoryKind);
@@ -157,7 +157,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentSourceArtifactId(IdentityMapping obj, int index) {
         java.lang.String depParentSourceArtifactId = "depParentSourceArtifactId_" + index;
-        if (depParentSourceArtifactId.length() > 128) {
+        if (128 < depParentSourceArtifactId.length()) {
             depParentSourceArtifactId = depParentSourceArtifactId.substring(0, 128);
         }
         obj.setDepParentSourceArtifactId(depParentSourceArtifactId);
@@ -165,7 +165,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentSourceRepositoryId(IdentityMapping obj, int index) {
         java.lang.String depParentSourceRepositoryId = "depParentSourceRepositoryId_" + index;
-        if (depParentSourceRepositoryId.length() > 128) {
+        if (128 < depParentSourceRepositoryId.length()) {
             depParentSourceRepositoryId = depParentSourceRepositoryId.substring(0, 128);
         }
         obj.setDepParentSourceRepositoryId(depParentSourceRepositoryId);
@@ -173,7 +173,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentSourceRepositoryKind(IdentityMapping obj, int index) {
         java.lang.String depParentSourceRepositoryKind = "depParentSourceRepositoryKind_" + index;
-        if (depParentSourceRepositoryKind.length() > 128) {
+        if (128 < depParentSourceRepositoryKind.length()) {
             depParentSourceRepositoryKind = depParentSourceRepositoryKind.substring(0, 128);
         }
         obj.setDepParentSourceRepositoryKind(depParentSourceRepositoryKind);
@@ -181,7 +181,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentTargetArtifactId(IdentityMapping obj, int index) {
         java.lang.String depParentTargetArtifactId = "depParentTargetArtifactId_" + index;
-        if (depParentTargetArtifactId.length() > 128) {
+        if (128 < depParentTargetArtifactId.length()) {
             depParentTargetArtifactId = depParentTargetArtifactId.substring(0, 128);
         }
         obj.setDepParentTargetArtifactId(depParentTargetArtifactId);
@@ -189,7 +189,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentTargetRepositoryId(IdentityMapping obj, int index) {
         java.lang.String depParentTargetRepositoryId = "depParentTargetRepositoryId_" + index;
-        if (depParentTargetRepositoryId.length() > 128) {
+        if (128 < depParentTargetRepositoryId.length()) {
             depParentTargetRepositoryId = depParentTargetRepositoryId.substring(0, 128);
         }
         obj.setDepParentTargetRepositoryId(depParentTargetRepositoryId);
@@ -197,7 +197,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     private void IdentityMappingDataOnDemand.setDepParentTargetRepositoryKind(IdentityMapping obj, int index) {
         java.lang.String depParentTargetRepositoryKind = "depParentTargetRepositoryKind_" + index;
-        if (depParentTargetRepositoryKind.length() > 128) {
+        if (128 < depParentTargetRepositoryKind.length()) {
             depParentTargetRepositoryKind = depParentTargetRepositoryKind.substring(0, 128);
         }
         obj.setDepParentTargetRepositoryKind(depParentTargetRepositoryKind);
@@ -205,7 +205,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     public IdentityMapping IdentityMappingDataOnDemand.getSpecificIdentityMapping(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         IdentityMapping obj = data.get(index);
         return IdentityMapping.findIdentityMapping(obj.getId());
@@ -219,7 +219,7 @@ privileged aspect IdentityMappingDataOnDemand_Roo_DataOnDemand {
     
     public void IdentityMappingDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping.findIdentityMappingEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'IdentityMapping' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'IdentityMapping' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

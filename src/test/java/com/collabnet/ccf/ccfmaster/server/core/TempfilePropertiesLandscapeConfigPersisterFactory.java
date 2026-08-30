@@ -24,7 +24,7 @@ public class TempfilePropertiesLandscapeConfigPersisterFactory implements Landsc
             File newFile = File.createTempFile("test-landscape", ".properties");
             newFile.deleteOnExit();
             File cacheFile = fileCache.putIfAbsent(landscape, newFile);
-            if (cacheFile == null) {
+            if (null == cacheFile) {
                 return new PropertiesConfigItemPersister<LandscapeConfig>(
                         newFile);
             } else {

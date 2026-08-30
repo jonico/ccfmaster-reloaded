@@ -35,7 +35,7 @@ privileged aspect DirectionDataOnDemand_Roo_DataOnDemand {
     
     public Direction DirectionDataOnDemand.getSpecificDirection(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         Direction obj = data.get(index);
         return Direction.findDirection(obj.getId());

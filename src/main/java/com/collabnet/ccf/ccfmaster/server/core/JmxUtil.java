@@ -67,7 +67,7 @@ final class JmxUtil {
                     return JmxStatus.NOT_CONNECTED;
                 } finally {
                     try {
-                        if (connector != null)
+                        if (null != connector)
                             connector.close();
                     } catch (IOException e) {
                         return JmxStatus.NOT_CONNECTED;
@@ -117,7 +117,7 @@ final class JmxUtil {
                     log.debug("JMX exception: " + e.getMessage(), e);
                 } finally {
                     try {
-                        if (connector != null)
+                        if (null != connector)
                             connector.close();
                     } catch (IOException e) {
                         // shouldn't happen.

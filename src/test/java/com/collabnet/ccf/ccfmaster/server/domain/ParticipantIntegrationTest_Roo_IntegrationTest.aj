@@ -54,7 +54,7 @@ privileged aspect ParticipantIntegrationTest_Roo_IntegrationTest {
     public void ParticipantIntegrationTest.testFindParticipantEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomParticipant(), "Data on demand for 'Participant' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.Participant.countParticipants();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.Participant> result = com.collabnet.ccf.ccfmaster.server.domain.Participant.findParticipantEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Participant' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'Participant' returned an incorrect number of entries");

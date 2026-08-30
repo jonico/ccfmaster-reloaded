@@ -38,7 +38,7 @@ public final class Version implements Comparable<Version>, Serializable {
 
     @Override
     public int compareTo(Version o) {
-        if (o == null)
+        if (null == o)
             return 1; // FIXME: 
         return ComparisonChain.start().compare(getMajor(), o.getMajor())
                 .compare(getMinor(), o.getMinor())

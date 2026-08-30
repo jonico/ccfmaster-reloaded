@@ -59,7 +59,7 @@ public class ApiFieldMappingExternalAppTemplateController extends AbstractApiCon
 
     private void validateRequestBody(Long id,
             FieldMappingExternalAppTemplate requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

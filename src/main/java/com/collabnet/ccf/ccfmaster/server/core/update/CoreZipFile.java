@@ -45,7 +45,7 @@ public final class CoreZipFile implements Closeable, Serializable {
      */
     @Override
     public void close() throws IOException {
-        if (file != null)
+        if (null != file)
             file.delete();
     }
 
@@ -124,7 +124,7 @@ public final class CoreZipFile implements Closeable, Serializable {
             ClassNotFoundException {
         s.defaultReadObject();
         final File f = (File) s.readObject();
-        if (f != null)
+        if (null != f)
             setFile(f);
     }
 
@@ -163,7 +163,7 @@ public final class CoreZipFile implements Closeable, Serializable {
 
     private static void cleanupTempFile(File tempFile) {
         // avoid having invalid uploaded files lying around
-        if (tempFile != null && !tempFile.delete())
+        if (null != tempFile && !tempFile.delete())
             tempFile.deleteOnExit();
     }
 }

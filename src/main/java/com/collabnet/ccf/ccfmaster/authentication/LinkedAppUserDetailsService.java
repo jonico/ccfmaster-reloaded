@@ -48,7 +48,7 @@ public class LinkedAppUserDetailsService implements AuthenticationUserDetailsSer
         final String oneTimeToken = linkedAppCredentials.getLoginToken();
         final Connection.Builder builder = Connection.builder(serverUrl)
                 .oneTimeToken(linkedAppCredentials.getUserName(), oneTimeToken);
-        if (proxy != null) {
+        if (null != proxy) {
             builder.proxy(proxy).httpAuth(httpAuthUser, httpAuthPass);
         }
         final Connection connection = builder.build();

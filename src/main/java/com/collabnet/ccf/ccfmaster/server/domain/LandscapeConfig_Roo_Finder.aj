@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 privileged aspect LandscapeConfig_Roo_Finder {
     
     public static TypedQuery<LandscapeConfig> LandscapeConfig.findLandscapeConfigsByLandscape(Landscape landscape) {
-        if (landscape == null) throw new IllegalArgumentException("The landscape argument is required");
+        if (null == landscape) throw new IllegalArgumentException("The landscape argument is required");
         EntityManager em = LandscapeConfig.entityManager();
         TypedQuery<LandscapeConfig> q = em.createQuery("SELECT o FROM LandscapeConfig AS o WHERE o.landscape = :landscape", LandscapeConfig.class);
         q.setParameter("landscape", landscape);
@@ -20,8 +20,8 @@ privileged aspect LandscapeConfig_Roo_Finder {
     }
     
     public static TypedQuery<LandscapeConfig> LandscapeConfig.findLandscapeConfigsByLandscapeAndName(Landscape landscape, String name) {
-        if (landscape == null) throw new IllegalArgumentException("The landscape argument is required");
-        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
+        if (null == landscape) throw new IllegalArgumentException("The landscape argument is required");
+        if (null == name || 0 == name.length()) throw new IllegalArgumentException("The name argument is required");
         EntityManager em = LandscapeConfig.entityManager();
         TypedQuery<LandscapeConfig> q = em.createQuery("SELECT o FROM LandscapeConfig AS o WHERE o.landscape = :landscape AND o.name = :name", LandscapeConfig.class);
         q.setParameter("landscape", landscape);

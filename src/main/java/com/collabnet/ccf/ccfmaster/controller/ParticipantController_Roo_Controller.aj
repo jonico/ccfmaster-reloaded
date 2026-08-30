@@ -51,7 +51,7 @@ privileged aspect ParticipantController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String ParticipantController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
+        if (null != page || null != size) {
             int sizeNo = size == null ? 10 : size.intValue();
             uiModel.addAttribute("participants", Participant.findParticipantEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) Participant.countParticipants() / sizeNo;
@@ -105,7 +105,7 @@ privileged aspect ParticipantController_Roo_Controller {
     
     String ParticipantController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
+        if (null == enc) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         // Spring 6's UriUtils.encodePathSegment no longer throws

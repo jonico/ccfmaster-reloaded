@@ -104,7 +104,7 @@ public class FieldMappingAPIIntegrationTest extends AbstractAPIIntegrationTest {
         //        obj = obj.merge();
         obj = restTemplate.getForObject(ccfAPIUrl + "/fieldmappings/" + id,
                 FieldMapping.class);
-        if (obj.getKind() != FieldMappingKind.MAPPING_RULES) {
+        if (FieldMappingKind.MAPPING_RULES != obj.getKind()) {
             Assertions.assertFalse(obj.getRules().isEmpty());
         }
         org.junit.jupiter.api.Assertions

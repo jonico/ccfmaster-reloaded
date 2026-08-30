@@ -101,7 +101,7 @@ public class XsltValidator implements ConstraintValidator<SafeXslt, Element> {
 
         boolean result = false;
 
-        if (xslt == null) {
+        if (null == xslt) {
             return false;
         }
 

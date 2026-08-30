@@ -42,7 +42,7 @@ privileged aspect DirectionController_Roo_Controller {
     public String DirectionController.createForm(Model uiModel) {
         uiModel.addAttribute("direction", new Direction());
         List dependencies = new ArrayList();
-        if (Landscape.countLandscapes() == 0) {
+        if (0 == Landscape.countLandscapes()) {
             dependencies.add(new String[]{"landscape", "landscapes"});
         }
         uiModel.addAttribute("dependencies", dependencies);
@@ -58,7 +58,7 @@ privileged aspect DirectionController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String DirectionController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
+        if (null != page || null != size) {
             int sizeNo = size == null ? 10 : size.intValue();
             uiModel.addAttribute("directions", Direction.findDirectionEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) Direction.countDirections() / sizeNo;
@@ -112,7 +112,7 @@ privileged aspect DirectionController_Roo_Controller {
     
     String DirectionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
+        if (null == enc) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         // Spring 6's UriUtils.encodePathSegment no longer throws

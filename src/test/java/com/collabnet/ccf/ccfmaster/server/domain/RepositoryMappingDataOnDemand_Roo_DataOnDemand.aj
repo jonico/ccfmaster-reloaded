@@ -42,7 +42,7 @@ privileged aspect RepositoryMappingDataOnDemand_Roo_DataOnDemand {
     
     private void RepositoryMappingDataOnDemand.setTeamForgeRepositoryId(RepositoryMapping obj, int index) {
         java.lang.String teamForgeRepositoryId = "teamForgeRepositoryId_" + index;
-        if (teamForgeRepositoryId.length() > 128) {
+        if (128 < teamForgeRepositoryId.length()) {
             teamForgeRepositoryId = teamForgeRepositoryId.substring(0, 128);
         }
         obj.setTeamForgeRepositoryId(teamForgeRepositoryId);
@@ -50,7 +50,7 @@ privileged aspect RepositoryMappingDataOnDemand_Roo_DataOnDemand {
     
     private void RepositoryMappingDataOnDemand.setParticipantRepositoryId(RepositoryMapping obj, int index) {
         java.lang.String participantRepositoryId = "participantRepositoryId_" + index;
-        if (participantRepositoryId.length() > 128) {
+        if (128 < participantRepositoryId.length()) {
             participantRepositoryId = participantRepositoryId.substring(0, 128);
         }
         obj.setParticipantRepositoryId(participantRepositoryId);
@@ -58,7 +58,7 @@ privileged aspect RepositoryMappingDataOnDemand_Roo_DataOnDemand {
     
     public RepositoryMapping RepositoryMappingDataOnDemand.getSpecificRepositoryMapping(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         RepositoryMapping obj = data.get(index);
         return RepositoryMapping.findRepositoryMapping(obj.getId());
@@ -76,7 +76,7 @@ privileged aspect RepositoryMappingDataOnDemand_Roo_DataOnDemand {
     
     public void RepositoryMappingDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping.findRepositoryMappingEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'RepositoryMapping' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'RepositoryMapping' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

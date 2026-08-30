@@ -57,13 +57,13 @@ privileged aspect FieldMappingValueMap_Roo_Entity {
     
     @Transactional
     public void FieldMappingValueMap.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void FieldMappingValueMap.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect FieldMappingValueMap_Roo_Entity {
     
     @Transactional
     public void FieldMappingValueMap.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void FieldMappingValueMap.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public FieldMappingValueMap FieldMappingValueMap.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         FieldMappingValueMap merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect FieldMappingValueMap_Roo_Entity {
     
     public static final EntityManager FieldMappingValueMap.entityManager() {
         EntityManager em = new FieldMappingValueMap().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect FieldMappingValueMap_Roo_Entity {
     }
     
     public static FieldMappingValueMap FieldMappingValueMap.findFieldMappingValueMap(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(FieldMappingValueMap.class, id);
     }
     

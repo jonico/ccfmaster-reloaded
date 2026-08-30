@@ -13,8 +13,8 @@ import jakarta.persistence.TypedQuery;
 privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     
     public static TypedQuery<FieldMappingLandscapeTemplate> FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplateNamesByParentAndDirection(Landscape parent, Directions direction) {
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
         EntityManager em = FieldMappingLandscapeTemplate.entityManager();
         TypedQuery<FieldMappingLandscapeTemplate> q = em.createQuery("SELECT o FROM FieldMappingLandscapeTemplate AS o WHERE o.parent = :parent AND o.direction = :direction", FieldMappingLandscapeTemplate.class);
         q.setParameter("parent", parent);
@@ -23,7 +23,7 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     }
     
     public static TypedQuery<FieldMappingLandscapeTemplate> FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplatesByDirection(Directions direction) {
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
         EntityManager em = FieldMappingLandscapeTemplate.entityManager();
         TypedQuery<FieldMappingLandscapeTemplate> q = em.createQuery("SELECT o FROM FieldMappingLandscapeTemplate AS o WHERE o.direction = :direction", FieldMappingLandscapeTemplate.class);
         q.setParameter("direction", direction);
@@ -31,7 +31,7 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     }
     
     public static TypedQuery<FieldMappingLandscapeTemplate> FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplatesByParent(Landscape parent) {
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
         EntityManager em = FieldMappingLandscapeTemplate.entityManager();
         TypedQuery<FieldMappingLandscapeTemplate> q = em.createQuery("SELECT o FROM FieldMappingLandscapeTemplate AS o WHERE o.parent = :parent", FieldMappingLandscapeTemplate.class);
         q.setParameter("parent", parent);
@@ -39,8 +39,8 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     }
     
     public static TypedQuery<FieldMappingLandscapeTemplate> FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplatesByParentAndDirection(Landscape parent, Directions direction) {
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
         EntityManager em = FieldMappingLandscapeTemplate.entityManager();
         TypedQuery<FieldMappingLandscapeTemplate> q = em.createQuery("SELECT o FROM FieldMappingLandscapeTemplate AS o WHERE o.parent = :parent AND o.direction = :direction", FieldMappingLandscapeTemplate.class);
         q.setParameter("parent", parent);
@@ -49,9 +49,9 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     }
     
     public static TypedQuery<FieldMappingLandscapeTemplate> FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplatesByParentAndNameAndDirection(Landscape parent, String name, Directions direction) {
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
-        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
+        if (null == name || 0 == name.length()) throw new IllegalArgumentException("The name argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
         EntityManager em = FieldMappingLandscapeTemplate.entityManager();
         TypedQuery<FieldMappingLandscapeTemplate> q = em.createQuery("SELECT o FROM FieldMappingLandscapeTemplate AS o WHERE o.parent = :parent AND o.name = :name AND o.direction = :direction", FieldMappingLandscapeTemplate.class);
         q.setParameter("parent", parent);

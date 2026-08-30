@@ -86,7 +86,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
     }
 
     private void validateIdentityMapping(IdentityMapping requestBody) {
-        if (requestBody == null) {
+        if (null == requestBody) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }
@@ -98,7 +98,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
     }
 
     private void validateRequestBody(Long id, IdentityMapping requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

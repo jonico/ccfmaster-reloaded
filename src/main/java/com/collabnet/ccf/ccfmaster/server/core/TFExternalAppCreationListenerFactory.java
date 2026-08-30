@@ -41,7 +41,7 @@ public class TFExternalAppCreationListenerFactory implements ExternalAppCreation
                 final String plugId = landscape.getPlugId();
                 final String projectPath = externalApp.getProjectPath();
                 String linkId = getLinkId(projectPath);
-                if (linkId == null) {
+                if (null == linkId) {
                     ProjectDO project = tfc.getProjectDataByPath(projectPath);
                     final String prefix = CreateIntegratedAppStrategy.prefix
                             + landscape.getId();
@@ -60,7 +60,7 @@ public class TFExternalAppCreationListenerFactory implements ExternalAppCreation
                         }
                     }
                     linkId = getLinkId(projectPath);
-                    if (linkId == null) { // if dummyservice is down
+                    if (null == linkId) { // if dummyservice is down
                         throw new CoreConfigurationException(
                                 "IAF dummy service is down. Please contact TeamForge administrator");
                     }

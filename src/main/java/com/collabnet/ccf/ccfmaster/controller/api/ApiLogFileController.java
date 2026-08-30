@@ -48,7 +48,7 @@ public class ApiLogFileController {
         response.setContentType("text/plain");
         Writer out = response.getWriter();
         LineIterator it;
-        if (startLine != null) {
+        if (null != startLine) {
             it = logFile.linesFrom(startLine);
         } else {
             it = logFile.lines();
@@ -56,7 +56,7 @@ public class ApiLogFileController {
         try {
             long line = 0;
             while (it.hasNext()) {
-                if (maxLines != null && line >= maxLines) {
+                if (null != maxLines && line >= maxLines) {
                     break;
                 }
                 out.write(it.nextLine());

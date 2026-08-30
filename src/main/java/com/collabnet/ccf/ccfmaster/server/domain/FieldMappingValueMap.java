@@ -34,7 +34,7 @@ public class FieldMappingValueMap {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null)
+        if (null == o)
             return false;
         FieldMappingValueMap other = (FieldMappingValueMap) o;
         return name.equals(other.name)

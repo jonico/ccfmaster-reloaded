@@ -53,7 +53,7 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
         Participant swp = new Participant();
         swp.setSystemKind(SystemKind.SWP);
         Direction obj = dod.getSpecificDirection(0);
-        if (!(obj.getLandscape().getTeamForge().getSystemKind() == SystemKind.TF)) {
+        if (!(SystemKind.TF == obj.getLandscape().getTeamForge().getSystemKind())) {
             obj.getLandscape().getTeamForge().setSystemKind(SystemKind.TF);
             obj.getLandscape().getParticipant().setSystemKind(SystemKind.SWP);
         }

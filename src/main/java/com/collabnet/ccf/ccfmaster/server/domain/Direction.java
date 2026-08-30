@@ -118,7 +118,7 @@ public class Direction {
     }
 
     public static long countDirectionsByDirection(Directions direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -132,10 +132,10 @@ public class Direction {
 
     public static long countDirectionsByLandscapeAndDirection(
             Landscape landscape, Directions direction) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -149,7 +149,7 @@ public class Direction {
     }
 
     public static long countDirectionsByLandscapeEquals(Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -163,7 +163,7 @@ public class Direction {
 
     public static TypedQuery<Direction> findDirectionsByDirection(
             Directions direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -177,7 +177,7 @@ public class Direction {
 
     public static TypedQuery<Direction> findDirectionsByLandscapeEquals(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -191,10 +191,10 @@ public class Direction {
 
     public static TypedQuery<Direction> findDirectionsByLandscapeEqualsAndDirectionEquals(
             Landscape landscape, Directions direction) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();

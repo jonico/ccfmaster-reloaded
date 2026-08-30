@@ -74,7 +74,7 @@ public class Landscape {
 
     public static TypedQuery<Landscape> findLandscapesByTeamForgeOrParticipant(
             Participant participant) {
-        if (participant == null)
+        if (null == participant)
             throw new IllegalArgumentException(
                     "The participant argument is required");
         EntityManager em = Landscape.entityManager();

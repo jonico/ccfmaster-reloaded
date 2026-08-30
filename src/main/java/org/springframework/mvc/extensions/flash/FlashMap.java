@@ -83,7 +83,7 @@ public final class FlashMap {
         HttpSession session = request.getSession();
         Map<String, Object> flash = (Map<String, Object>) session
                 .getAttribute(FLASH_MAP_ATTRIBUTE);
-        if (flash == null) {
+        if (null == flash) {
             flash = new HashMap<String, Object>();
             session.setAttribute(FLASH_MAP_ATTRIBUTE, flash);
         }

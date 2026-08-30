@@ -64,7 +64,7 @@ public class CreateIntegratedAppStrategy extends AbstractLandscapeCreationListen
         try {
             String plugId = integratedAppClient
                     .getPlugIdByBaseUrl(getBaseUrl());
-            if (plugId == null) {
+            if (null == plugId) {
                 String pfx = randomPrefix();
                 PluggableComponentDO integratedApplication = integratedAppClient
                         .createIntegratedApplication(plugName, description,

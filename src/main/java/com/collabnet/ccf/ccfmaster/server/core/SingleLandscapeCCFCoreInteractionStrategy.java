@@ -82,7 +82,7 @@ public class SingleLandscapeCCFCoreInteractionStrategy extends LandscapeCCFCoreI
             File landscapePropertyFile = new File(ccfLandscapeDirectory,
                     getImmutableLandscapePropertyFileName());
             createProperties(context, landscapePropertyFile);
-            if (context.getVersion() != null) {
+            if (null != context.getVersion()) {
                 createFieldMappingLandscapeTemplates(context, new File(
                         ccfLandscapeDirectory, FIELDMAPPING_BASE_DIRECTORY));
             }
@@ -152,18 +152,18 @@ public class SingleLandscapeCCFCoreInteractionStrategy extends LandscapeCCFCoreI
     }
 
     private void checkParticipantKinds(Landscape context) {
-        if (context.getTeamForge().getSystemKind() != SystemKind.TF) {
+        if (SystemKind.TF != context.getTeamForge().getSystemKind()) {
             throw new CoreConfigurationException(
                     "CCFMaster only supports TF instances as first participant.");
         }
-        if (context.getParticipant().getSystemKind() == SystemKind.TF) {
+        if (SystemKind.TF == context.getParticipant().getSystemKind()) {
             throw new CoreConfigurationException(
                     "CCFMaster does not support TF instances as second participant.");
         }
     }
 
     private void checkSingleLandscapeConstraint() {
-        if (Landscape.countLandscapes() > 1) {
+        if (1 < Landscape.countLandscapes()) {
             throw new CoreConfigurationException(
                     "CCFMaster is configured with a CCFCoreInteractionStrategy that does not suppport more than one landscape.");
         }

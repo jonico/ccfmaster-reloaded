@@ -12,9 +12,9 @@ import jakarta.persistence.TypedQuery;
 privileged aspect RepositoryMapping_Roo_Finder {
     
     public static TypedQuery<RepositoryMapping> RepositoryMapping.findRepositoryMappingsByExternalAppAndParticipantRepositoryIdAndTeamForgeRepositoryId(ExternalApp externalApp, String participantRepositoryId, String teamForgeRepositoryId) {
-        if (externalApp == null) throw new IllegalArgumentException("The externalApp argument is required");
-        if (participantRepositoryId == null || participantRepositoryId.length() == 0) throw new IllegalArgumentException("The participantRepositoryId argument is required");
-        if (teamForgeRepositoryId == null || teamForgeRepositoryId.length() == 0) throw new IllegalArgumentException("The teamForgeRepositoryId argument is required");
+        if (null == externalApp) throw new IllegalArgumentException("The externalApp argument is required");
+        if (null == participantRepositoryId || 0 == participantRepositoryId.length()) throw new IllegalArgumentException("The participantRepositoryId argument is required");
+        if (null == teamForgeRepositoryId || 0 == teamForgeRepositoryId.length()) throw new IllegalArgumentException("The teamForgeRepositoryId argument is required");
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<RepositoryMapping> q = em.createQuery("SELECT o FROM RepositoryMapping AS o WHERE o.externalApp = :externalApp AND o.participantRepositoryId = :participantRepositoryId AND o.teamForgeRepositoryId = :teamForgeRepositoryId", RepositoryMapping.class);
         q.setParameter("externalApp", externalApp);

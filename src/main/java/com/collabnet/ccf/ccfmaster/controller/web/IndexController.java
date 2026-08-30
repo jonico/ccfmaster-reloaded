@@ -34,7 +34,7 @@ public class IndexController {
     public String index() {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
-        if (auth == null)
+        if (null == auth)
             throw new AccessDeniedException("Not authenticated at all");
         Object principal = auth.getPrincipal();
         if (principal instanceof IafUserDetails)

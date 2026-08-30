@@ -58,7 +58,7 @@ public class ParticipantConfig implements ConfigItem, PersistableConfigItem<Part
 
     public static long countParticipantConfigsByParticipant(
             Participant participant) {
-        if (participant == null)
+        if (null == participant)
             throw new IllegalArgumentException(
                     "The participant argument is required");
         EntityManager em = ParticipantConfig.entityManager();

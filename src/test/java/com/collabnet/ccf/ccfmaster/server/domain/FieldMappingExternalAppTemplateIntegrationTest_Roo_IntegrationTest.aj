@@ -54,7 +54,7 @@ privileged aspect FieldMappingExternalAppTemplateIntegrationTest_Roo_Integration
     public void FieldMappingExternalAppTemplateIntegrationTest.testFindFieldMappingExternalAppTemplateEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingExternalAppTemplate(), "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.countFieldMappingExternalAppTemplates();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplateEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingExternalAppTemplate' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingExternalAppTemplate' returned an incorrect number of entries");

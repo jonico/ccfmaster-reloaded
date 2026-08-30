@@ -69,7 +69,7 @@ public class RepositoryMappingDirectionConfig {
 
     public static TypedQuery<RepositoryMappingDirectionConfig> findRepositoryMappingDirectionConfigByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -83,10 +83,10 @@ public class RepositoryMappingDirectionConfig {
 
     public static TypedQuery<RepositoryMappingDirectionConfig> findRepositoryMappingDirectionConfigByExternalAppAndRepositoryMapping(
             ExternalApp externalApp, RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -102,10 +102,10 @@ public class RepositoryMappingDirectionConfig {
     public static TypedQuery<RepositoryMappingDirectionConfig> findRepositoryMappingDirectionConfigByExternalAppAndRepositoryMappingDirection(
             ExternalApp externalApp,
             RepositoryMappingDirection repositoryMappingDirection) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (repositoryMappingDirection == null)
+        if (null == repositoryMappingDirection)
             throw new IllegalArgumentException(
                     "The repositoryMappingDirection argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -120,7 +120,7 @@ public class RepositoryMappingDirectionConfig {
 
     public static TypedQuery<RepositoryMappingDirectionConfig> findRepositoryMappingDirectionConfigByRepositoryMapping(
             RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
         EntityManager em = RepositoryMapping.entityManager();

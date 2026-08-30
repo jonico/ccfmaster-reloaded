@@ -94,7 +94,7 @@ public class RepositoryMappingDirection {
     public Participant getSourceSystem() {
         Landscape landscape = getRepositoryMapping().getExternalApp()
                 .getLandscape();
-        if (getDirection() == Directions.FORWARD) {
+        if (Directions.FORWARD == getDirection()) {
             return landscape.getTeamForge();
         } else {
             return landscape.getParticipant();
@@ -126,7 +126,7 @@ public class RepositoryMappingDirection {
     public Participant getTargetSystem() {
         Landscape landscape = getRepositoryMapping().getExternalApp()
                 .getLandscape();
-        if (getDirection() == Directions.REVERSE) {
+        if (Directions.REVERSE == getDirection()) {
             return landscape.getTeamForge();
         } else {
             return landscape.getParticipant();
@@ -159,7 +159,7 @@ public class RepositoryMappingDirection {
 
     public static long countRepositoryMappingDirectionsByDirection(
             Directions direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = RepositoryMappingDirection.entityManager();
@@ -182,10 +182,10 @@ public class RepositoryMappingDirection {
 
     public static long countRepositoryMappingDirectionsByExternalAppAndDirection(
             ExternalApp externalApp, Directions direction) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -200,7 +200,7 @@ public class RepositoryMappingDirection {
 
     public static long countRepositoryMappingDirectionsByLandscape(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -228,7 +228,7 @@ public class RepositoryMappingDirection {
 
     public static long countRepositoryMappingDirectionsByRepositoryMapping(
             RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
         EntityManager em = entityManager();
@@ -242,10 +242,10 @@ public class RepositoryMappingDirection {
 
     public static long countRepositoryMappingDirectionsByRepositoryMappingAndDirection(
             RepositoryMapping repositoryMapping, Directions direction) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -260,7 +260,7 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByDirection(
             Directions direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = RepositoryMappingDirection.entityManager();
@@ -274,7 +274,7 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -288,10 +288,10 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByExternalAppAndDirection(
             ExternalApp externalApp, Directions direction) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -306,7 +306,7 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByLandscape(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = RepositoryMapping.entityManager();
@@ -334,7 +334,7 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByRepositoryMapping(
             RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
         EntityManager em = RepositoryMappingDirection.entityManager();
@@ -348,10 +348,10 @@ public class RepositoryMappingDirection {
 
     public static TypedQuery<RepositoryMappingDirection> findRepositoryMappingDirectionsByRepositoryMappingAndDirection(
             RepositoryMapping repositoryMapping, Directions direction) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = RepositoryMappingDirection.entityManager();

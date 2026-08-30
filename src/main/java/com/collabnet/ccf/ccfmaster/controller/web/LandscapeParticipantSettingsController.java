@@ -72,7 +72,7 @@ public class LandscapeParticipantSettingsController extends AbstractLandscapeCon
     public String displayParticipantSettings(Model model,
             HttpServletRequest request) {
         ParticipantSettingsModel participantSettingsModel = new ParticipantSettingsModel();
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             participantSettingsModel.setLandscapeConfigList(genericParticipant
                     .getGenericParticipantConfigItemFactory()
                     .getLandscapeFieldList());
@@ -151,7 +151,7 @@ public class LandscapeParticipantSettingsController extends AbstractLandscapeCon
             HttpServletRequest request) {
         RequestContext ctx = new RequestContext(request);
         ValidationResult connectionResult = null;
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             IGenericParticipantConfigItemValidator validator = genericParticipant
                     .getGenericParticipantConfigItemFactory()
                     .getCustomValidator();
@@ -159,7 +159,7 @@ public class LandscapeParticipantSettingsController extends AbstractLandscapeCon
                     .validateConnection(participantSettingsModel);
         }
 
-        if (connectionResult != null && connectionResult.isConnectionValid()) {
+        if (null != connectionResult && connectionResult.isConnectionValid()) {
             return getTestConnectionMsg(
                     connectionResult.getMessage(),
                     ctx.getMessage(ControllerConstants.GP_CONNECTION_SUCCESS_MESSAGE),
@@ -237,7 +237,7 @@ public class LandscapeParticipantSettingsController extends AbstractLandscapeCon
             String cssColor) {
         StringBuilder builder = new StringBuilder("<strong><font color='")
                 .append(cssColor).append("'>").append(contextMessage);
-        if (message != null) {
+        if (null != message) {
             builder.append(" ").append(message);
         }
         return builder.append("</font></strong>").toString();
@@ -259,12 +259,12 @@ public class LandscapeParticipantSettingsController extends AbstractLandscapeCon
     private void validateGenericParticipant(
             ParticipantSettingsModel participantSettingsModel,
             BindingResult bindingResult) {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             IGenericParticipantConfigItemValidator participantValidator = genericParticipant
                     .getGenericParticipantConfigItemFactory()
                     .getCustomValidator();
-            if (genericParticipant.getGenericParticipantConfigItemFactory()
-                    .getCustomValidator() == null) {
+            if (null == genericParticipant.getGenericParticipantConfigItemFactory()
+                    .getCustomValidator()) {
                 participantValidator = new DefaultGenericParticipantConfigValidator();
                 participantValidator.validate(participantSettingsModel,
                         bindingResult);

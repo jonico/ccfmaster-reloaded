@@ -55,7 +55,7 @@ public class LandscapeConfig implements PersistableConfigItem<LandscapeConfig> {
     private String    val;
 
     public static long countLandscapeConfigsByLandscape(Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = LandscapeConfig.entityManager();

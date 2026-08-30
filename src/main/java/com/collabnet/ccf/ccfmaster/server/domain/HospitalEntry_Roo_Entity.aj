@@ -57,13 +57,13 @@ privileged aspect HospitalEntry_Roo_Entity {
     
     @Transactional
     public void HospitalEntry.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void HospitalEntry.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect HospitalEntry_Roo_Entity {
     
     @Transactional
     public void HospitalEntry.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void HospitalEntry.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public HospitalEntry HospitalEntry.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         HospitalEntry merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect HospitalEntry_Roo_Entity {
     
     public static final EntityManager HospitalEntry.entityManager() {
         EntityManager em = new HospitalEntry().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect HospitalEntry_Roo_Entity {
     }
     
     public static HospitalEntry HospitalEntry.findHospitalEntry(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(HospitalEntry.class, id);
     }
     

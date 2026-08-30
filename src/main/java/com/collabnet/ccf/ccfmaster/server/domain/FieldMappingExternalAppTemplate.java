@@ -79,7 +79,7 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static long countFieldMappingExternalAppTemplatesByParent(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = entityManager();
@@ -93,10 +93,10 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static long countFieldMappingExternalAppTemplatesByParentAndDirection(
             ExternalApp externalApp, Directions direction) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -111,10 +111,10 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static TypedQuery<FieldMappingExternalAppTemplate> findFieldMappingExternalAppTemplateNamesByParentAndDirection(
             ExternalApp parent, Directions direction) {
-        if (parent == null)
+        if (null == parent)
             throw new IllegalArgumentException(
                     "The parent argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = FieldMappingExternalAppTemplate.entityManager();
@@ -129,7 +129,7 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static TypedQuery<FieldMappingExternalAppTemplate> findFieldMappingExternalAppTemplatesByParent(
             ExternalApp parent) {
-        if (parent == null)
+        if (null == parent)
             throw new IllegalArgumentException(
                     "The parent argument is required");
         EntityManager em = FieldMappingExternalAppTemplate.entityManager();
@@ -143,10 +143,10 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static TypedQuery<FieldMappingExternalAppTemplate> findFieldMappingExternalAppTemplatesByParentAndDirection(
             ExternalApp parent, Directions direction) {
-        if (parent == null)
+        if (null == parent)
             throw new IllegalArgumentException(
                     "The parent argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = FieldMappingExternalAppTemplate.entityManager();
@@ -161,12 +161,12 @@ public class FieldMappingExternalAppTemplate implements Template<ExternalApp> {
 
     public static TypedQuery<FieldMappingExternalAppTemplate> findFieldMappingExternalAppTemplatesByParentAndNameAndDirection(
             ExternalApp parent, String name, Directions direction) {
-        if (parent == null)
+        if (null == parent)
             throw new IllegalArgumentException(
                     "The parent argument is required");
-        if (name == null || name.length() == 0)
+        if (null == name || 0 == name.length())
             throw new IllegalArgumentException("The name argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = FieldMappingExternalAppTemplate.entityManager();

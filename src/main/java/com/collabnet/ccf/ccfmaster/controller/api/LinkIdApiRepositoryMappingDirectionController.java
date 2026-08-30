@@ -147,7 +147,7 @@ public class LinkIdApiRepositoryMappingDirectionController extends AbstractApiLi
 
     private void validateRepositoryMappingDirection(
             RepositoryMappingDirection requestBody) {
-        if (requestBody == null) {
+        if (null == requestBody) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }
@@ -160,7 +160,7 @@ public class LinkIdApiRepositoryMappingDirectionController extends AbstractApiLi
 
     private void validateRequestBody(Long id,
             RepositoryMappingDirection requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

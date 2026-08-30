@@ -56,7 +56,7 @@ public class SingleLandscapeDirectionCCFCoreInteractionStrategyTest {
 
     @AfterEach
     public void deleteDirectoryIfNecessary() throws IOException {
-        if (directoryToDelete != null) {
+        if (null != directoryToDelete) {
             FileUtils.deleteDirectory(directoryToDelete);
         }
     }

@@ -57,13 +57,13 @@ privileged aspect DirectionConfig_Roo_Entity {
     
     @Transactional
     public void DirectionConfig.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void DirectionConfig.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect DirectionConfig_Roo_Entity {
     
     @Transactional
     public void DirectionConfig.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void DirectionConfig.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public DirectionConfig DirectionConfig.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         DirectionConfig merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect DirectionConfig_Roo_Entity {
     
     public static final EntityManager DirectionConfig.entityManager() {
         EntityManager em = new DirectionConfig().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect DirectionConfig_Roo_Entity {
     }
     
     public static DirectionConfig DirectionConfig.findDirectionConfig(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(DirectionConfig.class, id);
     }
     

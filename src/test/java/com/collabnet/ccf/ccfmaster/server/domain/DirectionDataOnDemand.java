@@ -26,7 +26,7 @@ public class DirectionDataOnDemand {
     public void init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.Direction
                 .findDirectionEntries(0, 10);
-        if (data == null)
+        if (null == data)
             throw new IllegalStateException(
                     "Find entries implementation for 'Direction' illegally returned null");
         if (!data.isEmpty()) {

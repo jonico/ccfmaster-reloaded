@@ -51,7 +51,7 @@ public class IafMenu extends TagSupport {
     public int doEndTag() throws JspException {
         SecurityContext ctx = SecurityContextHolder.getContext();
         Authentication auth = ctx.getAuthentication();
-        if (auth == null) {
+        if (null == auth) {
             log.debug("Authentication from spring security was null.");
             return SKIP_PAGE;
         }
@@ -62,7 +62,7 @@ public class IafMenu extends TagSupport {
             Connection connection = user.getConnection();
             String apiVersion = connection.getTeamForgeClient().getApiVersion();
             //From TF 7.2 use the default code implementation of topinclude (http://<>/sf/sfmain/do/topInclude/projects.xxxx?linkId=prplxxxx)
-            if (apiVersion.compareTo(CTF71_API_VERSION) > 0) {
+            if (0 < apiVersion.compareTo(CTF71_API_VERSION)) {
                 pageContext.getOut().write(getCTFHeaderBar(user, request));
             } else {
                 pageContext.getOut().write(getBanner(user, request));
@@ -199,7 +199,7 @@ public class IafMenu extends TagSupport {
          * embedded.
          */
 
-        if (apiVersion.compareTo(CTF82_API_VERSION) >= 0) {
+        if (0 <= apiVersion.compareTo(CTF82_API_VERSION)) {
             final String serverUrl = conn.getServerUrl();
             buf.append("<script src=\"")
                     .append(serverUrl)
@@ -240,7 +240,7 @@ public class IafMenu extends TagSupport {
 
     private String makePath(String projectPath) {
         String res = "/sf/sfmain/do/topInclude";
-        if (projectPath != null) {
+        if (null != projectPath) {
             res += "/" + projectPath;
         }
         return res;

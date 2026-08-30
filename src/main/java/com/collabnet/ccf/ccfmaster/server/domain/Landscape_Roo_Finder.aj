@@ -11,7 +11,7 @@ import jakarta.persistence.TypedQuery;
 privileged aspect Landscape_Roo_Finder {
     
     public static TypedQuery<Landscape> Landscape.findLandscapesByPlugIdEquals(String plugId) {
-        if (plugId == null || plugId.length() == 0) throw new IllegalArgumentException("The plugId argument is required");
+        if (null == plugId || 0 == plugId.length()) throw new IllegalArgumentException("The plugId argument is required");
         EntityManager em = Landscape.entityManager();
         TypedQuery<Landscape> q = em.createQuery("SELECT o FROM Landscape AS o WHERE o.plugId = :plugId", Landscape.class);
         q.setParameter("plugId", plugId);

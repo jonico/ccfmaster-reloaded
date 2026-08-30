@@ -40,7 +40,7 @@ privileged aspect RepositoryMappingDirectionDataOnDemand_Roo_DataOnDemand {
     
     private void RepositoryMappingDirectionDataOnDemand.setLastSourceArtifactVersion(RepositoryMappingDirection obj, int index) {
         java.lang.String lastSourceArtifactVersion = "lastSourceArtifactVersion_" + index;
-        if (lastSourceArtifactVersion.length() > 128) {
+        if (128 < lastSourceArtifactVersion.length()) {
             lastSourceArtifactVersion = lastSourceArtifactVersion.substring(0, 128);
         }
         obj.setLastSourceArtifactVersion(lastSourceArtifactVersion);
@@ -48,7 +48,7 @@ privileged aspect RepositoryMappingDirectionDataOnDemand_Roo_DataOnDemand {
     
     private void RepositoryMappingDirectionDataOnDemand.setLastSourceArtifactId(RepositoryMappingDirection obj, int index) {
         java.lang.String lastSourceArtifactId = "lastSourceArtifactId_" + index;
-        if (lastSourceArtifactId.length() > 128) {
+        if (128 < lastSourceArtifactId.length()) {
             lastSourceArtifactId = lastSourceArtifactId.substring(0, 128);
         }
         obj.setLastSourceArtifactId(lastSourceArtifactId);
@@ -66,7 +66,7 @@ privileged aspect RepositoryMappingDirectionDataOnDemand_Roo_DataOnDemand {
     
     public RepositoryMappingDirection RepositoryMappingDirectionDataOnDemand.getSpecificRepositoryMappingDirection(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         RepositoryMappingDirection obj = data.get(index);
         return RepositoryMappingDirection.findRepositoryMappingDirection(obj.getId());

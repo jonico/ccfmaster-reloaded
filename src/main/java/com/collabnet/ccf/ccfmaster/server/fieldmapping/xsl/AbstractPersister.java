@@ -130,7 +130,7 @@ public abstract class AbstractPersister<T extends Mapping<?>> {
     }
 
     static void writeXml(Element xml, File file) throws IOException {
-        if (xml == null)
+        if (null == xml)
             return;
         XMLWriter writer = null;
         try {
@@ -138,7 +138,7 @@ public abstract class AbstractPersister<T extends Mapping<?>> {
                     file), "UTF-8"));
             writer.write(xml);
         } finally {
-            if (writer != null)
+            if (null != writer)
                 writer.close();
         }
     }
