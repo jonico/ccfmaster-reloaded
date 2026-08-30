@@ -29,10 +29,8 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
             Direction dir = dirdod.getRandomDirection();
     
             CcfCoreStatus obj = CcfCoreStatus.findCcfCoreStatus(dir.getId());
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'CcfCoreStatus' failed to provide a new transient entity",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'CcfCoreStatus' failed to provide a new transient entity");
             obj.setId(null);
             obj.setVersion(null);
             org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'CcfCoreStatus' identifier to be null");
@@ -53,23 +51,17 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
                 .getRandomDirection();
         CcfCoreStatus obj = CcfCoreStatus.findCcfCoreStatusesByDirection(dir)
                 .getSingleResult();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'CcfCoreStatus' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'CcfCoreStatus' failed to provide an identifier");
         obj = restTemplate.getForObject(ccfAPIUrl + "/ccfcorestatuses/" + id,
                 CcfCoreStatus.class);
         org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'CcfCoreStatus' illegally returned null for id '"
                         + id + "'");
-        org.junit.Assert
-                .assertEquals(
-                        "Find method for 'CcfCoreStatus' returned the incorrect identifier",
-                        id, obj.getId());
+        org.junit.jupiter.api.Assertions
+                .assertEquals(id, obj.getId(), "Find method for 'CcfCoreStatus' returned the incorrect identifier");
     }
 
     @Test
@@ -78,15 +70,11 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
             final Direction dir = dirdod.getRandomDirection();
             final CcfCoreStatus obj = CcfCoreStatus.findCcfCoreStatus(dir.getId());
             //        final com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = dod.getRandomCcfCoreStatus();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'CcfCoreStatus' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'CcfCoreStatus' failed to provide an identifier");
             try {
                 restTemplate.delete(ccfAPIUrl + "/ccfcorestatuses/" + id);
             } catch (HttpClientErrorException e) {
@@ -100,10 +88,8 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
     public void testUpdate() {
         final Direction dir = dirdod.getRandomDirection();
         final CcfCoreStatus obj = CcfCoreStatus.findCcfCoreStatus(dir.getId());
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'CcfCoreStatus' failed to initialize correctly");
         new mockit.NonStrictExpectations() {
             {
                 stateMachine.determineCurrentStatus((CcfCoreStatus) any, 0);
@@ -113,10 +99,8 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
             }
         };
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'CcfCoreStatus' failed to provide an identifier");
         java.lang.Integer currentVersion = obj.getVersion();
         CcfCoreStatus obj2 = restTemplate.getForObject(ccfAPIUrl
                 + "/ccfcorestatuses/" + id, CcfCoreStatus.class);
@@ -126,11 +110,9 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
         restTemplate.put(ccfAPIUrl + "/ccfcorestatuses/" + id, obj2);
         obj2 = restTemplate.getForObject(ccfAPIUrl + "/ccfcorestatuses/" + id,
                 CcfCoreStatus.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'CcfCoreStatus' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions
+                .assertTrue((currentVersion != null && obj.getVersion() > currentVersion)
+                                || !modified, "Version for 'CcfCoreStatus' failed to increment on flush directive");
     }
 
     @Test
@@ -138,10 +120,8 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             final Direction dir = dirdod.getRandomDirection();
             final CcfCoreStatus obj = CcfCoreStatus.findCcfCoreStatus(dir.getId());
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'CcfCoreStatus' failed to initialize correctly");
             new mockit.NonStrictExpectations() {
                 {
                     stateMachine.determineCurrentStatus((CcfCoreStatus) any, 0);
@@ -151,10 +131,8 @@ public class CcfCoreStatusAPIIntegrationTest extends AbstractAPIIntegrationTest 
                 }
             };
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'CcfCoreStatus' failed to provide an identifier");
             CcfCoreStatus obj2 = restTemplate.getForObject(ccfAPIUrl
                     + "/ccfcorestatuses/" + id, CcfCoreStatus.class);
             org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'CcfCoreStatus' illegally returned null for id '"

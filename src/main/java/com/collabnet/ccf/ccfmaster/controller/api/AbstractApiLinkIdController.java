@@ -44,19 +44,19 @@ public abstract class AbstractApiLinkIdController<T> extends AbstractBaseApiCont
     @ResponseStatus(CREATED)
     @RequestMapping(method = POST)
     public abstract @ResponseBody
-    T create(@ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+    T create(@ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody T requestBody, HttpServletResponse response);
 
     @ResponseStatus(NO_CONTENT)
     @RequestMapping(value = "/{id}", method = DELETE)
     public abstract void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response);
 
     @RequestMapping(method = GET)
     public abstract @ResponseBody
     List<T> list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea);
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea);
 
     @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME)
     @PreAuthorize("isAuthenticated() and (hasRole('ROLE_ADMIN') or (principal.linkId == #linkId))")
@@ -86,7 +86,7 @@ public abstract class AbstractApiLinkIdController<T> extends AbstractBaseApiCont
 
     @RequestMapping(value = "/{id}", method = GET)
     public abstract T show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id);
 
     /**
@@ -100,7 +100,7 @@ public abstract class AbstractApiLinkIdController<T> extends AbstractBaseApiCont
      */
     @RequestMapping(value = "/{id}", method = PUT)
     public abstract void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, @RequestBody T requestBody,
             HttpServletResponse response);
 }

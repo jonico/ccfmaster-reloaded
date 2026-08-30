@@ -13,6 +13,13 @@
  * (DirectionTest, LandscapeTest, ParticipantTest, ...) depend on this and are green again
  * with it in place.
  *
+ * It sits under src/main rather than src/test on purpose. methodToMock() is an
+ * execution() pointcut on the entities' static methods, so the around advice has to be
+ * woven into the entity classes themselves, which happens during the main ajc compile - a
+ * test-compile run only weaves test classes. At the baseline spring-aspects 3.0.5 was an
+ * ordinary compile-scope aspectLibrary and did exactly this, so the entity classes have
+ * always carried this advice.
+ *
  * Original: org.springframework.mock.staticmock.AnnotationDrivenStaticEntityMockingControl,
  * Spring Framework 3.2.18.RELEASE, Apache License 2.0.
  */

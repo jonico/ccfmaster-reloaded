@@ -57,15 +57,11 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
             obj.getLandscape().getTeamForge().setSystemKind(SystemKind.TF);
             obj.getLandscape().getParticipant().setSystemKind(SystemKind.SWP);
         }
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'Direction' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'Direction' failed to provide an identifier");
         LogFileList logObj = restTemplate.getForObject(ccfAPIUrl
                 + "/directions/" + id + "/logs/", LogFileList.class);
         org.junit.jupiter.api.Assertions.assertNotNull(logObj, "Find method for 'Direction' illegally returned null for id '"

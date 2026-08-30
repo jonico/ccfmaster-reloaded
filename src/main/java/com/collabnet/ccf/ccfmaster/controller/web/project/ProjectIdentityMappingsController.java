@@ -57,7 +57,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
 
     @RequestMapping("/applyfilter")
     public String applyFilter(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
             Model model, HttpServletRequest request, HttpSession session) {
@@ -124,7 +124,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) String rmdid,
             @RequestParam(SOURCE_FILTER_ARTIFACT_ID) String source_filter_artifact_id,
             @RequestParam(TARGET_FILTER_ARTIFACT_ID) String target_filter_artifact_id,
@@ -149,7 +149,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
             Model model, HttpSession session) {
@@ -166,7 +166,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
 
     @RequestMapping(method = RequestMethod.GET, params = RMD_ID_REQUEST_PARAM)
     public String listForRepositoryMappingDirection(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
@@ -188,7 +188,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
     public String saveDetails(
             @RequestParam(IDENTITY_MAPPING_ID_REQUEST_PARAM) String identityMappingId,
             @RequestParam(RMD_ID_REQUEST_PARAM) String rmdid,
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             IdentityMappingsModel identityMappingsModel, Model model,
             HttpServletRequest request, HttpSession session) {
         String tfUrl = ccfRuntimePropertyHolder.getTfUrl();
@@ -218,7 +218,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
 
     @RequestMapping("/details")
     public String showDetails(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(MAPPING_ID_REQUEST_PARAM) IdentityMapping entry,
             @RequestParam(RMD_ID_REQUEST_PARAM) String rmdid, Model model,
             HttpSession session) {

@@ -27,7 +27,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
     @Override
     public @ResponseBody
     RepositoryMappingDirectionConfig create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody RepositoryMappingDirectionConfig requestBody,
             HttpServletResponse response) {
         validateRepositoryMappingDirectionConfig(requestBody);
@@ -41,7 +41,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         RepositoryMappingDirectionConfig repositoryMappingDirectionConfig = RepositoryMappingDirectionConfig
                 .findRepositoryMappingDirectionConfig(id);
@@ -53,7 +53,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     List<RepositoryMappingDirectionConfig> list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new RepositoryMappingDirectionConfigList(
                 RepositoryMappingDirectionConfig
                         .findRepositoryMappingDirectionConfigByExternalApp(ea)
@@ -63,7 +63,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
     @Override
     public @ResponseBody
     RepositoryMappingDirectionConfig show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMappingDirectionConfig rm = RepositoryMappingDirectionConfig
                 .findRepositoryMappingDirectionConfig(id);
@@ -73,7 +73,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @RequestBody RepositoryMappingDirectionConfig requestBody,
             HttpServletResponse response) {

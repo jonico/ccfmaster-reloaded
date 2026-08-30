@@ -71,7 +71,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping("/bulkimport")
     public String bulkImportFieldMappingTemplate(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             Model model, HttpServletRequest request, HttpSession session) {
         String[] items = request.getParameterValues(FMTNAME);
@@ -135,7 +135,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping(value = "/delete")
     public String deleteFieldMappingExternalAppTemplate(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(FMT_ID_REQUEST_PARAM) FieldMappingExternalAppTemplate[] entries,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             Model model, HttpSession session) {
@@ -166,7 +166,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
     @ResponseBody
     @RequestMapping(value = "/export")
     public FieldMappingExternalAppTemplateList exportFieldMappingTemplate(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(FMT_ID_REQUEST_PARAM) FieldMappingExternalAppTemplate[] entries,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             HttpServletResponse response) {
@@ -191,7 +191,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping("/import")
     public String importFieldMappingTemplate(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @ModelAttribute("fileUpload") FileUpload fileUpload,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             Model model, HttpServletRequest request, HttpSession session) {
@@ -267,7 +267,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,

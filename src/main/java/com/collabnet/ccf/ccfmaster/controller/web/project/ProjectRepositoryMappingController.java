@@ -43,7 +43,7 @@ public class ProjectRepositoryMappingController extends AbstractProjectControlle
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(DIRECTION_REQUEST_PARAM) Directions direction,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection[] rmds,
             Model model, HttpSession session) {
@@ -64,7 +64,7 @@ public class ProjectRepositoryMappingController extends AbstractProjectControlle
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
@@ -86,7 +86,7 @@ public class ProjectRepositoryMappingController extends AbstractProjectControlle
 
     @RequestMapping(value = "/pause", method = RequestMethod.POST)
     public String pause(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(DIRECTION_REQUEST_PARAM) Directions direction,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection[] rmds,
             Model model, HttpSession session) {
@@ -100,7 +100,7 @@ public class ProjectRepositoryMappingController extends AbstractProjectControlle
 
     @RequestMapping(value = "/resume", method = RequestMethod.POST)
     public String resume(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(DIRECTION_REQUEST_PARAM) Directions direction,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection[] rmds,
             Model model, HttpSession session) {

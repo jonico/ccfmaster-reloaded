@@ -25,7 +25,13 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Entity {
     transient EntityManager FieldMappingLandscapeTemplate.entityManager;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // GenerationType.AUTO used to mean "native", i.e. an HSQLDB identity
+    // column, because Hibernate 3.5 defaulted hibernate.id.new_generator_mappings
+    // to false. Hibernate 6 always reads AUTO as a sequence, which both changes the
+    // schema and defers the INSERT from persist() to flush() - two integration tests
+    // rely on the constraint violation surfacing from persist(). IDENTITY is the
+    // baseline mapping, spelled out.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long FieldMappingLandscapeTemplate.id;
     

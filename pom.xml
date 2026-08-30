@@ -101,7 +101,6 @@
 			<groupId>com.collabnet.ccf.ccfmaster.legacy</groupId>
 			<artifactId>spring-mock-staticmock</artifactId>
 			<version>3.2.18.RELEASE</version>
-			<scope>test</scope>
 		</dependency>
 		<!--
 			jmockit is deliberately left at 0.999.4. 1.x deleted mockit.Mockit and
@@ -611,20 +610,6 @@
 						<id>aspectj-test-compile</id>
 						<phase>test-compile</phase>
 						<goals><goal>test-compile</goal></goals>
-						<configuration>
-							<aspectLibraries>
-								<aspectLibrary>
-									<groupId>org.springframework</groupId>
-									<artifactId>spring-aspects</artifactId>
-								</aspectLibrary>
-								<!-- holds the abstract AbstractMethodMockingControl aspect that
-								     AnnotationDrivenStaticEntityMockingControl extends -->
-								<aspectLibrary>
-									<groupId>com.collabnet.ccf.ccfmaster.legacy</groupId>
-									<artifactId>spring-mock-staticmock</artifactId>
-								</aspectLibrary>
-							</aspectLibraries>
-						</configuration>
 					</execution>
 				</executions>
 				<configuration>
@@ -633,6 +618,12 @@
 						<aspectLibrary>
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+						<!-- holds the abstract AbstractMethodMockingControl aspect that
+						     AnnotationDrivenStaticEntityMockingControl extends -->
+						<aspectLibrary>
+							<groupId>com.collabnet.ccf.ccfmaster.legacy</groupId>
+							<artifactId>spring-mock-staticmock</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
 					<complianceLevel>${java.release}</complianceLevel>

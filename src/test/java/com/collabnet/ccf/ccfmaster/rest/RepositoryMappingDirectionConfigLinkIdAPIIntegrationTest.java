@@ -25,10 +25,8 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
     public void testCountByRepositoryMappingDirectionScope() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
                 .getRandomRepositoryMappingDirectionConfig();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig
                 .countRepositoryMappingDirectionConfigsByExternalAppAndRepositoryMappingDirection(
                         obj.getRepositoryMappingDirection()
@@ -44,28 +42,20 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
         List<RepositoryMappingDirectionConfig> result = restTemplate
                 .getForObject(ccfAPIUrl + linkIdPathSegment,
                         RepositoryMappingDirectionConfigList.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Counter for 'RepositoryMappingDirectionConfig' incorrectly reported there were no entries",
-                        count > 0);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find entries method for 'RepositoryMappingDirectionConfig' illegally returned null",
-                        result);
-        org.junit.Assert
-                .assertEquals(
-                        "Find entries method for 'RepositoryMappingDirectionConfig' returned an incorrect number of entries",
-                        count, result.size());
+        org.junit.jupiter.api.Assertions
+                .assertTrue(count > 0, "Counter for 'RepositoryMappingDirectionConfig' incorrectly reported there were no entries");
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(result, "Find entries method for 'RepositoryMappingDirectionConfig' illegally returned null");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(count, result.size(), "Find entries method for 'RepositoryMappingDirectionConfig' returned an incorrect number of entries");
     }
 
     @Test
     public void testCreate() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig randomconfigObject = dodRMDC
                 .getNewTransientRepositoryMappingDirectionConfig(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        randomconfigObject);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(randomconfigObject, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
         String linkIdPathSegment = "/linkid/"
                 + randomconfigObject.getRepositoryMappingDirection()
                         .getRepositoryMapping().getExternalApp().getLinkId()
@@ -74,25 +64,19 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
         randomconfigObject = restTemplate.postForObject(ccfAPIUrl
                 + linkIdPathSegment, randomconfigObject,
                 RepositoryMappingDirectionConfig.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Expected 'RepositoryMappingDirectionConfig' identifier to no longer be null",
-                        randomconfigObject.getId());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(randomconfigObject.getId(), "Expected 'RepositoryMappingDirectionConfig' identifier to no longer be null");
     }
 
     @Test
     public void testFind() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
                 .getRandomRepositoryMappingDirectionConfig();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier");
         // figure out linkId path segment
         String linkIdPathSegment = "/linkid/"
                 + obj.getRepositoryMappingDirection().getRepositoryMapping()
@@ -100,14 +84,11 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
                 + "/repositorymappingdirectionconfigs/";
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 RepositoryMappingDirectionConfig.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
-                                + id + "'", obj);
-        org.junit.Assert
-                .assertEquals(
-                        "Find method for 'RepositoryMappingDirectionConfig' returned the incorrect identifier",
-                        id, obj.getId());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
+                                + id + "'");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(id, obj.getId(), "Find method for 'RepositoryMappingDirectionConfig' returned the incorrect identifier");
     }
 
     @Test
@@ -115,15 +96,11 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
                     .getRandomRepositoryMappingDirectionConfig();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier");
             String linkIdPathSegment = "/linkid/"
                     + obj.getRepositoryMappingDirection().getRepositoryMapping()
                             .getExternalApp().getLinkId()
@@ -143,23 +120,18 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
     public void testUpdate() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
                 .getRandomRepositoryMappingDirectionConfig();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier");
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl
                 + "/repositorymappingdirectionconfigs/" + id,
                 RepositoryMappingDirectionConfig.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
-                                + id + "'", obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
+                                + id + "'");
         boolean modified = dodRMDC.modifyRepositoryMappingDirectionConfig(obj);
         String linkIdPathSegment = "/linkid/"
                 + obj.getRepositoryMappingDirection().getRepositoryMapping()
@@ -168,11 +140,9 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 RepositoryMappingDirectionConfig.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'RepositoryMappingDirectionConfig' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions
+                .assertTrue((currentVersion != null && obj.getVersion() > currentVersion)
+                                || !modified, "Version for 'RepositoryMappingDirectionConfig' failed to increment on flush directive");
     }
 
     @Test
@@ -180,22 +150,17 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
                     .getRandomRepositoryMappingDirectionConfig();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier");
             obj = restTemplate.getForObject(ccfAPIUrl
                     + "/repositorymappingdirectionconfigs/" + id,
                     RepositoryMappingDirectionConfig.class);
-            org.junit.Assert
-                    .assertNotNull(
-                            "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
-                                    + id + "'", obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
+                                    + id + "'");
             ExternalApp ea = dodEA.getNewTransientExternalApp(42);
             ea.persist();
             String linkIdPathSegment = "/linkid/" + ea.getLinkId()

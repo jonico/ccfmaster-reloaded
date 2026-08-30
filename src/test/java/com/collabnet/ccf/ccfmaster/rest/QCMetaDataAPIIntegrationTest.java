@@ -39,26 +39,22 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
 
     @Test
     public void testShowDefectFields() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/" + project
                 + "/defectFields/?qcUser=" + qcUser + "&qcPassword="
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("showDefectFields" + landscape + domain + project + qcURL
-                        + qcUser + qcPassword, result, "returned string did not match expectations");
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showDefectFields" + landscape + domain + project + qcURL
+                        + qcUser + qcPassword);
     }
 
     @Test
     public void testShowRequirementFields() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/" + project
                 + "/requirementTypes/" + requirementType
@@ -66,89 +62,76 @@ public class QCMetaDataAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.Assert
-                .assertEquals(
-                        "returned string did not match expectations",
-                        "showRequirementFields" + landscape + domain + project
-                                + requirementType + qcURL + qcUser + qcPassword,
-                        result);
+        org.junit.jupiter.api.Assertions
+                .assertEquals("showRequirementFields" + landscape + domain + project
+                                + requirementType + qcURL + qcUser + qcPassword, result, "returned string did not match expectations");
     }
 
     @Test
     public void testShowRequirementTypes() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/" + project
                 + "/requirementTypes/?qcUser=" + qcUser + "&qcPassword="
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("showRequirementTypes" + landscape + domain + project + qcURL
-                        + qcUser + qcPassword, result, "returned string did not match expectations");
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showRequirementTypes" + landscape + domain + project + qcURL
+                        + qcUser + qcPassword);
     }
 
     @Test
     public void testShowVisibleDomains() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + "?qcUser=" + qcUser + "&qcPassword="
                 + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("showVisibleDomains" + landscape + qcURL + qcUser + qcPassword, result, "returned string did not match expectations");
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showVisibleDomains" + landscape + qcURL + qcUser + qcPassword);
     }
 
     @Test
     public void testShowVisibleProjectsInDomain() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/?qcUser="
                 + qcUser + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("showVisibleProjectsInDomain" + landscape + domain + qcURL
-                        + qcUser + qcPassword, result, "returned string did not match expectations");
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "showVisibleProjectsInDomain" + landscape + domain + qcURL
+                        + qcUser + qcPassword);
     }
 
     @Test
     public void testValidateDomainAndProject() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/" + project
                 + "?qcUser=" + qcUser + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("validateDomainAndProject" + landscape + domain + project
-                        + qcURL + qcUser + qcPassword, result, "returned string did not match expectations");
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "validateDomainAndProject" + landscape + domain + project
+                        + qcURL + qcUser + qcPassword);
     }
 
     @Test
     public void testValidateDomainAndProjectAndRequirementType() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        landscape);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(landscape, "Data on demand for 'Landscape' failed to initialize correctly");
         String apiString = "/landscapes/" + landscape.getPlugId()
                 + "/qcmetadata/domains/" + domain + "/projects/" + project
                 + "/requirementTypes/" + requirementType + "?qcUser=" + qcUser
                 + "&qcPassword=" + qcPassword;
         String result = restTemplate.getForObject(ccfAPIUrl + apiString,
                 String.class);
-        org.junit.jupiter.api.Assertions.assertEquals("validateDomainAndProjectAndRequirementType" + landscape
+        org.junit.jupiter.api.Assertions.assertEquals(result, "returned string did not match expectations", "validateDomainAndProjectAndRequirementType" + landscape
                         + domain + project + requirementType + qcURL + qcURL
-                        + qcPassword, result, "returned string did not match expectations");
+                        + qcPassword);
     }
 
 }

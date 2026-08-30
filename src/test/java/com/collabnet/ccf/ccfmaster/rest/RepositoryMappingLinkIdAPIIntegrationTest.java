@@ -25,47 +25,35 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
     public void testCount() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                 .getRandomRepositoryMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping
                 .countRepositoryMappingsByExternalApp(obj.getExternalApp());
         String linkIdPathSegment = "/linkid/"
                 + obj.getExternalApp().getLinkId() + "/repositorymappings/";
         List<RepositoryMapping> result = restTemplate.getForObject(ccfAPIUrl
                 + linkIdPathSegment, RepositoryMappingList.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Counter for 'RepositoryMapping' incorrectly reported there were no entries",
-                        count > 0);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find entries method for 'RepositoryMapping' illegally returned null",
-                        result);
-        org.junit.Assert
-                .assertEquals(
-                        "Find entries method for 'RepositoryMapping' returned an incorrect number of entries",
-                        count, result.size());
+        org.junit.jupiter.api.Assertions
+                .assertTrue(count > 0, "Counter for 'RepositoryMapping' incorrectly reported there were no entries");
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(result, "Find entries method for 'RepositoryMapping' illegally returned null");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(count, result.size(), "Find entries method for 'RepositoryMapping' returned an incorrect number of entries");
     }
 
     @Test
     public void testCreate() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping randomObject = dod
                 .getRandomRepositoryMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                        randomObject);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(randomObject, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
         String linkIdPathSegment = "/linkid/"
                 + randomObject.getExternalApp().getLinkId()
                 + "/repositorymappings/";
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                 .getNewTransientRepositoryMapping(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to provide a new transient entity",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to provide a new transient entity");
         org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'RepositoryMapping' identifier to be null");
         obj.setExternalApp(randomObject.getExternalApp());
         obj = restTemplate.postForObject(ccfAPIUrl + linkIdPathSegment, obj,
@@ -77,15 +65,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
     public void testFind() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                 .getRandomRepositoryMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
         // figure out linkId path segment
         String linkIdPathSegment = "/linkid/"
                 + obj.getExternalApp().getLinkId() + "/repositorymappings/";
@@ -93,10 +77,8 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
                 RepositoryMapping.class);
         org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'RepositoryMapping' illegally returned null for id '"
                         + id + "'");
-        org.junit.Assert
-                .assertEquals(
-                        "Find method for 'RepositoryMapping' returned the incorrect identifier",
-                        id, obj.getId());
+        org.junit.jupiter.api.Assertions
+                .assertEquals(id, obj.getId(), "Find method for 'RepositoryMapping' returned the incorrect identifier");
     }
 
     @Test
@@ -104,15 +86,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                     .getRandomRepositoryMapping();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
             String linkIdPathSegment = "/linkid/"
                     + obj.getExternalApp().getLinkId() + "/repositorymappings/";
             restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
@@ -131,15 +109,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                     .getRandomRepositoryMapping();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
             obj = restTemplate.getForObject(
                     ccfAPIUrl + "/repositorymappings/" + id,
                     RepositoryMapping.class);
@@ -164,15 +138,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
     public void testUpdate() {
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                 .getRandomRepositoryMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(
                 ccfAPIUrl + "/repositorymappings/" + id,
@@ -185,11 +155,9 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 RepositoryMapping.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'RepositoryMapping' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions
+                .assertTrue((currentVersion != null && obj.getVersion() > currentVersion)
+                                || !modified, "Version for 'RepositoryMapping' failed to increment on flush directive");
     }
 
     @Test
@@ -197,15 +165,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                     .getRandomRepositoryMapping();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
             obj = restTemplate.getForObject(
                     ccfAPIUrl + "/repositorymappings/" + id,
                     RepositoryMapping.class);
@@ -230,15 +194,11 @@ public class RepositoryMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegr
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.RepositoryMapping obj = dod
                     .getRandomRepositoryMapping();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'RepositoryMapping' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'RepositoryMapping' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'RepositoryMapping' failed to provide an identifier");
             obj = restTemplate.getForObject(
                     ccfAPIUrl + "/repositorymappings/" + id,
                     RepositoryMapping.class);

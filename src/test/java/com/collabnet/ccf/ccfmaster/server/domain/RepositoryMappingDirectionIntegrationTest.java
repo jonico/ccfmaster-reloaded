@@ -52,16 +52,12 @@ public class RepositoryMappingDirectionIntegrationTest {
 
     @Test
     public void testPersist() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirection' failed to initialize correctly",
-                        dod.getRandomRepositoryMappingDirection());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(dod.getRandomRepositoryMappingDirection(), "Data on demand for 'RepositoryMappingDirection' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection obj = dod
                 .getNewTransientRepositoryMappingDirection(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirection' failed to provide a new transient entity",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'RepositoryMappingDirection' failed to provide a new transient entity");
         org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'RepositoryMappingDirection' identifier to be null");
 
         // we do not persist due to unique key constraints

@@ -24,10 +24,8 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
     @Test
     public void testCount() {
         FieldMapping obj = dod.getRandomFieldMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to initialize correctly");
         long count = FieldMapping.countFieldMappingsByExternalApp(obj
                 .getParent().getRepositoryMapping().getExternalApp());
         String linkIdPathSegment = "/linkid/"
@@ -35,27 +33,19 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
                         .getLinkId() + "/fieldmappings/";
         List<FieldMapping> result = restTemplate.getForObject(ccfAPIUrl
                 + linkIdPathSegment, FieldMappingList.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Counter for 'FieldMapping' incorrectly reported there were no entries",
-                        count > 0);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find entries method for 'FieldMapping' illegally returned null",
-                        result);
-        org.junit.Assert
-                .assertEquals(
-                        "Find entries method for 'FieldMapping' returned an incorrect number of entries",
-                        count, result.size());
+        org.junit.jupiter.api.Assertions
+                .assertTrue(count > 0, "Counter for 'FieldMapping' incorrectly reported there were no entries");
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(result, "Find entries method for 'FieldMapping' illegally returned null");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(count, result.size(), "Find entries method for 'FieldMapping' returned an incorrect number of entries");
     }
 
     @Test
     public void testCountRepositoryMappingDirectionScope() {
         FieldMapping obj = dod.getRandomFieldMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to initialize correctly");
         long count = FieldMapping.countFieldMappingsByParent(obj.getParent());
         String linkIdPathSegment = "/linkid/"
                 + obj.getParent().getRepositoryMapping().getExternalApp()
@@ -63,36 +53,26 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
                 + obj.getParent().getId() + "/fieldmappings/";
         List<FieldMapping> result = restTemplate.getForObject(ccfAPIUrl
                 + linkIdPathSegment, FieldMappingList.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Counter for 'FieldMapping' incorrectly reported there were no entries",
-                        count > 0);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find entries method for 'FieldMapping' illegally returned null",
-                        result);
-        org.junit.Assert
-                .assertEquals(
-                        "Find entries method for 'FieldMapping' returned an incorrect number of entries",
-                        count, result.size());
+        org.junit.jupiter.api.Assertions
+                .assertTrue(count > 0, "Counter for 'FieldMapping' incorrectly reported there were no entries");
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(result, "Find entries method for 'FieldMapping' illegally returned null");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(count, result.size(), "Find entries method for 'FieldMapping' returned an incorrect number of entries");
     }
 
     @Test
     public void testCreate() {
         RepositoryMappingDirection randomObject = dodRM
                 .getRandomRepositoryMappingDirection();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to initialize correctly",
-                        randomObject);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(randomObject, "Data on demand for 'FieldMapping' failed to initialize correctly");
         String linkIdPathSegment = "/linkid/"
                 + randomObject.getRepositoryMapping().getExternalApp()
                         .getLinkId() + "/fieldmappings/";
         FieldMapping obj = dod.getNewTransientFieldMapping(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to provide a new transient entity",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to provide a new transient entity");
         org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'FieldMapping' identifier to be null");
         obj.setParent(randomObject);
         obj = restTemplate.postForObject(ccfAPIUrl + linkIdPathSegment, obj,
@@ -103,15 +83,11 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
     @Test
     public void testFind() {
         FieldMapping obj = dod.getRandomFieldMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'FieldMapping' failed to provide an identifier");
         // figure out linkId path segment
         String linkIdPathSegment = "/linkid/"
                 + obj.getParent().getRepositoryMapping().getExternalApp()
@@ -120,25 +96,19 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
                 FieldMapping.class);
         org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMapping' illegally returned null for id '"
                         + id + "'");
-        org.junit.Assert
-                .assertEquals(
-                        "Find method for 'FieldMapping' returned the incorrect identifier",
-                        id, obj.getId());
+        org.junit.jupiter.api.Assertions
+                .assertEquals(id, obj.getId(), "Find method for 'FieldMapping' returned the incorrect identifier");
     }
 
     @Test
     public void testRemove() {
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             FieldMapping obj = dod.getRandomFieldMapping();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'FieldMapping' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'FieldMapping' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'FieldMapping' failed to provide an identifier");
             String linkIdPathSegment = "/linkid/"
                     + obj.getParent().getRepositoryMapping().getExternalApp()
                             .getLinkId() + "/fieldmappings/";
@@ -156,15 +126,11 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
     @Test
     public void testUpdate() {
         FieldMapping obj = dod.getRandomFieldMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'FieldMapping' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMapping' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'FieldMapping' failed to provide an identifier");
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/fieldmappings/" + id,
                 FieldMapping.class);
@@ -177,11 +143,9 @@ public class FieldMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegration
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 FieldMapping.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'FieldMapping' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions
+                .assertTrue((currentVersion != null && obj.getVersion() > currentVersion)
+                                || !modified, "Version for 'FieldMapping' failed to increment on flush directive");
     }
 
 }

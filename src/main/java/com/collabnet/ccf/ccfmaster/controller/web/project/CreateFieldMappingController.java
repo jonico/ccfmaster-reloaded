@@ -47,7 +47,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping(value = "/createfm", method = RequestMethod.POST)
     public String createFieldMapping(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             Model model, HttpServletRequest request) {
 
@@ -67,7 +67,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteFieldMapping(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(FIELD_MAPPING_ID) String[] items, Model model,
             HttpServletRequest request) {
@@ -119,7 +119,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
@@ -138,7 +138,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping(value = "/savefm", method = RequestMethod.POST)
     public String saveNewFieldMapping(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             FieldMappingTemplateModel fieldMappingTemplateModel, Model model,
             HttpServletRequest request) {
@@ -164,7 +164,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
      */
     @RequestMapping(value = "/setactivefm", method = RequestMethod.POST)
     public String setasActiveFieldMapping(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(FIELD_MAPPING_ID) FieldMapping fieldMapping,
             Model model, HttpServletRequest request) {

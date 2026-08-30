@@ -18,44 +18,30 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
 
     @Test
     public void testCount() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        dod.getRandomParticipant());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(dod.getRandomParticipant(), "Data on demand for 'Participant' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.Participant
                 .countParticipants();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        dod.getRandomParticipant());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(dod.getRandomParticipant(), "Data on demand for 'Participant' failed to initialize correctly");
         List<Participant> result = restTemplate.getForObject(ccfAPIUrl
                 + "/participants", ParticipantList.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Counter for 'Participant' incorrectly reported there were no entries",
-                        count > 0);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find entries method for 'Participant' illegally returned null",
-                        result);
-        org.junit.Assert
-                .assertEquals(
-                        "Find entries method for 'Participant' returned an incorrect number of entries",
-                        count, result.size());
+        org.junit.jupiter.api.Assertions
+                .assertTrue(count > 0, "Counter for 'Participant' incorrectly reported there were no entries");
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(result, "Find entries method for 'Participant' illegally returned null");
+        org.junit.jupiter.api.Assertions
+                .assertEquals(count, result.size(), "Find entries method for 'Participant' returned an incorrect number of entries");
     }
 
     @Test
     public void testCreate() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        dod.getRandomParticipant());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(dod.getRandomParticipant(), "Data on demand for 'Participant' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
                 .getNewTransientParticipant(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to provide a new transient entity",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'Participant' failed to provide a new transient entity");
         org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Participant' identifier to be null");
         obj = restTemplate.postForObject(ccfAPIUrl + "/participants/", obj,
                 Participant.class);
@@ -66,23 +52,17 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
     public void testFind() {
         com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
                 .getRandomParticipant();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'Participant' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'Participant' failed to provide an identifier");
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                 Participant.class);
         org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Participant' illegally returned null for id '"
                         + id + "'");
-        org.junit.Assert
-                .assertEquals(
-                        "Find method for 'Participant' returned the incorrect identifier",
-                        id, obj.getId());
+        org.junit.jupiter.api.Assertions
+                .assertEquals(id, obj.getId(), "Find method for 'Participant' returned the incorrect identifier");
     }
 
     @Test
@@ -90,15 +70,11 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
                     .getRandomParticipant();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'Participant' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'Participant' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'Participant' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'Participant' failed to provide an identifier");
             restTemplate.delete(ccfAPIUrl + "/participants/" + id);
             try {
                 obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
@@ -114,15 +90,11 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
     public void testUpdate() {
         com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
                 .getRandomParticipant();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'Participant' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to provide an identifier",
-                        id);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(id, "Data on demand for 'Participant' failed to provide an identifier");
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                 Participant.class);
@@ -132,11 +104,9 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
         restTemplate.put(ccfAPIUrl + "/participants/" + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                 Participant.class);
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'Participant' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions
+                .assertTrue((currentVersion != null && obj.getVersion() > currentVersion)
+                                || !modified, "Version for 'Participant' failed to increment on flush directive");
     }
 
     @Test
@@ -144,15 +114,11 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
         org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
             com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
                     .getRandomParticipant();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'Participant' failed to initialize correctly",
-                            obj);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(obj, "Data on demand for 'Participant' failed to initialize correctly");
             java.lang.Long id = obj.getId();
-            org.junit.Assert
-                    .assertNotNull(
-                            "Data on demand for 'Participant' failed to provide an identifier",
-                            id);
+            org.junit.jupiter.api.Assertions
+                    .assertNotNull(id, "Data on demand for 'Participant' failed to provide an identifier");
             obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                     Participant.class);
             org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Participant' illegally returned null for id '"

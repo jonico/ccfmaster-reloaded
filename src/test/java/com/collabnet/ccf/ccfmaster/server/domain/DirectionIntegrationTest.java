@@ -18,16 +18,12 @@ public class DirectionIntegrationTest {
 
     @Test
     public void testPersist() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to initialize correctly",
-                        dod.getRandomDirection());
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(dod.getRandomDirection(), "Data on demand for 'Direction' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.Direction obj = dod
                 .getNewTransientDirection(Integer.MAX_VALUE);
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to provide a new transient entity",
-                        obj);
+        org.junit.jupiter.api.Assertions
+                .assertNotNull(obj, "Data on demand for 'Direction' failed to provide a new transient entity");
         org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Direction' identifier to be null");
 
         // We do not persist due to unique key constraint

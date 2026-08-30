@@ -77,7 +77,7 @@ public class ProjectRMDController extends AbstractProjectController {
 
     @RequestMapping(value = "/" + UIPathConstants.PROJECT_RMD_SAVE, method = RequestMethod.POST)
     public String saveRMD(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @ModelAttribute(value = "rmdModel") RMDModel rmdmodel,
             BindingResult bindingResult, Model model, HttpServletRequest request) {
         createRMDHelper.populateConfigMaps(rmdmodel);

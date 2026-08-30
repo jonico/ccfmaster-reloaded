@@ -56,7 +56,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping(value = "/applyfilter")
     public String applyFilterForHospital(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
@@ -125,7 +125,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(HOSPITAL_ID_REQUEST_PARAM) HospitalEntry[] entries,
             @RequestParam(RM_ID_REQUEST_PARAM) String rmid,
             @RequestParam(SOURCE_FILTER_ARTIFACT_ID) String source_filter_artifact_id,
@@ -153,7 +153,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping("/payload")
     public String examinePayload(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(HOSPITAL_ID_REQUEST_PARAM) HospitalEntry entry,
             @RequestParam(RM_ID_REQUEST_PARAM) String rmid, Model model,
             HttpServletRequest request, HttpSession session) {
@@ -184,7 +184,7 @@ public class ProjectHospitalController extends AbstractProjectController {
     @ResponseBody
     @RequestMapping(value = "/export")
     public HospitalEntryList export(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(HOSPITAL_ID_REQUEST_PARAM) HospitalEntry[] entries,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             HttpServletResponse response) {
@@ -198,7 +198,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
@@ -216,7 +216,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping(method = RequestMethod.GET, params = RMD_ID_REQUEST_PARAM)
     public String listForRepositoryMappingDirection(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(value = PAGE_REQUEST_PARAM, required = false) Integer page,
             @RequestParam(value = PAGE_SIZE_REQUEST_PARAM, required = false) Integer size,
@@ -236,7 +236,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping(value = "/replay", method = RequestMethod.POST)
     public String replay(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(HOSPITAL_ID_REQUEST_PARAM) HospitalEntry[] entries,
             @RequestParam(RM_ID_REQUEST_PARAM) String rmid,
             @RequestParam(SOURCE_FILTER_ARTIFACT_ID) String source_filter_artifact_id,
@@ -265,7 +265,7 @@ public class ProjectHospitalController extends AbstractProjectController {
 
     @RequestMapping("/details")
     public String showDetails(
-            @ModelAttribute(EXTERNAL_APP_MODEL_ATTRIBUTE) ExternalApp ea,
+            @ModelAttribute(name = EXTERNAL_APP_MODEL_ATTRIBUTE, binding = false) ExternalApp ea,
             @RequestParam(HOSPITAL_ID_REQUEST_PARAM) HospitalEntry entry,
             @RequestParam(RMD_ID_REQUEST_PARAM) String rmdid, Model model,
             HttpSession session) {
