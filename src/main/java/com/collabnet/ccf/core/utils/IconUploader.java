@@ -37,7 +37,7 @@ public class IconUploader {
             PluggableComponentDO plugDO = integratedAppClient
                     .getIntegratedApplicationByName(landscape.getName());
             String iconKey = plugDO.getIconKey();
-            if (iconKey == null && tfConnection.supports65()) {
+            if (iconKey == null && com.collabnet.ccf.compat.TeamForgeCompat.supports65(tfConnection)) {
                 loadIcon(plugDO.getId(), tfConnection.getFileStorageClient(),
                         integratedAppClient);
             }
@@ -79,8 +79,9 @@ public class IconUploader {
                         tempIconFile);
                 String iconFileKey = fileStorage.uploadFile(new DataHandler(
                         tempIconFile.toURL()));
-                integratedAppClient.setIntegratedApplicationIcon(plugId,
-                        iconFileKey, "ccf.png", "image/png");
+                com.collabnet.ccf.compat.TeamForgeCompat
+                        .setIntegratedApplicationIcon(integratedAppClient, plugId,
+                                iconFileKey, "ccf.png", "image/png");
             }
         } catch (MalformedURLException e) {
             throw new CoreConfigurationException(e);

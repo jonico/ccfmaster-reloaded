@@ -31,7 +31,7 @@ public class TFLandscapeCreationListenerFactory implements LandscapeCreationList
             return new CreateIntegratedAppStrategy(baseUrl,
                     getIafServiceEndpoint(tfClient), integratedAppClient,
                     tfConnection.getFileStorageClient(),
-                    tfConnection.supports65());
+                    com.collabnet.ccf.compat.TeamForgeCompat.supports65(tfConnection));
         } catch (RemoteException e) {
             throw new CoreConfigurationException(e);
         }

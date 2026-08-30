@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.springframework.roo</groupId>
+  <artifactId>org.springframework.roo.annotations</artifactId>
+  <version>1.1.3.RELEASE</version>
+  <name>Spring Roo Annotations (reconstructed stub)</name>
+  <description>
+    Compile-time-only stub reconstructed from the annotation usages found in the CCFMaster
+    sources. The genuine artifact is unobtainable in 2026. Roo's annotations are
+    SOURCE-retention and are read only by the Roo tooling that generated the .aj ITDs, all
+    of which are checked in, so this stub is sufficient to compile the original unchanged.
+  </description>
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+</project>
