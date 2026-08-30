@@ -132,7 +132,7 @@ public class CreateIntegratedAppStrategy extends AbstractLandscapeCreationListen
     }
 
     static String prefixFor(int num) {
-        Assert.isTrue(num >= 0 && num < 0x1000000);
+        Assert.isTrue(num >= 0 && num < 0x1000000, "must be true");
         // ensure the first digit in the hex representation is a letter (a,b,e or f)
         num |= 0xa00000;
         String pfx = String.format("%06x", num);

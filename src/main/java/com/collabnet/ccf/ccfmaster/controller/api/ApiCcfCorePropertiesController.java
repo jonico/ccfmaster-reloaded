@@ -10,8 +10,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBException;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

@@ -115,12 +115,12 @@ public class StartCoresOnBootBean {
     }
 
     public void setDelayBetweenPollMillis(int delayBetweenPollMillis) {
-        Assert.isTrue(delayBetweenPollMillis >= 0);
+        Assert.isTrue(delayBetweenPollMillis >= 0, "must be true");
         this.delayBetweenPollMillis = delayBetweenPollMillis;
     }
 
     public void setPollCount(int pollCount) {
-        Assert.isTrue(pollCount >= 0);
+        Assert.isTrue(pollCount >= 0, "must be true");
         this.pollCount = pollCount;
     }
 

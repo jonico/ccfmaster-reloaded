@@ -39,7 +39,7 @@ public class CreatingFieldMappingRulesShouldNotDisableCascadingDeletes extends A
 
     @Test(expected = ObjectRetrievalFailureException.class)
     public void deleteFieldMappingRuleShouldFail() {
-        FieldMappingRule fmr = fm.getRules().get(0);
+        FieldMappingRule fmr = fm.getRules().getFirst();
         long id = fmr.getId();
         fmr.remove();
         fmr.flush();
@@ -80,9 +80,9 @@ public class CreatingFieldMappingRulesShouldNotDisableCascadingDeletes extends A
 
     @Test(expected = CoreConfigurationException.class)
     public void removeFieldMappingRuleFromList() {
-        FieldMappingRule fmr = fm.getRules().get(0);
+        FieldMappingRule fmr = fm.getRules().getFirst();
         long id = fmr.getId();
-        fm.getRules().remove(0);
+        fm.getRules().removeFirst();
         fm.merge();
         assertNull(FieldMappingRule.findFieldMappingRule(id));
     }

@@ -27,7 +27,7 @@ public class UpdateCoreController {
     public Landscape populateLandscape() {
         List<Landscape> landscapes = Landscape.findAllLandscapes();
         Preconditions.checkState(!landscapes.isEmpty(), "no landscape exists");
-        return landscapes.get(0);
+        return landscapes.getFirst();
     }
 
     @ModelAttribute("participant")

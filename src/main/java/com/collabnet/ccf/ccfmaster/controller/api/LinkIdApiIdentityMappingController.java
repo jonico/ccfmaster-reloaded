@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -24,7 +24,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
     @Override
     public @ResponseBody
     IdentityMapping create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody IdentityMapping requestBody,
             HttpServletResponse response) {
         validateIdentityMapping(requestBody);
@@ -39,7 +39,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         IdentityMapping rm = IdentityMapping.findIdentityMapping(id);
         validateIdentityMapping(rm);
@@ -49,7 +49,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
     @Override
     public @ResponseBody
     IdentityMappingList list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new IdentityMappingList(IdentityMapping
                 .findIdentityMappingsByExternalApp(ea).getResultList());
     }
@@ -57,7 +57,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
     @Override
     public @ResponseBody
     IdentityMapping show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         IdentityMapping rm = IdentityMapping.findIdentityMapping(id);
         validateIdentityMapping(rm);
@@ -66,7 +66,7 @@ public class LinkIdApiIdentityMappingController extends AbstractApiLinkIdControl
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @RequestBody IdentityMapping requestBody,
             HttpServletResponse response) {

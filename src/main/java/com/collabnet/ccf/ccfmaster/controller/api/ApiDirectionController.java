@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class ApiDirectionController extends AbstractApiController<Direction> {
 
     @Override
     public @ResponseBody
-    Direction show(@PathVariable("id") Direction id) {
+    Direction show(@PathVariable(value = "id", required = false) Direction id) {
         return super.show(id);
     }
 

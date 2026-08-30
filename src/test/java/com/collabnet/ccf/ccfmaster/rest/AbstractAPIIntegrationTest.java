@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.rest;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import org.junit.BeforeClass;
 import org.springframework.mock.web.MockServletConfig;

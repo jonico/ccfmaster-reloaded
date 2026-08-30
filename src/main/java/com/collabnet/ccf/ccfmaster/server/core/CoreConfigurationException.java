@@ -1,5 +1,7 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
+import java.io.Serial;
+
 /**
  * Root exception to be thrown by strategies in this package when problems occur
  * when managing a CCF core.
@@ -9,6 +11,7 @@ package com.collabnet.ccf.ccfmaster.server.core;
  */
 public class CoreConfigurationException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public CoreConfigurationException() {

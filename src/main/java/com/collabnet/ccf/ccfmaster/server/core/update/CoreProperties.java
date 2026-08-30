@@ -3,6 +3,7 @@ package com.collabnet.ccf.ccfmaster.server.core.update;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -16,6 +17,7 @@ import com.google.common.base.Supplier;
 
 public final class CoreProperties implements Supplier<Properties>, Serializable {
 
+    @Serial
     private static final long serialVersionUID          = 1L;
     static final String       META_INFORMATION_FILENAME = "ccfcoreversion.properties";
     static final String       CCFCORE_DESCRIPTION       = "ccfcore.description";

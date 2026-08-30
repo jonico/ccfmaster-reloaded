@@ -30,7 +30,7 @@ public class PropertiesConfigItemPersister<T extends ConfigItem> implements Pers
      *             if rootPath is null, doesn't exist or isn't a directory.
      */
     public PropertiesConfigItemPersister(final File propFile) {
-        Assert.notNull(propFile);
+        Assert.notNull(propFile, "must not be null");
         this.propFile = propFile;
     }
 

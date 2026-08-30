@@ -34,6 +34,7 @@ public class MaybeTest {
 
     @Test
     public void increaseCoreCoverageEquals() {
+        // NOT Integer.valueOf(1): assertNotSame below requires two distinct instances.
         Integer i1 = new Integer(1);
         Integer i2 = new Integer(1);
         assertNotSame(i1, i2);
@@ -121,6 +122,7 @@ public class MaybeTest {
 
     @Test
     public void testEquals() {
+        // NOT Integer.valueOf(1): assertNotSame below requires two distinct instances.
         final Integer i = new Integer(1);
         final Integer j = new Integer(1);
         Maybe<Integer> s1 = some(i);

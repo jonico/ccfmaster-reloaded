@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,7 +41,7 @@ public class ApiLandscapeConfigController extends AbstractApiController<Landscap
 
     @Override
     public @ResponseBody
-    LandscapeConfig show(@PathVariable("id") LandscapeConfig id) {
+    LandscapeConfig show(@PathVariable(value = "id", required = false) LandscapeConfig id) {
         return super.show(id);
     }
 

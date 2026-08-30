@@ -8,7 +8,7 @@ public class ControllerHelper {
 
     public static Landscape findLandscape() {
         List<Landscape> landscapeList = Landscape.findAllLandscapes();
-        return landscapeList.isEmpty() ? null : landscapeList.get(0);
+        return landscapeList.isEmpty() ? null : landscapeList.getFirst();
     }
 
     public static String landscapeDirName(String ccfHome) {

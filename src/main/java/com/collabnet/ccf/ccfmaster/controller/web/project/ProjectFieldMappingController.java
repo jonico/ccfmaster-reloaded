@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.collabnet.ccf.ccfmaster.controller.web.ControllerConstants;
 import com.collabnet.ccf.ccfmaster.controller.web.LandscapeFieldMappingTemplatesController;
@@ -194,18 +194,19 @@ public class ProjectFieldMappingController extends AbstractProjectController {
             @ModelAttribute("fileUpload") FileUpload fileUpload,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             Model model, HttpServletRequest request, HttpSession session) {
-        CommonsMultipartFile commonsmultipartFile = fileUpload.getFile();
-        byte[] xmlContent = commonsmultipartFile.getFileItem().get();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlContent);
+        MultipartFile commonsmultipartFile = fileUpload.getFile();
         FieldMappingExternalAppTemplateList fieldMappingExternalAppTemplateList = null;
         //un-marshal JAXB object
         try {
+            byte[] xmlContent = commonsmultipartFile.getBytes();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(
+                    xmlContent);
             JAXBContext xmlContext = JAXBContext
                     .newInstance(FieldMappingExternalAppTemplateList.class);
             Unmarshaller unmarshaller = xmlContext.createUnmarshaller();
             fieldMappingExternalAppTemplateList = (FieldMappingExternalAppTemplateList) unmarshaller
                     .unmarshal(inputStream);
-        } catch (JAXBException exception) {
+        } catch (JAXBException | java.io.IOException exception) {
             log.debug("Error unmarshalling field mapping template: "
                     + exception.getMessage(), exception);
             FlashMap.setErrorMessage(

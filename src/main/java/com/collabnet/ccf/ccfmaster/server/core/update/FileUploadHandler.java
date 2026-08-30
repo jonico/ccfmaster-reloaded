@@ -2,13 +2,14 @@ package com.collabnet.ccf.ccfmaster.server.core.update;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public class FileUploadHandler extends MultiAction implements Serializable {
     private CoreProperties             coreProperties;
     private File                       landscapeDirectory;
 
+    @Serial
     private static final long          serialVersionUID           = 1L;
     /*
      * transient because of https://jira.springsource.org/browse/SWF-1083 and
@@ -72,7 +74,7 @@ public class FileUploadHandler extends MultiAction implements Serializable {
         if (landscapes.isEmpty()) {
             throw new IllegalStateException("no landscape created");
         }
-        Landscape landscape = landscapes.get(0);
+        Landscape landscape = landscapes.getFirst();
         landscapeDirectory = new File(ccfHome(), "landscape"
                 + landscape.getId());
         coreProperties = CoreProperties.ofDirectory(landscapeDirectory);

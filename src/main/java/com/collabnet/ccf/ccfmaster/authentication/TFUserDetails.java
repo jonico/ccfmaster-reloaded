@@ -8,6 +8,7 @@ package com.collabnet.ccf.ccfmaster.authentication;
 // com.collabnet.ce.soap50.webservices.cemain.UserSoapDO.STATUS_REMOVED;
 import static com.collabnet.ce.soap50.webservices.cemain.UserSoapDO.STATUS_ACTIVE;
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,19 +16,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import com.collabnet.teamforge.api.Connection;
 import com.collabnet.teamforge.api.main.UserDO;
 
 public class TFUserDetails extends User {
+    @Serial
     private static final long            serialVersionUID = 1L;
-    public static final GrantedAuthority USER             = new GrantedAuthorityImpl(
+    public static final GrantedAuthority USER             = new SimpleGrantedAuthority(
                                                                   "ROLE_TF_USER");
-    public static final GrantedAuthority SUPER_USER       = new GrantedAuthorityImpl(
+    public static final GrantedAuthority SUPER_USER       = new SimpleGrantedAuthority(
                                                                   "ROLE_TF_SUPER_USER");
-    public static final GrantedAuthority RESTRICTED_USER  = new GrantedAuthorityImpl(
+    public static final GrantedAuthority RESTRICTED_USER  = new SimpleGrantedAuthority(
                                                                   "ROLE_TF_RESTRICTED_USER");
     private final String                 sessionId;
     private final String                 serverUrl;
@@ -107,7 +109,7 @@ public class TFUserDetails extends User {
     }
 
     public static TFUserDetails fromConnection(Connection connection,
-            String password, Collection<GrantedAuthority> authorities)
+            String password, Collection<? extends GrantedAuthority> authorities)
             throws RemoteException {
         return fromConnection(connection, "UNUSED", password, authorities);
     }
@@ -122,7 +124,7 @@ public class TFUserDetails extends User {
      */
     public static TFUserDetails fromConnection(Connection connection,
             String username, String password,
-            Collection<GrantedAuthority> authorities) throws RemoteException {
+            Collection<? extends GrantedAuthority> authorities) throws RemoteException {
         UserDO userDO = connection.getTeamForgeClient().getCurrentUserData();
         String tfURL = connection.getServerUrl();
         String sessionId = connection.getSessionId();

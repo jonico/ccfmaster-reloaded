@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -291,7 +291,7 @@ public class ProjectIdentityMappingsController extends AbstractProjectController
         IdentityMapping identityMappingEntry = identityMappingsModel
                 .getIdentityMappingEntry();
         IdentityMapping identityMappingEntryForMerge = IdentityMapping
-                .findIdentityMapping(new Long(identityMappingId));
+                .findIdentityMapping(Long.valueOf(identityMappingId));
         identityMappingEntryForMerge
                 .setSourceArtifactVersion(identityMappingEntry
                         .getSourceArtifactVersion());

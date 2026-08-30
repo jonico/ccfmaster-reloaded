@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -24,7 +24,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
     @Override
     public @ResponseBody
     FieldMapping create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody FieldMapping requestBody, HttpServletResponse response) {
         validateFieldMapping(requestBody);
         requestBody.persist();
@@ -36,7 +36,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         FieldMapping rm = FieldMapping.findFieldMapping(id);
         validateFieldMapping(rm);
@@ -46,7 +46,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
     @Override
     public @ResponseBody
     FieldMappingList list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new FieldMappingList(FieldMapping
                 .findFieldMappingsByExternalApp(ea).getResultList());
     }
@@ -54,7 +54,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
     @Override
     public @ResponseBody
     FieldMapping show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         FieldMapping rm = FieldMapping.findFieldMapping(id);
         validateFieldMapping(rm);
@@ -63,7 +63,7 @@ public class LinkIdApiFieldMappingController extends AbstractApiLinkIdController
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, @RequestBody FieldMapping requestBody,
             HttpServletResponse response) {
         validateRequestBody(id, requestBody);

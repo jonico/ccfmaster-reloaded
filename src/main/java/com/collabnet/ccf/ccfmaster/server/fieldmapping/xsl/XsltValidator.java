@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl;
 import java.util.Collection;
 import java.util.List;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import javax.xml.XMLConstants;
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.Source;

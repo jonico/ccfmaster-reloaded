@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.Service;
+import jakarta.xml.ws.BindingProvider;
+import jakarta.xml.ws.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

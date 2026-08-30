@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.controller.web.project;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +81,7 @@ public class CreateFieldMappingController extends AbstractProjectController {
                     FlashMap.setErrorMessage(ControllerConstants.FIELD_MAPPING_NODELETE_ACTIVE_FAILURE_MESSAGE);
                 } else {
                     FieldMapping fieldMappingEntry = FieldMapping
-                            .findFieldMapping(new Long(fieldMappingId));
+                            .findFieldMapping(Long.valueOf(fieldMappingId));
                     validateRepositoryMappingDirection(ea,
                             fieldMappingEntry.getParent());
                     fieldMappingEntry.remove();

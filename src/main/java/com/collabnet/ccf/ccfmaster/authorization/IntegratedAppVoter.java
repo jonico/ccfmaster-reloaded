@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 import com.collabnet.ccf.ccfmaster.authentication.IafUserDetails;
 import com.collabnet.ccf.ccfmaster.authentication.TFUserDetails;
 
-public class IntegratedAppVoter implements AccessDecisionVoter {
+public class IntegratedAppVoter implements AccessDecisionVoter<FilterInvocation> {
 
     public static final String   INTEGRATED_APPLICATION_CHECK = "INTEGRATED_APPLICATION_CHECK";
     private static final Logger  log                          = LoggerFactory
@@ -61,11 +61,11 @@ public class IntegratedAppVoter implements AccessDecisionVoter {
      *         with INTEGRATED_APPLICATION_CHECK, returns ACCESS_ABSTAIN.
      */
     @Override
-    public int vote(Authentication authentication, Object object,
+    public int vote(Authentication authentication, FilterInvocation object,
             Collection<ConfigAttribute> attributes) {
-        Assert.notNull(authentication);
-        Assert.notNull(object);
-        Assert.notNull(attributes);
+        Assert.notNull(authentication, "must not be null");
+        Assert.notNull(object, "must not be null");
+        Assert.notNull(attributes, "must not be null");
         log.debug("checking if linkId is correct");
         // logic inspired by RoleVoter
         int result = ACCESS_ABSTAIN;
@@ -75,7 +75,7 @@ public class IntegratedAppVoter implements AccessDecisionVoter {
                 if (authentication.getPrincipal() instanceof IafUserDetails) {
                     IafUserDetails user = (IafUserDetails) authentication
                             .getPrincipal();
-                    FilterInvocation fi = (FilterInvocation) object;
+                    FilterInvocation fi = object;
                     if (checkAccess(user, fi.getRequestUrl())) {
                         log.debug("granting access");
                         return ACCESS_GRANTED;

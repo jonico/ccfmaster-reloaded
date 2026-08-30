@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class HttpUtils {
     private HttpUtils() {

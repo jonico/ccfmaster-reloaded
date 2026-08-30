@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.collabnet.ccf.ccfmaster.server.domain.Directions;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
@@ -136,7 +136,7 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
             for (String fmtId : items) {
                 newfmtId = Pattern.compile("-").split(fmtId);
                 fieldMappingLandscapeTemplateModel = FieldMappingLandscapeTemplate
-                        .findFieldMappingLandscapeTemplate(new Long(newfmtId[1]));
+                        .findFieldMappingLandscapeTemplate(Long.valueOf(newfmtId[1]));
                 fieldMappingLandscapeTemplateModel.remove();
             }
             FlashMap.setSuccessMessage(ControllerConstants.FMTDELETESUCCESSMESSAGE);
@@ -206,7 +206,7 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
             for (String fmtId : items) {
                 newfmtId = Pattern.compile("-").split(fmtId);
                 fieldMappingLandscapeTemplateModel = FieldMappingLandscapeTemplate
-                        .findFieldMappingLandscapeTemplate(new Long(newfmtId[1]));
+                        .findFieldMappingLandscapeTemplate(Long.valueOf(newfmtId[1]));
                 fieldMappingLandscapeTemplateList
                         .add(fieldMappingLandscapeTemplateModel);
             }
@@ -243,15 +243,16 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
         Directions directions = ControllerConstants.FORWARD
                 .equals(paramdirection) ? Directions.FORWARD
                 : Directions.REVERSE;
-        CommonsMultipartFile commonsmultipartFile = fileUpload.getFile();
-        byte[] xmlContent = commonsmultipartFile.getFileItem().get();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlContent);
+        MultipartFile commonsmultipartFile = fileUpload.getFile();
         FieldMappingLandscapeTemplateList fieldMappingLandscapeTemplateList = null;
         try {
+            byte[] xmlContent = commonsmultipartFile.getBytes();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(
+                    xmlContent);
             //un-marshal JAXB object
             fieldMappingLandscapeTemplateList = SerializationUtil.deSerialize(
                     inputStream, FieldMappingLandscapeTemplateList.class);
-        } catch (JAXBException exception) {
+        } catch (JAXBException | java.io.IOException exception) {
             log.debug(
                     "Error importing field mapping template: "
                             + exception.getMessage(), exception);

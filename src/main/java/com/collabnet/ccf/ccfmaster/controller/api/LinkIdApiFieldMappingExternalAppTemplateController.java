@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.controller.api;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -27,7 +27,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
     @Override
     public @ResponseBody
     FieldMappingExternalAppTemplate create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody FieldMappingExternalAppTemplate requestBody,
             HttpServletResponse response) {
         validateFieldMappingExternalAppTemplate(requestBody);
@@ -41,7 +41,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         FieldMappingExternalAppTemplate rm = FieldMappingExternalAppTemplate
                 .findFieldMappingExternalAppTemplate(id);
@@ -53,7 +53,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
     public @ResponseBody
     FieldMappingExternalAppTemplateList fieldMappingExternalAppTemplateDirectionScope(
             @PathVariable("direction") Directions direction,
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new FieldMappingExternalAppTemplateList(
                 FieldMappingExternalAppTemplate
                         .findFieldMappingExternalAppTemplatesByParentAndDirection(
@@ -63,7 +63,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
     @Override
     public @ResponseBody
     FieldMappingExternalAppTemplateList list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new FieldMappingExternalAppTemplateList(
                 FieldMappingExternalAppTemplate
                         .findFieldMappingExternalAppTemplatesByParent(ea)
@@ -73,7 +73,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
     @Override
     public @ResponseBody
     FieldMappingExternalAppTemplate show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         FieldMappingExternalAppTemplate rm = FieldMappingExternalAppTemplate
                 .findFieldMappingExternalAppTemplate(id);
@@ -83,7 +83,7 @@ public class LinkIdApiFieldMappingExternalAppTemplateController extends Abstract
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @RequestBody FieldMappingExternalAppTemplate requestBody,
             HttpServletResponse response) {

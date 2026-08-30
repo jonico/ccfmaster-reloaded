@@ -1,9 +1,12 @@
 package com.collabnet.ccf.ccfmaster.server.core.update;
 
+import java.io.Serial;
+
 import com.collabnet.ccf.ccfmaster.server.core.CoreConfigurationException;
 
 public class CoreUpdateException extends CoreConfigurationException {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public CoreUpdateException() {

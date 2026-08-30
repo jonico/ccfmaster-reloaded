@@ -25,10 +25,10 @@ public class LoginInfo {
     public static final String LINKID_SYSTEM_PROPERTY                = "ccf.selenium.linkId";
 
     public LoginInfo(String userName, String password, String linkId) {
-        Assert.hasText(userName);
+        Assert.hasText(userName, "must have text; it must not be null, empty, or blank");
         Assert.isTrue(userName.indexOf('/') == -1,
                 "username must not contain slashes, was: " + userName);
-        Assert.hasText(password);
+        Assert.hasText(password, "must have text; it must not be null, empty, or blank");
         this.userName = userName;
         this.password = password;
         this.linkId = linkId;
@@ -71,7 +71,7 @@ public class LoginInfo {
         String pass = System.getProperty(HOSPITAL_PASSWORD_SYSTEM_PROPERTY,
                 "seleniumhospital");
         String linkId = System.getProperty(LINKID_SYSTEM_PROPERTY, null);
-        Assert.notNull(linkId);
+        Assert.notNull(linkId, "must not be null");
         return new LoginInfo(user, pass, linkId);
     }
 
@@ -81,7 +81,7 @@ public class LoginInfo {
         String pass = System.getProperty(IDMAPPING_PASSWORD_SYSTEM_PROPERTY,
                 "seleniumidmapping");
         String linkId = System.getProperty(LINKID_SYSTEM_PROPERTY, null);
-        Assert.notNull(linkId);
+        Assert.notNull(linkId, "must not be null");
         return new LoginInfo(user, pass, linkId);
     }
 
@@ -91,7 +91,7 @@ public class LoginInfo {
         String pass = System.getProperty(REPO_MAPPING_PASSWORD_SYSTEM_PROPERTY,
                 "seleniumrepomapping");
         String linkId = System.getProperty(LINKID_SYSTEM_PROPERTY, null);
-        Assert.notNull(linkId);
+        Assert.notNull(linkId, "must not be null");
         return new LoginInfo(user, pass, linkId);
     }
 
@@ -99,7 +99,7 @@ public class LoginInfo {
         String user = System.getProperty(USERNAME_SYSTEM_PROPERTY, "admin");
         String pass = System.getProperty(PASSWORD_SYSTEM_PROPERTY, "admin");
         String linkId = System.getProperty(LINKID_SYSTEM_PROPERTY, null);
-        Assert.notNull(linkId);
+        Assert.notNull(linkId, "must not be null");
         return new LoginInfo(user, pass, linkId);
     }
 

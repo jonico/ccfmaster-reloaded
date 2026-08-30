@@ -13,8 +13,8 @@ public class PropertiesParticipantConfigPersisterFactory implements PersisterFac
     public static final String PREFIX = "ccf.participant.";
 
     public PropertiesParticipantConfigPersisterFactory(File basePath) {
-        Assert.notNull(basePath);
-        Assert.isTrue(basePath.exists() && basePath.isDirectory());
+        Assert.notNull(basePath, "must not be null");
+        Assert.isTrue(basePath.exists() && basePath.isDirectory(), "must be true");
         this.basePath = basePath;
     }
 

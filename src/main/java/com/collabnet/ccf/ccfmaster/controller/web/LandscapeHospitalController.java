@@ -3,9 +3,9 @@ package com.collabnet.ccf.ccfmaster.controller.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mvc.extensions.flash.FlashMap;
@@ -140,7 +140,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         try {
             for (String hospitalId : items) {
                 HospitalEntry hospitalEntry = HospitalEntry
-                        .findHospitalEntry(new Long(hospitalId));
+                        .findHospitalEntry(Long.valueOf(hospitalId));
                 hospitalEntry.remove();
             }
             FlashMap.setSuccessMessage(ControllerConstants.HOSPITALDELETESUCCESSMESSAGE);
@@ -209,7 +209,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         Landscape landscape = ControllerHelper.findLandscape();
         String hospitalId = request.getParameter(HOSPITALID);
         HospitalEntry hospitalEntryWithId = HospitalEntry
-                .findHospitalEntry(new Long(hospitalId));
+                .findHospitalEntry(Long.valueOf(hospitalId));
         String genericArtifact = hospitalEntryWithId.getGenericArtifact();
         String result = null;
         try {
@@ -248,7 +248,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         try {
             for (String hospitalId : items) {
                 HospitalEntry hospitalEntry = HospitalEntry
-                        .findHospitalEntry(new Long(hospitalId));
+                        .findHospitalEntry(Long.valueOf(hospitalId));
                 hospitalList.add(hospitalEntry);
             }
             hospitalEntryList.setHospitalEntry(hospitalList);
@@ -295,7 +295,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
                     directions).getResultList();
         } else {
             HospitalEntry hospitalEntryWithId = HospitalEntry
-                    .findHospitalEntry(new Long(hospitalId));
+                    .findHospitalEntry(Long.valueOf(hospitalId));
             hospitalEntry.add(hospitalEntryWithId);
         }
         List<HospitalModel> hospitalModel = makeHospitalModel(hospitalEntry,
@@ -323,7 +323,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
                     session);
         } else {
             HospitalEntry hospitalEntryWithId = HospitalEntry
-                    .findHospitalEntry(new Long(hospitalId));
+                    .findHospitalEntry(Long.valueOf(hospitalId));
             hospitalEntry.add(hospitalEntryWithId);
         }
         List<HospitalModel> hospitalModel = makeHospitalModel(hospitalEntry,
@@ -352,7 +352,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         try {
             for (String hospitalId : items) {
                 HospitalEntry hospitalEntry = HospitalEntry
-                        .findHospitalEntry(new Long(hospitalId));
+                        .findHospitalEntry(Long.valueOf(hospitalId));
                 hospitalEntry.setErrorCode(REPLAY);
                 hospitalEntry.merge();
             }

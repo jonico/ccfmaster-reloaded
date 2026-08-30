@@ -5,9 +5,9 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +57,10 @@ public class AbstractBaseApiController {
     public void badRequest(Exception ex, HttpServletResponse response)
             throws IOException {
         log.debug("handling bad request.", ex);
+        // Set the status before writing: Spring 6 applies @ResponseStatus only after this
+        // method returns, and writing to the response commits it, so the status would be
+        // lost. Spring 3 set it before invoking the handler.
+        response.setStatus(BAD_REQUEST.value());
         ex.printStackTrace(response.getWriter());
     }
 
@@ -65,13 +69,15 @@ public class AbstractBaseApiController {
     public void permissionDenied(Exception ex, HttpServletResponse response)
             throws IOException {
         log.debug("handling permission denied.", ex);
+        // see the comment in badRequest above
+        response.setStatus(FORBIDDEN.value());
         ex.printStackTrace(response.getWriter());
     }
 
     @PostConstruct
     public void setupContextUrl() {
         log.debug("setupContextUrl called.");
-        Assert.notNull(request);
+        Assert.notNull(request, "must not be null");
         this.contextPath = request.getContextPath();
         this.contextUrl = HttpUtils.buildContextUrl(request);
     }

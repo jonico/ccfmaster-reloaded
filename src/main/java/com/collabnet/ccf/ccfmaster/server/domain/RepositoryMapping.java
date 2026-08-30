@@ -1,17 +1,17 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.TypedQuery;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -30,7 +30,7 @@ import org.springframework.roo.addon.tostring.RooToString;
         "findRepositoryMappingsByExternalAppAndParticipantRepositoryIdAndTeamForgeRepositoryId" })
 public class RepositoryMapping {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, RepositoryMapping> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, RepositoryMapping> {
 
         @Override
         public Long marshal(RepositoryMapping v) throws Exception {

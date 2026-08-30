@@ -35,7 +35,7 @@ public class LogFileFactory {
                                                                        .compareTo(
                                                                                o2.getName());
                                                            }
-                                                       }; ;
+                                                       };
 
     public LogFile findLogFile(Direction direction, String fileName)
             throws IOException {

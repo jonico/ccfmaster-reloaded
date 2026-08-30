@@ -1,7 +1,10 @@
 package com.collabnet.ccf.ccfmaster.authentication;
 
+import java.io.Serial;
+
 public class TFSessionExpiredException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = -8573854072367732269L;
 
     public TFSessionExpiredException() {

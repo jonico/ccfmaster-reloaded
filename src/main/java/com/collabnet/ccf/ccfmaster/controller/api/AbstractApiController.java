@@ -9,7 +9,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +38,14 @@ public abstract class AbstractApiController<T> extends AbstractBaseApiController
     public abstract @ResponseBody
     List<T> list();
 
+    /*
+     * required = false: Spring 6.1 started throwing MissingPathVariableException when a
+     * required @PathVariable converts to null ("present but converted to null"), which
+     * turns a deleted id into 400 before this method is ever entered. Up to Spring 6.0 the
+     * null was passed through, which is what the body below is written for.
+     */
     @RequestMapping(value = "/{id}", method = GET, headers = "Accept=application/xml")
-    public T show(@PathVariable("id") T id) {
+    public T show(@PathVariable(value = "id", required = false) T id) {
         if (id == null) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");

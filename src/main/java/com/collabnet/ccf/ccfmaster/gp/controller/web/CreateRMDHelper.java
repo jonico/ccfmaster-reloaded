@@ -162,7 +162,7 @@ public class CreateRMDHelper {
             if (externalApps.isEmpty()) {
                 return ExternalApp.createNewExternalApp(linkId, connection);
             }
-            return externalApps.get(0);
+            return externalApps.getFirst();
         } else {
             ProjectDO project = TeamForgeMetadataHelper.getTFProjectDetails(
                     connection, projectId);
@@ -252,7 +252,7 @@ public class CreateRMDHelper {
             fieldMapping.persist();
             return fieldMapping;
         }
-        return fieldMappingList.get(0);
+        return fieldMappingList.getFirst();
     }
 
     private String getParticipantRepoId(RMDModel rmdmodel) {
@@ -289,7 +289,7 @@ public class CreateRMDHelper {
             repositoryMappingDirection.persist();
             return repositoryMappingDirection;
         }
-        return repositoryMappingDirectionList.get(0);
+        return repositoryMappingDirectionList.getFirst();
 
     }
 
@@ -308,7 +308,7 @@ public class CreateRMDHelper {
             repositoryMapping.persist();
             return repositoryMapping;
         }
-        return repositoryMappingList.get(0);
+        return repositoryMappingList.getFirst();
     }
 
     private String getTeamForgeRepoId(RMDModel rmdmodel) {

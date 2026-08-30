@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.mvc.extensions.flash.FlashMap;
 import org.springframework.stereotype.Controller;
@@ -76,7 +76,7 @@ public class LandscapeFieldMappingController extends AbstractLandscapeController
                     FlashMap.setErrorMessage(ControllerConstants.FIELD_MAPPING_NODELETE_ACTIVE_FAILURE_MESSAGE);
                 } else {
                     FieldMapping fieldMappingEntry = FieldMapping
-                            .findFieldMapping(new Long(fieldMappingId));
+                            .findFieldMapping(Long.valueOf(fieldMappingId));
                     fieldMappingEntry.remove();
                     FlashMap.setSuccessMessage(ControllerConstants.FIELD_MAPPING_DELETE_SUCCESS_MESSAGE);
                 }

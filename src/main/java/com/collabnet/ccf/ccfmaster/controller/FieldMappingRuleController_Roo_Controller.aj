@@ -5,14 +5,13 @@ package com.collabnet.ccf.ccfmaster.controller;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRuleType;
-import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -103,10 +102,7 @@ privileged aspect FieldMappingRuleController_Roo_Controller {
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
-        try {
-            pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-        }
-        catch (UnsupportedEncodingException uee) {}
+        pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
         return pathSegment;
     }
     

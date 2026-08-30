@@ -32,7 +32,7 @@ public class FieldMappingIntegrationTest {
         assertFalse("save was called on merge().", mockFmpf.calledSave);
     }
 
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test(expected = jakarta.validation.ConstraintViolationException.class)
     public void paramMustBeAlphaNumerical() {
         FieldMapping fm = fmdod.getNewTransientFieldMapping(23);
         fm.setName("illegalParam.xsl");

@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.xml.bind.JAXBException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.xml.bind.JAXBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -385,7 +385,7 @@ public class LandscapeCCFPropertiesController extends AbstractLandscapeControlle
                     .findDirectionConfigsByDirectionAndName(direction,
                             config.getName()).getResultList();
             if (!configList.isEmpty()) {
-                DirectionConfig currentConfig = configList.get(0);
+                DirectionConfig currentConfig = configList.getFirst();
                 if (!config.getValue().equals(currentConfig.getVal())) {
                     config.setValue(currentConfig.getVal());
                 }
@@ -432,7 +432,7 @@ public class LandscapeCCFPropertiesController extends AbstractLandscapeControlle
                     .findDirectionConfigsByDirectionAndName(direction,
                             dc.getName()).getResultList();
             if (!resultList.isEmpty()) { // if the directionconfig property is found,update the value of the property
-                DirectionConfig result = resultList.get(0);
+                DirectionConfig result = resultList.getFirst();
                 if (!dc.getVal().equals(result.getVal())) {
                     result.setVal(dc.getVal());
                     result.merge();

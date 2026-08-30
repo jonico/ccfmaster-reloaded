@@ -12,12 +12,49 @@ import com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.FieldMappingPersister
 public aspect FieldMappingPersistingAspect {
 
 	private interface CanPersistToXsl {}
+
+	/*
+	 * conversionResultFactory used to be a single inter-type field declared on
+	 * CanPersistToXsl:
+	 *
+	 *     @Autowired
+	 *     private transient ConversionResultFactory CanPersistToXsl.conversionResultFactory;
+	 *     public ConversionResultFactory CanPersistToXsl.getConversionResultFactory() { ... }
+	 *
+	 * AspectJ 1.9.24 and 1.9.25 cannot compile an inter-type *field* declaration whose
+	 * target type is an interface: ajc aborts with
+	 *     java.lang.AssertionError: Attempt to push null on operand stack!
+	 *     at ...codegen.OperandStack.push(OperandStack.java:58)
+	 *     at ...ast.InterTypeFieldDeclaration.generateInterfaceWriteBody(...:417)
+	 * at every compliance level. 1.9.22.1 compiles it, but 1.9.22.1 cannot target Java
+	 * 25 (it rejects -25), and 1.9.25 is the first release that can - so the two
+	 * requirements are mutually exclusive and this one construct had to go.
+	 *
+	 * The field is therefore declared once per implementing type instead. ajc already
+	 * materialised a per-class field for the interface ITD, and every read of it in this
+	 * aspect is through a concrete type, so this is the same code with the same
+	 * @Autowired injection. The marker interface and its declare-parents are kept so the
+	 * three entities' type hierarchies are unchanged; only getConversionResultFactory,
+	 * which nothing outside this aspect ever called, moves off the interface.
+	 */
 	@Autowired
-	private transient ConversionResultFactory CanPersistToXsl.conversionResultFactory;
-	public ConversionResultFactory CanPersistToXsl.getConversionResultFactory() {
+	private transient ConversionResultFactory FieldMapping.conversionResultFactory;
+	public ConversionResultFactory FieldMapping.getConversionResultFactory() {
 		return conversionResultFactory;
 	}
-	
+
+	@Autowired
+	private transient ConversionResultFactory FieldMappingLandscapeTemplate.conversionResultFactory;
+	public ConversionResultFactory FieldMappingLandscapeTemplate.getConversionResultFactory() {
+		return conversionResultFactory;
+	}
+
+	@Autowired
+	private transient ConversionResultFactory FieldMappingExternalAppTemplate.conversionResultFactory;
+	public ConversionResultFactory FieldMappingExternalAppTemplate.getConversionResultFactory() {
+		return conversionResultFactory;
+	}
+
 	declare parents: FieldMapping implements CanPersistToXsl;
 	
 //	@Autowired

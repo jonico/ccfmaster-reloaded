@@ -2,27 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 					
 	<!-- JSON Marshaling -->
-	<util:constant id="jsonBasicClassIntrospector" static-field="org.codehaus.jackson.map.introspect.BasicClassIntrospector.instance"/>
+	<!--
+		Jackson 1 (org.codehaus.jackson) is javax.xml.bind-based and is gone; this is the
+		Jackson 2 equivalent. Jackson 2 has no injectable SerializationConfig /
+		DeserializationConfig, so the jsonBasicClassIntrospector and visibilityChecker
+		beans have no counterpart - both were being set to Jackson 1's own defaults, which
+		Jackson 2 applies anyway. The one non-default setting, the JAXB annotation
+		introspector, is preserved.
+	-->
+	<bean class="com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector" id="jsonJaxbAnnotationIntrospector"/>
 
-	<bean class="org.codehaus.jackson.xc.JaxbAnnotationIntrospector" id="jsonJaxbAnnotationIntrospector"/>
-
-	<bean class="org.codehaus.jackson.map.introspect.VisibilityChecker.Std" factory-method="defaultInstance" id="visibilityChecker"/>
-
-	<bean class="org.codehaus.jackson.map.ObjectMapper" id="jsonObjectMapper">
-		<property name="serializationConfig">
-			<bean class="org.codehaus.jackson.map.SerializationConfig">
-				<constructor-arg ref="jsonBasicClassIntrospector"/>
-				<constructor-arg ref="jsonJaxbAnnotationIntrospector"/>
-				<constructor-arg ref="visibilityChecker"/>				
-			</bean>
-		</property>
-		<property name="deserializationConfig">
-			<bean class="org.codehaus.jackson.map.DeserializationConfig">
-				 <constructor-arg ref="jsonBasicClassIntrospector"/>
-				<constructor-arg ref="jsonJaxbAnnotationIntrospector"/>
-				<constructor-arg ref="visibilityChecker"/>				
-			</bean>
-		</property>
+	<bean class="com.fasterxml.jackson.databind.ObjectMapper" id="jsonObjectMapper">
+		<property name="annotationIntrospector" ref="jsonJaxbAnnotationIntrospector"/>
 	</bean>
 
 	<!-- XML Marshaling -->

@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.web.model;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
 import com.collabnet.ccf.ccfmaster.server.domain.LandscapeConfig;

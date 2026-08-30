@@ -1,18 +1,18 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import com.collabnet.ccf.ccfmaster.server.domain.Timezone;
-import javax.persistence.Enumerated;
+import jakarta.persistence.Enumerated;
 import com.collabnet.ccf.ccfmaster.server.domain.SystemKind;
 
 @XmlRootElement
@@ -22,7 +22,7 @@ import com.collabnet.ccf.ccfmaster.server.domain.SystemKind;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Participant {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, Participant> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, Participant> {
 
         @Override
         public Long marshal(Participant v) throws Exception {

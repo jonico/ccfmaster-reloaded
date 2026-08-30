@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.controller.web;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

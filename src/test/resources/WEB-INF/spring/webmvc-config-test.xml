@@ -52,7 +52,16 @@
 
 	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
 	     Also registers default Formatters and Validators for use across all @Controllers -->
-   	<mvc:annotation-driven conversion-service="applicationConversionService"/>
+   	<mvc:annotation-driven conversion-service="applicationConversionService">
+		<!--
+			Spring 6.0 flipped the default of trailing-slash matching from true to false, so
+			"/api/landscapes/" stopped matching @RequestMapping("/landscapes") and every REST
+			call with a trailing slash started coming back 404. The URLs are built by the
+			tests and by the JSP views, so the mapping behaviour is restored here rather than
+			rewritten. The property is deprecated in 6.x and gone in 7.
+		-->
+		<mvc:path-matching trailing-slash="true"/>
+	</mvc:annotation-driven>
 	<!--Installs application converters and formatters-->
 	<bean class="com.collabnet.ccf.ccfmaster.controller.ApplicationConversionServiceFactoryBean" id="applicationConversionService" />
 
@@ -82,7 +91,19 @@
 	
 	<bean class="org.springframework.web.servlet.theme.CookieThemeResolver" id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard"/>
  -->
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="uncaughtException">
+	<!--
+		order=-1 so this resolver runs before the HandlerExceptionResolverComposite that
+		<mvc:annotation-driven> registers at order 0. In Spring 3.0, <mvc:annotation-driven>
+		registered no exception resolvers at all, and declaring any HandlerExceptionResolver
+		bean suppressed DispatcherServlet's defaults - so this bean was the *only* resolver
+		in play, and the @ExceptionHandler methods on the API controllers never actually
+		fired. Spring 3.1 changed that, and without an explicit order the API's error
+		contract changes: DataRetrievalFailureException would return 400 from
+		AbstractBaseApiController.badRequest instead of the 404 mapped here, and
+		BadRequestException would return 400 instead of 401. Verified against the JDK 8
+		baseline's DispatcherServlet debug log.
+	-->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="uncaughtException" p:order="-1">
 		<property name="exceptionMappings">
 			<props>
 				<prop key=".PermissionDeniedDataAccessException">accessDenied</prop>

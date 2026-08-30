@@ -1,0 +1,56 @@
+# OpenRewrite recipes used for the CCFMaster migration.
+#
+# CCFMaster is the hard one: Spring Roo 1.1.3 / Spring 3.0.5 / Spring Security 3.0.2 /
+# Hibernate 3.5.5 / Servlet 2.5 / JPA 1.0 on JDK 8, with 125 AspectJ ITDs in src/main and
+# 72 in src/test that OpenRewrite cannot see at all - it has no AspectJ parser, so every
+# .aj file is outside every recipe's reach and is handled separately (see the commit log).
+#
+# As in the core and gui repositories, UpgradeToJava25 and UpgradeToJava21 are not used
+# directly; the composite is rebuilt from their parts. See the comment on
+# com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites below.
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+displayName: Migrate to Java 21, minus the if/else-if-to-switch recipes
+description: >-
+  org.openrewrite.java.migrate.UpgradeToJava21 with lang.IfElseIfConstructToSwitch,
+  lang.NullCheckAsSwitchCase, lang.SwitchCaseAssignmentsToSwitchExpression,
+  lang.SwitchCaseReturnsToSwitchExpression, lang.SwitchExpressionYieldToArrow and
+  SwitchPatternMatching removed. Those six produce invalid or behaviour-changing code on
+  this codebase; see the comment at the top of this file.
+recipeList:
+  - org.openrewrite.java.migrate.UpgradeToJava17
+  - org.openrewrite.java.migrate.UpgradeBuildToJava21
+  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
+  - org.openrewrite.java.migrate.lang.ThreadStopUnsupported
+  - org.openrewrite.java.migrate.net.URLConstructorToURICreate
+  - org.openrewrite.java.migrate.util.SequencedCollection
+  - org.openrewrite.java.migrate.util.UseLocaleOf
+  - org.openrewrite.staticanalysis.ReplaceDeprecatedRuntimeExecMethods
+  - org.openrewrite.java.migrate.UpgradePluginsForJava21
+  - org.openrewrite.java.migrate.DeleteDeprecatedFinalize
+  - org.openrewrite.java.migrate.RemovedSubjectMethods
+  - org.openrewrite.java.migrate.RemoveIllegalSemicolons
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.ccfmaster.MigrateToJava25
+displayName: CCFMaster - Java 8 to Java 25, javax to jakarta, Spring 3 to 6
+description: >-
+  Mechanical stack migration of CCFMaster. Run once, then finished by hand: because the
+  dependency-adding sub-recipes inside JakartaEE10 are scanning recipes evaluated against
+  the pre-edit LST, one pass rewrote all 437 javax.* import lines in the .java sources and
+  moved Spring/Hibernate/Spring Security to 6.2/6.6/6.4, but left several EE APIs that no
+  source file imports directly (JSTL, EL, JTA) on their javax coordinates. Those, and
+  everything the .aj files need, were done by hand - see the commit message.
+recipeList:
+  - com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+  - org.openrewrite.java.migrate.UpgradeBuildToJava25
+  - org.openrewrite.java.migrate.UpgradePluginsForJava25
+  # includes UpgradeSpringFramework_5_0/5_1/5_2/5_3/6_0/6_1 and, through 6_0,
+  # org.openrewrite.java.migrate.jakarta.JakartaEE10 - which is where the whole
+  # javax.persistence / javax.validation / javax.servlet / javax.xml.bind /
+  # javax.annotation namespace change comes from.
+  - org.openrewrite.java.spring.framework.UpgradeSpringFramework_6_2
+  - org.openrewrite.java.spring.security6.UpgradeSpringSecurity_6_4
+  - org.openrewrite.hibernate.MigrateToHibernate66
+  - org.openrewrite.hibernate.validator.HibernateValidator_8_0

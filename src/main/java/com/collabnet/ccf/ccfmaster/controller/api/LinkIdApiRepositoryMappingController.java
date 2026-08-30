@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.controller.api;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -35,7 +35,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @Override
     public @ResponseBody
     RepositoryMapping create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody RepositoryMapping requestBody,
             HttpServletResponse response) {
         validateRepositoryMapping(requestBody);
@@ -50,7 +50,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -60,7 +60,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @Override
     public @ResponseBody
     RepositoryMappingList list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new RepositoryMappingList(RepositoryMapping
                 .findRepositoryMappingsByExternalApp(ea).getResultList());
     }
@@ -68,7 +68,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @Override
     public @ResponseBody
     RepositoryMapping show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -78,7 +78,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/hospitalentrys", method = GET)
     public @ResponseBody
     HospitalEntryList showHospitalEntries(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -89,7 +89,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/hospitalentrys/count", method = GET)
     public @ResponseBody
     String showHospitalEntriesCount(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -100,7 +100,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/hospitalentrys/{direction}", method = GET)
     public @ResponseBody
     HospitalEntryList showHospitalEntriesDirectionScope(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @PathVariable("direction") Directions direction) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
@@ -113,7 +113,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/hospitalentrys/{direction}/count", method = GET)
     public @ResponseBody
     String showHospitalEntriesDirectionScopeCount(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @PathVariable("direction") Directions direction) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
@@ -126,7 +126,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/identitymappings", method = GET)
     public @ResponseBody
     IdentityMappingList showIdentityMappings(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -137,7 +137,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/repositorymappingdirectionconfigs/", method = GET)
     public @ResponseBody
     RepositoryMappingDirectionConfigList showRepositoryMappingDirectionConfigsRepositoryMappingScope(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") RepositoryMapping repositoryMapping) {
         validateRepositoryMapping(repositoryMapping);
         return new RepositoryMappingDirectionConfigList(
@@ -149,7 +149,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/repositorymappingdirections", method = GET)
     public @ResponseBody
     RepositoryMappingDirectionList showRepositoryMappingDirections(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
         validateRepositoryMapping(rm);
@@ -161,7 +161,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     @RequestMapping(value = "/{id}/repositorymappingdirections/{direction}", method = GET)
     public @ResponseBody
     RepositoryMappingDirectionList showRepositoryMappingDirectionsDirectionScope(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @PathVariable("direction") Directions direction) {
         RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(id);
@@ -174,7 +174,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @RequestBody RepositoryMapping requestBody,
             HttpServletResponse response) {

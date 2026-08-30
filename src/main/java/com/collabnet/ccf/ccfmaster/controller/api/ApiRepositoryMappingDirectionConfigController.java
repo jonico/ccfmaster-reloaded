@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class ApiRepositoryMappingDirectionConfigController extends AbstractApiCo
     @Override
     public @ResponseBody
     RepositoryMappingDirectionConfig show(
-            @PathVariable("id") RepositoryMappingDirectionConfig id) {
+            @PathVariable(value = "id", required = false) RepositoryMappingDirectionConfig id) {
         return super.show(id);
     }
 

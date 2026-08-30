@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.selenium.project;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.NameValuePair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

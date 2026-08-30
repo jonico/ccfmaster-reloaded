@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -63,7 +63,7 @@ public class ApiHospitalEntryController extends AbstractApiController<HospitalEn
 
     @Override
     public @ResponseBody
-    HospitalEntry show(@PathVariable("id") HospitalEntry id) {
+    HospitalEntry show(@PathVariable(value = "id", required = false) HospitalEntry id) {
         return super.show(id);
     }
 

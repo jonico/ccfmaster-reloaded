@@ -11,28 +11,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.persistence.Column;
-import javax.persistence.EntityManager;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FlushModeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.LockModeType;
-import javax.persistence.NoResultException;
-import javax.persistence.OneToOne;
-import javax.persistence.Parameter;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FlushModeType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Parameter;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -342,7 +342,7 @@ public class CcfCoreStatus {
                 final List<CcfCoreStatus> resultList = getResultList();
                 if (resultList.isEmpty())
                     throw new NoResultException();
-                return resultList.get(0);
+                return resultList.getFirst();
             }
 
             @Override

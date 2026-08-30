@@ -39,7 +39,7 @@ public class ProjectRepositoryMappingsPage extends ProjectScopeTestBase {
 
         List<WebElement> tabs = page.getTabs();
         assertThat(tabs.size(), equalTo(2));
-        assertThat(tabs.get(0).getText(),
+        assertThat(tabs.getFirst().getText(),
                 equalTo(RepositoryMappingsPage.TF_2_QC_LABEL));
         assertThat(tabs.get(1).getText(),
                 equalTo(RepositoryMappingsPage.QC_2_TF_LABEL));

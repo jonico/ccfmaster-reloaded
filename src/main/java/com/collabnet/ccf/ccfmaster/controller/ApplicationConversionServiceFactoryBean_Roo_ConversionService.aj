@@ -51,6 +51,9 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {
         super.afterPropertiesSet();
         installLabelConverters(getObject());
+        // Spring 4 removed FormattingConversionServiceFactoryBean.installFormatters, the
+        // hook the hand-written .java half used to override, so it is called from here.
+        installFormatters(getObject());
     }
     
     static class com.collabnet.ccf.ccfmaster.controller.ApplicationConversionServiceFactoryBean.CcfCoreStatusConverter implements Converter<CcfCoreStatus, String>  {

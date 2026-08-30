@@ -92,7 +92,7 @@ public abstract class AbstractProjectController extends AbstractLandscapeControl
             return ExternalApp.createNewExternalApp(linkId,
                     iafUser.getConnection());
         } else {
-            return externalApps.get(0);
+            return externalApps.getFirst();
         }
     }
 

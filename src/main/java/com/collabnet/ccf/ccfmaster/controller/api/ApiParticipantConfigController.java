@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,7 +41,7 @@ public class ApiParticipantConfigController extends AbstractApiController<Partic
 
     @Override
     public @ResponseBody
-    ParticipantConfig show(@PathVariable("id") ParticipantConfig id) {
+    ParticipantConfig show(@PathVariable(value = "id", required = false) ParticipantConfig id) {
         return super.show(id);
     }
 

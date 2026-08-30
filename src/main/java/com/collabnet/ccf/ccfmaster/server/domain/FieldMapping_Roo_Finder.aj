@@ -7,8 +7,8 @@ import com.collabnet.ccf.ccfmaster.server.domain.FieldMapping;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingScope;
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection;
 import java.lang.String;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 privileged aspect FieldMapping_Roo_Finder {
     

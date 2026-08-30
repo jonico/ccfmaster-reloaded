@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.controller.api;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -67,7 +67,7 @@ public class ApiRepositoryMappingDirectionController extends AbstractApiControll
     @Override
     public @ResponseBody
     RepositoryMappingDirection show(
-            @PathVariable("id") RepositoryMappingDirection id) {
+            @PathVariable(value = "id", required = false) RepositoryMappingDirection id) {
         return super.show(id);
     }
 

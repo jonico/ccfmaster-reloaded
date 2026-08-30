@@ -3,7 +3,7 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

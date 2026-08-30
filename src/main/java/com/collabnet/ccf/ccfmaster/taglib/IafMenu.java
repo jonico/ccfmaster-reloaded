@@ -3,25 +3,25 @@ package com.collabnet.ccf.ccfmaster.taglib;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serial;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.TagSupport;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpResponse;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
@@ -38,6 +38,7 @@ import com.google.common.io.CharStreams;
 
 public class IafMenu extends TagSupport {
 
+    @Serial
     private static final long   serialVersionUID  = 1L;
     private static final Logger log               = LoggerFactory
                                                           .getLogger(IafMenu.class);
@@ -116,7 +117,7 @@ public class IafMenu extends TagSupport {
         final String serverUrl = conn.getServerUrl();
         TeamForgeClient tfc = conn.getTeamForgeClient();
         final String sessionId = tfc.getWebSessionId();
-        HttpClient httpclient = new DefaultHttpClient();
+        HttpClient httpclient = HttpClients.createDefault();
         URI uri = constructURI(user);
         HttpGet httpget = new HttpGet(uri);
         httpget.setHeaders(new Header[] {

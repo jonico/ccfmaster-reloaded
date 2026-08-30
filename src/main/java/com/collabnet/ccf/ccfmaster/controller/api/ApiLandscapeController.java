@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +160,7 @@ public class ApiLandscapeController extends AbstractApiController<Landscape> {
 
     @Override
     public @ResponseBody
-    Landscape show(@PathVariable("id") Landscape id) {
+    Landscape show(@PathVariable(value = "id", required = false) Landscape id) {
         return super.show(id);
     }
 

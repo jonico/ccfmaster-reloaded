@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -26,7 +26,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     @Override
     public @ResponseBody
     HospitalEntry create(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @RequestBody HospitalEntry requestBody, HttpServletResponse response) {
         validateHospitalEntry(requestBody);
         requestBody.persist();
@@ -38,7 +38,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
 
     @Override
     public void delete(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id, HttpServletResponse response) {
         HospitalEntry rm = HospitalEntry.findHospitalEntry(id);
         validateHospitalEntry(rm);
@@ -48,7 +48,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     @RequestMapping(value = "/count/", method = RequestMethod.GET)
     public @ResponseBody
     String hospitalEntryCount(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return Long
                 .toString(HospitalEntry.countHospitalEntrysByExternalApp(ea));
     }
@@ -57,7 +57,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     public @ResponseBody
     HospitalEntryList hospitalEntrysDirectionScope(
             @PathVariable("direction") Directions direction,
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new HospitalEntryList(HospitalEntry
                 .findHospitalEntrysByExternalAppAndDirection(ea, direction)
                 .getResultList());
@@ -67,7 +67,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     public @ResponseBody
     String hospitalEntrysDirectionScopeCount(
             @PathVariable("direction") Directions direction,
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return Long.toString(HospitalEntry
                 .countHospitalEntrysByExternalAppAndDirection(ea, direction));
     }
@@ -75,7 +75,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     @Override
     public @ResponseBody
     HospitalEntryList list(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea) {
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea) {
         return new HospitalEntryList(HospitalEntry
                 .findHospitalEntrysByExternalApp(ea).getResultList());
     }
@@ -83,7 +83,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
     @Override
     public @ResponseBody
     HospitalEntry show(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id) {
         HospitalEntry rm = HospitalEntry.findHospitalEntry(id);
         validateHospitalEntry(rm);
@@ -92,7 +92,7 @@ public class LinkIdApiHospitalEntryController extends AbstractApiLinkIdControlle
 
     @Override
     public void update(
-            @ModelAttribute(EXTERNAL_APP_MODELATTRIBUTE_NAME) ExternalApp ea,
+            @ModelAttribute(value = EXTERNAL_APP_MODELATTRIBUTE_NAME, binding = false) ExternalApp ea,
             @PathVariable("id") Long id,
             @RequestBody HospitalEntry requestBody, HttpServletResponse response) {
         validateRequestBody(id, requestBody);

@@ -11,7 +11,16 @@
 
 	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
 	     Also registers default Formatters and Validators for use across all @Controllers -->
-   	<mvc:annotation-driven conversion-service="applicationConversionService"/>
+   	<mvc:annotation-driven conversion-service="applicationConversionService">
+		<!--
+			Spring 6.0 flipped the default of trailing-slash matching from true to false, so
+			"/api/landscapes/" stopped matching @RequestMapping("/landscapes") and every REST
+			call with a trailing slash started coming back 404. The URLs are built by the
+			tests and by the JSP views, so the mapping behaviour is restored here rather than
+			rewritten. The property is deprecated in 6.x and gone in 7.
+		-->
+		<mvc:path-matching trailing-slash="true"/>
+	</mvc:annotation-driven>
     <!--
 	<mvc:annotation-driven conversion-service="conversionService"/>
 	<bean
@@ -63,7 +72,14 @@
 	     The default behaviour of DispatcherServlet - is to propagate all exceptions to the servlet container: 
 	     this will happen - here with all other types of exceptions. -->
 	<!-- p:defaultErrorView="uncaughtException" -->
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	<!--
+		order=-1 so this resolver runs before the HandlerExceptionResolverComposite that
+		<mvc:annotation-driven> registers at order 0. In Spring 3.0 this bean was the only
+		exception resolver in play (declaring one suppressed DispatcherServlet's defaults, and
+		<mvc:annotation-driven> registered none), so the API controllers' @ExceptionHandler
+		methods never fired. Without the explicit order, Spring 3.1+ changes the error contract.
+	-->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:order="-1">
 		<property name="exceptionMappings">
 			<props>
 				<prop key=".PermissionDeniedDataAccessException">accessDenied</prop>

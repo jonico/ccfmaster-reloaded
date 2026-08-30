@@ -33,11 +33,11 @@ public class CcfSeleneseTestBase extends SeleneseTestBase {
                                                                      "Test {} failed.",
                                                                      description
                                                                              .getMethodName());
-                                                             if (driver instanceof TakesScreenshot) {
+                                                             if (driver instanceof TakesScreenshot screenshot) {
                                                                  log.error(
                                                                          SCREENSHOT_MESSAGE
                                                                                  + "\ndata:image/png;base64,{}",
-                                                                         ((TakesScreenshot) driver)
+                                                                         screenshot
                                                                                  .getScreenshotAs(OutputType.BASE64));
                                                              }
                                                          }

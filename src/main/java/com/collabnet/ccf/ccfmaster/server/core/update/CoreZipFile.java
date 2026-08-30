@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.zip.ZipException;
 
@@ -21,6 +22,7 @@ import com.google.common.base.Preconditions;
 
 public final class CoreZipFile implements Closeable, Serializable {
 
+    @Serial
     private static final long          serialVersionUID = 1L;
     private static final Logger        log              = LoggerFactory
                                                                 .getLogger(CoreZipFile.class);

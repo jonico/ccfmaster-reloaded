@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.web.helper;
 
 import java.rmi.RemoteException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;

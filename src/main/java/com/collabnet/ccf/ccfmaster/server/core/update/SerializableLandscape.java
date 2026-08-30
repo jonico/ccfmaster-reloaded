@@ -1,5 +1,6 @@
 package com.collabnet.ccf.ccfmaster.server.core.update;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import com.google.common.base.Preconditions;
 
 public final class SerializableLandscape implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private final String      name;
 
@@ -19,7 +21,7 @@ public final class SerializableLandscape implements Serializable {
         List<Landscape> landscapes = Landscape.findAllLandscapes();
         Preconditions.checkState(!landscapes.isEmpty(),
                 "no landscapes in database");
-        this.name = landscapes.get(0).getName();
+        this.name = landscapes.getFirst().getName();
     }
 
     public SerializableLandscape(String name) {

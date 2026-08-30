@@ -93,8 +93,10 @@ public final class Util {
                     selenium.getValue("participantUserNameLandscapeConfig.val"),
                     equalTo("invalid"));
         } catch (RuntimeException e) {
-            log.error("create QC landscape failed. Base64 screenshot:\n"
-                    + "data:image/png;base64,{}",
+            log.error("""
+                    create QC landscape failed. Base64 screenshot:
+                    data:image/png;base64,{}\
+                    """,
                     selenium.captureScreenshotToString());
             throw e;
         } catch (AssertionError e) {

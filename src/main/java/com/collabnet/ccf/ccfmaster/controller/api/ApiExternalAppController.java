@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,7 +40,7 @@ public class ApiExternalAppController extends AbstractApiController<ExternalApp>
 
     @Override
     public @ResponseBody
-    ExternalApp show(@PathVariable("id") ExternalApp id) {
+    ExternalApp show(@PathVariable(value = "id", required = false) ExternalApp id) {
         return super.show(id);
     }
 

@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.api;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class ApiFieldMappingLandscapeTemplateController extends AbstractApiContr
     @Override
     public @ResponseBody
     FieldMappingLandscapeTemplate show(
-            @PathVariable("id") FieldMappingLandscapeTemplate id) {
+            @PathVariable(value = "id", required = false) FieldMappingLandscapeTemplate id) {
         return super.show(id);
     }
 

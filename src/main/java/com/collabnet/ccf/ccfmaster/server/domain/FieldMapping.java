@@ -3,20 +3,20 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.TypedQuery;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -33,7 +33,7 @@ import org.springframework.roo.addon.tostring.RooToString;
         "findFieldMappingsByNameAndParentAndScope" })
 public class FieldMapping implements Mapping<RepositoryMappingDirection> {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, FieldMapping> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, FieldMapping> {
 
         @Override
         public Long marshal(FieldMapping v) throws Exception {
@@ -64,10 +64,10 @@ public class FieldMapping implements Mapping<RepositoryMappingDirection> {
     @Enumerated(EnumType.STRING)
     private FieldMappingKind           kind;
 
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     private List<FieldMappingRule>     rules     = new ArrayList<FieldMappingRule>();
 
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     private List<FieldMappingValueMap> valueMaps = new ArrayList<FieldMappingValueMap>();
 
     @Override
@@ -110,7 +110,7 @@ public class FieldMapping implements Mapping<RepositoryMappingDirection> {
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<FieldMapping> q = em
                 .createQuery(
-                        "SELECT FieldMapping FROM FieldMapping AS fieldmapping WHERE fieldmapping.parent.repositoryMapping.externalApp = :externalApp ORDER BY fieldmapping.id",
+                        "SELECT fieldmapping FROM FieldMapping AS fieldmapping WHERE fieldmapping.parent.repositoryMapping.externalApp = :externalApp ORDER BY fieldmapping.id",
                         FieldMapping.class);
         q.setParameter("externalApp", externalApp);
         return q;

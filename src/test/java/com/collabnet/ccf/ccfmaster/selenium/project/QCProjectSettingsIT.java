@@ -48,11 +48,13 @@ public class QCProjectSettingsIT {
             MockDataUtil.createIdentityMapping(selenium);
         } catch (RuntimeException e) {
             WebDriver driver = SeleniumSuite.getDriver();
-            if (driver instanceof TakesScreenshot) {
+            if (driver instanceof TakesScreenshot screenshot) {
                 log.error(
-                        "copy the following line to your driver address-bar to see the screenshot:\n"
-                                + "data:image/png;base64,{}",
-                        ((TakesScreenshot) driver)
+                        """
+                        copy the following line to your driver address-bar to see the screenshot:
+                        data:image/png;base64,{}\
+                        """,
+                        screenshot
                                 .getScreenshotAs(OutputType.BASE64));
             }
             throw e;

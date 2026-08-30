@@ -38,9 +38,12 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         }
     }
 
-    @Override
+    /**
+     * Called from ApplicationConversionServiceFactoryBean_Roo_ConversionService's
+     * afterPropertiesSet(). Spring 3's FormattingConversionServiceFactoryBean had an
+     * installFormatters(FormatterRegistry) hook to override; Spring 4 removed it.
+     */
     protected void installFormatters(FormatterRegistry registry) {
-        super.installFormatters(registry);
         // Register application converters and formatters
         registry.addConverter(new StringToExternalAppConverter());
         registry.addConverter(new StringToLandscapeConverter());

@@ -4,7 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.io.IOException;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

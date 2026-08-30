@@ -19,7 +19,7 @@ import com.google.common.util.concurrent.TimeLimiter;
 
 final class JmxUtil {
     public enum JmxStatus {
-        CONNECTED, NOT_CONNECTED, NOT_RESPONDING;
+        CONNECTED, NOT_CONNECTED, NOT_RESPONDING
     }
 
     private static final String      JMX_URL_TEMPLATE = "service:jmx:rmi:///jndi/rmi://localhost:%d/jmxrmi";

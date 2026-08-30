@@ -38,7 +38,7 @@ public class HibernateListTests extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void canRemoveAndAddAgainToList() {
-        FieldMappingValueMap removed = fm.getValueMaps().remove(0);
+        FieldMappingValueMap removed = fm.getValueMaps().removeFirst();
         fm.getValueMaps().add(removed);
         fm.merge();
         Assert.assertNotNull(FieldMappingValueMap
@@ -57,7 +57,7 @@ public class HibernateListTests extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void removeDoesNotDeleteOtherValueMaps() {
-        FieldMappingValueMap removed = fm.getValueMaps().remove(0);
+        FieldMappingValueMap removed = fm.getValueMaps().removeFirst();
         fm.merge();
         Assert.assertNull(FieldMappingValueMap.findFieldMappingValueMap(removed
                 .getId()));

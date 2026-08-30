@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.google.common.collect.ForwardingList;
 

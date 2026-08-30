@@ -18,7 +18,7 @@ public class PropertiesDirectionConfigPersisterFactory implements DirectionConfi
     private final File          basePath;
 
     public PropertiesDirectionConfigPersisterFactory(File basePath) {
-        Assert.notNull(basePath);
+        Assert.notNull(basePath, "must not be null");
         Assert.isTrue(basePath.exists() && basePath.isDirectory(),
                 "base path must exist and be a directory");
         this.basePath = basePath;

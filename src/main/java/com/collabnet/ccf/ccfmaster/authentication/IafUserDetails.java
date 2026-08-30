@@ -1,11 +1,12 @@
 package com.collabnet.ccf.ccfmaster.authentication;
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.Locale;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.collabnet.teamforge.api.Connection;
 import com.collabnet.teamforge.api.rbac.RbacClient;
@@ -13,9 +14,10 @@ import com.google.common.collect.ImmutableSet;
 
 public class IafUserDetails extends TFUserDetails {
 
-    private static final GrantedAuthorityImpl IAF_USER         = new GrantedAuthorityImpl(
+    private static final SimpleGrantedAuthority IAF_USER         = new SimpleGrantedAuthority(
                                                                        "ROLE_IAF_USER");
 
+    @Serial
     private static final long                 serialVersionUID = 1L;
     private String                            linkId;
     private String                            projectPath;
@@ -70,7 +72,7 @@ public class IafUserDetails extends TFUserDetails {
             permission = "ROLE_"
                     + permission.toUpperCase(Locale.ROOT)
                             .replaceAll("\\s", "_");
-            authorities.add(new GrantedAuthorityImpl(permission));
+            authorities.add(new SimpleGrantedAuthority(permission));
         }
         authorities.add(IAF_USER);
         return authorities.build();

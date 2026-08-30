@@ -7,14 +7,14 @@ import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
 import java.lang.Integer;
 import java.lang.Long;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Version;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect FieldMappingLandscapeTemplate_Roo_Entity {
@@ -25,7 +25,7 @@ privileged aspect FieldMappingLandscapeTemplate_Roo_Entity {
     transient EntityManager FieldMappingLandscapeTemplate.entityManager;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long FieldMappingLandscapeTemplate.id;
     

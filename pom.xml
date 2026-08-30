@@ -7,13 +7,15 @@
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<name>CCFMaster</name>
 	<properties>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
 		<roo.version>1.1.3.RELEASE</roo.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<aspectj.version>1.9.7</aspectj.version>
+		<spring.version>6.2.19</spring.version>
+		<aspectj.version>1.9.25</aspectj.version>
+		<aspectj.compliance>25</aspectj.compliance>
 		<slf4j.version>1.6.1</slf4j.version>
 		<cobertura.version>1.9.4.1</cobertura.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-security.version>3.0.2.RELEASE</spring-security.version>
+		<spring-security.version>6.4.13</spring-security.version>
 		<skipUnitTests>false</skipUnitTests>
 		<selenium.version>2.37.0</selenium.version>
 	</properties>
@@ -88,9 +90,28 @@
 	<dependencies>
 		<!-- General dependencies for standard applications -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
+			<groupId>jakarta.mail</groupId>
+			<artifactId>jakarta.mail-api</artifactId>
+			<version>2.1.5</version>
+		</dependency>
+		<!--
+			javax.activation, not jakarta.activation: IconUploader passes a DataHandler into
+			com.collabnet.teamforge:tfapi's FileStorageClient.uploadFile, and that jar is
+			javax-namespace bytecode that was never published anywhere and cannot be rebuilt.
+			So this one call site has to stay on javax.activation, and the API has to be
+			supplied explicitly since JEP 320 removed it from the JDK. jakarta.activation
+			2.1 (javax's successor, pulled in by jakarta.mail-api) is a different package, so
+			the two coexist without conflict.
+		-->
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>javax.activation</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>mockit</groupId>
@@ -101,7 +122,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -125,15 +146,44 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.flexjson</groupId>
 			<artifactId>flexjson</artifactId>
 			<version>2.0</version>
+		</dependency>
+		<!--
+			JEP 320: javax.xml.bind, javax.annotation and javax.xml.ws were removed from the
+			JDK in Java 11. Declared at the Jakarta EE 8 coordinates, which still carry the
+			javax.* package names, so that the project builds on JDK 17 - which is what the
+			OpenRewrite plugin needs in order to run at all. The jakarta.* namespace change
+			itself is done by the recipes, which bump these to EE 10 versions.
+		-->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>4.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>2.1.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.ws</groupId>
+			<artifactId>jakarta.xml.ws-api</artifactId>
+			<version>4.0.3</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- ROO dependencies -->
 		<dependency>
@@ -189,37 +239,17 @@
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>2.0.0</version>
+			<version>2.7.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>3.5.5-Final</version>
+			<version>6.6.56.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.5.5-Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>dom4j</groupId>
-					<artifactId>dom4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
+			<version>8.0.5.Final</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.xml.bind</groupId>
@@ -229,12 +259,36 @@
 					<groupId>com.sun.xml.bind</groupId>
 					<artifactId>jaxb-impl</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>jakarta.xml.bind</groupId>
+					<artifactId>jakarta.xml.bind-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jaxb</groupId>
+					<artifactId>jaxb-runtime</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
@@ -242,9 +296,9 @@
 			<version>2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<version>2.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -267,18 +321,21 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--
+			commons-dbcp 1.3 predates JDBC 4: its PoolableConnection leaves createClob() and
+			friends abstract, and Hibernate 6 calls them, so every context load died with
+			AbstractMethodError. dbcp2 is the maintained line and is JDBC 4.3-complete. The
+			package name changes (org.apache.commons.dbcp -> .dbcp2), which is why
+			applicationContext.xml and applicationContext-development.xml name the new class.
+		-->
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.3</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.13.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-pool</groupId>
-					<artifactId>commons-pool</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>xerces</groupId>
@@ -344,9 +401,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload2-jakarta-servlet6</artifactId>
+			<version>2.0.0-M4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -355,15 +412,25 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>el-api</artifactId>
-			<version>1.0</version>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
+			<version>5.0.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -371,20 +438,20 @@
 			<version>1.6</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
+			<version>3.1.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-jaxrs</artifactId>
-			<version>1.5.6</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.19.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-xc</artifactId>
-			<version>1.5.6</version>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
+			<version>2.19.4</version>
 		</dependency>
 		<!--<dependency> <groupId>com.sun.syndication</groupId> <artifactId>com.springsource.com.sun.syndication</artifactId> 
 			<version>1.0.0</version> </dependency> -->
@@ -464,14 +531,42 @@
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
+				<!-- split package javax.xml.namespace with java.xml; re-added below at runtime scope -->
+				<exclusion>
+					<groupId>org.apache.axis</groupId>
+					<artifactId>axis-jaxrpc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>axis</groupId>
+					<artifactId>axis-jaxrpc</artifactId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		<!--
+			Replaces the axis-jaxrpc 1.4 excluded just above. axis-jaxrpc ships its own copies
+			of javax.xml.namespace.QName and NamespaceContext, which java.xml owns, and under
+			source >= 9 ecj/ajc reject that as a split package - which made
+			javax.xml.namespace.QName unresolvable in LandscapeParticipantSettingsController.
+			The Geronimo spec jar is the same JAX-RPC 1.1 API (51 classes) with no
+			javax.xml.namespace in it, so Axis 1.4 still finds javax.xml.rpc at runtime.
+			Runtime scope only: nothing in this project's sources uses JAX-RPC.
+		-->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jaxrpc_1.1_spec</artifactId>
+			<version>2.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>4.0.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>4.5.14</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -503,7 +598,7 @@
 		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-js-resources</artifactId>
-			<version>2.2.1.RELEASE</version>
+			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -513,12 +608,12 @@
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
-			<version>1.1.2</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.4</version>
+			<version>1.17.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -537,6 +632,11 @@
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
 				</exclusion>
+				<!-- split package org.w3c.dom / javax.xml.namespace with java.xml -->
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -549,16 +649,42 @@
 	<dependency>
             <groupId>org.springframework.webflow</groupId>
             <artifactId>spring-webflow</artifactId>
-            <version>2.2.1.RELEASE</version>
+            <version>3.0.2</version>
         </dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
+			<!--
+				legacy/spring-aspects-staticmock holds the org.springframework.mock.staticmock
+				aspect, vendored from spring-aspects 4.3.30 because Spring 5 deleted it and
+				nine test classes are written against it. It has to be a *main* source root:
+				its around() advice attaches to the execution of the entities' static finder
+				methods, which are in src/main. aspectj-maven-plugin's test-compile goal has
+				weaveWithAspectsInMainSourceFolder=true by default, so the test classes get
+				woven against it as well. See the header comment in each vendored file.
+			-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.6.0</version>
+				<executions>
+					<execution>
+						<id>add-vendored-staticmock-aspect</id>
+						<phase>generate-sources</phase>
+						<goals><goal>add-source</goal></goals>
+						<configuration>
+							<sources>
+								<source>legacy/spring-aspects-staticmock</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>3.5.1</version>
 				<configuration>
           		<webResources>
             		<resource>
@@ -566,7 +692,12 @@
              	     	<includes>
                				 <include>**/ccf.png</include>
              			</includes>
-             		     <targetPath>\WEB-INF\classes\com\collabnet\ccf\core\utils</targetPath>
+             		     <!--
+             		       Forward slashes: this used to be \WEB-INF\classes\..., which
+             		       maven-war-plugin 2.1-beta-1 tolerated but 3.5.1 treats as a literal
+             		       file name, failing with "Error assembling WAR".
+             		     -->
+             		     <targetPath>WEB-INF/classes/com/collabnet/ccf/core/utils</targetPath>
            			</resource>
          		</webResources>
         		</configuration>
@@ -574,7 +705,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
+				<version>3.15.0</version>
 				<executions>
 					<!-- ajc compiles the .java sources as well as the .aj ITDs; javac cannot
 					     see aspect types (e.g. ConfigSavingAspect) and fails on them. -->
@@ -582,14 +713,13 @@
 					<execution><id>default-testCompile</id><phase>none</phase></execution>
 				</executions>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<release>25</release>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.14.0</version>
+				<version>1.16.0</version>
 				<dependencies>
 					<!-- NB: You must use Maven 2.0.9 or above or these are ignored (see 
 						MNG-2972) -->
@@ -624,10 +754,17 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
-					<source>8</source>
-					<target>8</target>
-					<!-- defaults to 1.4, which ajc rejects against source 8 -->
-					<complianceLevel>8</complianceLevel>
+					<source>${aspectj.compliance}</source>
+					<target>${aspectj.compliance}</target>
+					<!-- defaults to 1.4; ajc needs it stated explicitly -->
+					<complianceLevel>${aspectj.compliance}</complianceLevel>
+					<!--
+						Spring 6 removed LocalVariableTableParameterNameDiscoverer, so parameter
+						names must be in the class file for @RequestParam/@PathVariable without an
+						explicit name to resolve. The recipes set maven.compiler.parameters, but
+						ajc - not javac - compiles this project, so ajc needs telling separately.
+					-->
+					<parameters>true</parameters>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -641,14 +778,24 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.8.1</version>
+				<version>3.5.6</version>
 				<configuration>
 					<excludes>
 						<exclude>**/*_Roo_*</exclude>
 						<exclude>**/*SystemTest*</exclude>
 					</excludes>
 					<skipTests>${skipUnitTests}</skipTests>
-					<forkMode>always</forkMode>
+					<!--
+						Was <forkMode>always</forkMode>. Surefire 3 removed forkMode entirely and
+						silently ignores it, so every test class ran in one shared JVM - which
+						this suite cannot survive: the Roo DataOnDemand fixtures and the static
+						entityManager() on the entities carry state across classes, and 158 tests
+						failed purely from the leakage (a class that fails in the full run passes
+						on its own). forkCount=1 + reuseForks=false is the documented equivalent
+						of the old forkMode=always: one fresh JVM per test class.
+					-->
+					<forkCount>1</forkCount>
+					<reuseForks>false</reuseForks>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -708,30 +855,51 @@
 				<version>1.0</version>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<groupId>org.openrewrite.maven</groupId>
+				<artifactId>rewrite-maven-plugin</artifactId>
+				<version>6.46.1</version>
 				<configuration>
-					<instrumentation>
-						<ignores>
-						</ignores>
-						<excludes>
-							<exclude>**/*_Roo_*</exclude>
-						</excludes>
-					</instrumentation>
+					<activeRecipes>
+						<recipe>com.collabnet.ccf.ccfmaster.MigrateToJava25</recipe>
+					</activeRecipes>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-migrate-java</artifactId>
+						<version>3.42.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-testing-frameworks</artifactId>
+						<version>3.44.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-spring</artifactId>
+						<version>6.37.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-hibernate</artifactId>
+						<version>2.25.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-static-analysis</artifactId>
+						<version>2.41.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.openrewrite.recipe</groupId>
+						<artifactId>rewrite-java-dependencies</artifactId>
+						<version>1.60.2</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.8.1</version>
+				<version>3.5.6</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>
@@ -863,8 +1031,6 @@
 					<url>http://opensource.kantega.no/nexus/content/groups/public/</url>
 				</pluginRepository>
 			</pluginRepositories>
-			<dependencies>
-			</dependencies>
 			<build>
 				<plugins>
 					<plugin>
