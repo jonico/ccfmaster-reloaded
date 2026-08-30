@@ -1,22 +1,25 @@
 CCFMaster
 Copyright CollabNet, Inc.
 
-LICENSE STATUS: NONE DECLARED
------------------------------
-This repository has no license, and one has deliberately NOT been added.
+This product includes software developed at CollabNet, Inc.
 
-The upstream repository (https://github.com/jonico/ccfmaster) carries no repository-level
-LICENSE file, and only 1 of its 621 source files contains any license header at all. There
-is therefore nothing to record. Choosing a license would mean selecting one on behalf of
-CollabNet, Inc., who hold the copyright - which is not the publisher's to do.
+Licensed under the Apache License, Version 2.0. See LICENSE.
 
-What that means for you: this code is publicly readable because its upstream is publicly
-readable, but no rights are granted. Do not assume you may use, copy, modify or
-redistribute it. If you need to, seek permission from the copyright holder.
+LICENSE PROVENANCE
+------------------
+The CCF (CollabNet Connector Framework) project is licensed under the Apache License,
+Version 2.0 in its entirety. This is attested by the project's former lead and main
+contributor, who is also the owner of the upstream repository this was derived from.
 
-By contrast, the sibling repositories core (Apache-2.0, repository-level) and gui
-(Apache-2.0 declared in 62 source file headers) do carry license declarations.
+That attestation is the basis for the LICENSE file here, and it is worth recording because
+the file-level evidence alone is thin for this particular component: the upstream
+repository (https://github.com/jonico/ccfmaster) has no repository-level LICENSE file, and
+only 1 of its 621 source files carries a license header. The sibling components are more
+explicit - core declares Apache-2.0 at the repository level, and 62 of gui's 267 source
+files carry per-file Apache-2.0 headers - which is consistent with a project-wide
+Apache-2.0 license that was simply not restated in every file.
 
 This repository also contains vendored third-party binaries inherited unchanged from
-upstream, including proprietary SDKs (TeamForge, ScrumWorks, SourceForge SOAP). Their own
-licenses govern them; none was added or altered here.
+upstream, including proprietary SDKs (TeamForge, ScrumWorks, SourceForge SOAP). Those are
+NOT covered by the Apache-2.0 license above; their own licenses govern them, and none was
+added or altered here.
