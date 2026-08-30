@@ -1,0 +1,22 @@
+CCFMaster
+Copyright CollabNet, Inc.
+
+LICENSE STATUS: NONE DECLARED
+-----------------------------
+This repository has no license, and one has deliberately NOT been added.
+
+The upstream repository (https://github.com/jonico/ccfmaster) carries no repository-level
+LICENSE file, and only 1 of its 621 source files contains any license header at all. There
+is therefore nothing to record. Choosing a license would mean selecting one on behalf of
+CollabNet, Inc., who hold the copyright - which is not the publisher's to do.
+
+What that means for you: this code is publicly readable because its upstream is publicly
+readable, but no rights are granted. Do not assume you may use, copy, modify or
+redistribute it. If you need to, seek permission from the copyright holder.
+
+By contrast, the sibling repositories core (Apache-2.0, repository-level) and gui
+(Apache-2.0 declared in 62 source file headers) do carry license declarations.
+
+This repository also contains vendored third-party binaries inherited unchanged from
+upstream, including proprietary SDKs (TeamForge, ScrumWorks, SourceForge SOAP). Their own
+licenses govern them; none was added or altered here.
