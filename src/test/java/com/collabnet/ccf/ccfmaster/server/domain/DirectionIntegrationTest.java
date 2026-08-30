@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.test.RooIntegrationTest;
 
@@ -28,12 +28,11 @@ public class DirectionIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'Direction' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'Direction' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Direction' identifier to be null");
 
         // We do not persist due to unique key constraint
         //obj.persist();
         //obj.flush();
-        //org.junit.Assert.assertNotNull("Expected 'Direction' identifier to no longer be null", obj.getId());
+        //org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'Direction' identifier to no longer be null");
     }
 }

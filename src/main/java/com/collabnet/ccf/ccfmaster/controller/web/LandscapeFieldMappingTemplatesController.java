@@ -1,5 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.web;
 
+import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.collabnet.ccf.ccfmaster.server.domain.Directions;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
@@ -243,8 +244,18 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
         Directions directions = ControllerConstants.FORWARD
                 .equals(paramdirection) ? Directions.FORWARD
                 : Directions.REVERSE;
-        CommonsMultipartFile commonsmultipartFile = fileUpload.getFile();
-        byte[] xmlContent = commonsmultipartFile.getFileItem().get();
+        MultipartFile commonsmultipartFile = fileUpload.getFile();
+        byte[] xmlContent;
+        try {
+            // Spring 6 dropped the Commons-FileUpload multipart support, so
+            // CommonsMultipartFile.getFileItem() is gone. MultipartFile.getBytes() is the
+            // equivalent, but it declares IOException where FileItem.get() threw an
+            // unchecked exception, so the checked one is rewrapped to keep the same
+            // failure mode.
+            xmlContent = commonsmultipartFile.getBytes();
+        } catch (IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
         ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlContent);
         FieldMappingLandscapeTemplateList fieldMappingLandscapeTemplateList = null;
         try {

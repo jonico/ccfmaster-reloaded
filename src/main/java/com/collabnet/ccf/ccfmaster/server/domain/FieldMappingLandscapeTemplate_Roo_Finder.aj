@@ -7,8 +7,8 @@ import com.collabnet.ccf.ccfmaster.server.domain.Directions;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
 import java.lang.String;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 privileged aspect FieldMappingLandscapeTemplate_Roo_Finder {
     

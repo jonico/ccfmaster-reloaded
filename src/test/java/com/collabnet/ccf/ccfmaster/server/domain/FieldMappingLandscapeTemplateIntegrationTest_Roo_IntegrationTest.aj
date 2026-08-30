@@ -4,16 +4,16 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplateDataOnDemand;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 privileged aspect FieldMappingLandscapeTemplateIntegrationTest_Roo_IntegrationTest {
     
-    declare @type: FieldMappingLandscapeTemplateIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
+    declare @type: FieldMappingLandscapeTemplateIntegrationTest: @ExtendWith(SpringExtension.class);
     
     declare @type: FieldMappingLandscapeTemplateIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext.xml");
     
@@ -24,92 +24,92 @@ privileged aspect FieldMappingLandscapeTemplateIntegrationTest_Roo_IntegrationTe
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testCountFieldMappingLandscapeTemplates() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", dod.getRandomFieldMappingLandscapeTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingLandscapeTemplate(), "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.countFieldMappingLandscapeTemplates();
-        org.junit.Assert.assertTrue("Counter for 'FieldMappingLandscapeTemplate' incorrectly reported there were no entries", count > 0);
+        org.junit.jupiter.api.Assertions.assertTrue(count > 0, "Counter for 'FieldMappingLandscapeTemplate' incorrectly reported there were no entries");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testFindFieldMappingLandscapeTemplate() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod.getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'FieldMappingLandscapeTemplate' returned the incorrect identifier", id, obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '" + id + "'");
+        org.junit.jupiter.api.Assertions.assertEquals(id, obj.getId(), "Find method for 'FieldMappingLandscapeTemplate' returned the incorrect identifier");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testFindAllFieldMappingLandscapeTemplates() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", dod.getRandomFieldMappingLandscapeTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingLandscapeTemplate(), "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.countFieldMappingLandscapeTemplates();
-        org.junit.Assert.assertTrue("Too expensive to perform a find all test for 'FieldMappingLandscapeTemplate', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
+        org.junit.jupiter.api.Assertions.assertTrue(count < 250, "Too expensive to perform a find all test for 'FieldMappingLandscapeTemplate', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test");
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findAllFieldMappingLandscapeTemplates();
-        org.junit.Assert.assertNotNull("Find all method for 'FieldMappingLandscapeTemplate' illegally returned null", result);
-        org.junit.Assert.assertTrue("Find all method for 'FieldMappingLandscapeTemplate' failed to return any data", result.size() > 0);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find all method for 'FieldMappingLandscapeTemplate' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertTrue(result.size() > 0, "Find all method for 'FieldMappingLandscapeTemplate' failed to return any data");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testFindFieldMappingLandscapeTemplateEntries() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", dod.getRandomFieldMappingLandscapeTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingLandscapeTemplate(), "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.countFieldMappingLandscapeTemplates();
         if (count > 20) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplateEntries(0, (int) count);
-        org.junit.Assert.assertNotNull("Find entries method for 'FieldMappingLandscapeTemplate' illegally returned null", result);
-        org.junit.Assert.assertEquals("Find entries method for 'FieldMappingLandscapeTemplate' returned an incorrect number of entries", count, result.size());
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingLandscapeTemplate' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingLandscapeTemplate' returned an incorrect number of entries");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testFlush() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod.getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '" + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '" + id + "'");
         boolean modified =  dod.modifyFieldMappingLandscapeTemplate(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         obj.flush();
-        org.junit.Assert.assertTrue("Version for 'FieldMappingLandscapeTemplate' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingLandscapeTemplate' failed to increment on flush directive");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testMerge() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod.getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id);
         boolean modified =  dod.modifyFieldMappingLandscapeTemplate(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate merged = (com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate) obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
-        org.junit.Assert.assertTrue("Version for 'FieldMappingLandscapeTemplate' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertEquals(merged.getId(), id, "Identifier of merged object not the same as identifier of original object");
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingLandscapeTemplate' failed to increment on merge and flush directive");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testPersist() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", dod.getRandomFieldMappingLandscapeTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingLandscapeTemplate(), "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod.getNewTransientFieldMappingLandscapeTemplate(Integer.MAX_VALUE);
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'FieldMappingLandscapeTemplate' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide a new transient entity");
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'FieldMappingLandscapeTemplate' identifier to be null");
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'FieldMappingLandscapeTemplate' identifier to no longer be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'FieldMappingLandscapeTemplate' identifier to no longer be null");
     }
     
     @Test
     public void FieldMappingLandscapeTemplateIntegrationTest.testRemove() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod.getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id);
         obj.remove();
         obj.flush();
-        org.junit.Assert.assertNull("Failed to remove 'FieldMappingLandscapeTemplate' with identifier '" + id + "'", com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id));
+        org.junit.jupiter.api.Assertions.assertNull(com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplate(id), "Failed to remove 'FieldMappingLandscapeTemplate' with identifier '" + id + "'");
     }
     
 }

@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.web.helper;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.mvc.extensions.flash.FlashMap;
 import org.springframework.ui.Model;

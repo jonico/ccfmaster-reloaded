@@ -1,7 +1,7 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.test.RooIntegrationTest;
 
@@ -17,9 +17,9 @@ public class CcfCoreStatusIntegrationTest {
     public void nonPersistedDirectionHasNoCoreStatus() {
         Direction dir = directionDataOnDemand
                 .getNewTransientDirection(Integer.MAX_VALUE);
-        Assert.assertNull(dir.getId());
-        Assert.assertNull(CcfCoreStatus.findCcfCoreStatus(dir.getId()));
-        Assert.assertTrue(CcfCoreStatus.findCcfCoreStatusesByDirection(dir)
+        Assertions.assertNull(dir.getId());
+        Assertions.assertNull(CcfCoreStatus.findCcfCoreStatus(dir.getId()));
+        Assertions.assertTrue(CcfCoreStatus.findCcfCoreStatusesByDirection(dir)
                 .getResultList().isEmpty());
     }
 
@@ -53,9 +53,7 @@ public class CcfCoreStatusIntegrationTest {
                         count < 250);
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus> result = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
                 .findAllCcfCoreStatuses();
-        org.junit.Assert.assertNotNull(
-                "Find all method for 'CcfCoreStatus' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find all method for 'CcfCoreStatus' illegally returned null");
         org.junit.Assert
                 .assertTrue(
                         "Find all method for 'CcfCoreStatus' failed to return any data",
@@ -77,9 +75,8 @@ public class CcfCoreStatusIntegrationTest {
                         id);
         obj = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
                 .findCcfCoreStatus(id);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'CcfCoreStatus' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'CcfCoreStatus' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'CcfCoreStatus' returned the incorrect identifier",
@@ -108,32 +105,33 @@ public class CcfCoreStatusIntegrationTest {
                         count, result.size());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testFlush() {
-        com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = dod
-                .getRandomCcfCoreStatus();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                        id);
-        obj = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
-                .findCcfCoreStatus(id);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'CcfCoreStatus' illegally returned null for id '"
-                        + id + "'", obj);
-        boolean modified = dod.modifyCcfCoreStatus(obj);
-        java.lang.Integer currentVersion = obj.getVersion();
-        obj.flush();
-        org.junit.Assert
-                .assertTrue(
-                        "Version for 'CcfCoreStatus' failed to increment on flush directive",
-                        (currentVersion != null && obj.getVersion() > currentVersion)
-                                || !modified);
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = dod
+                    .getRandomCcfCoreStatus();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
+                            id);
+            obj = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
+                    .findCcfCoreStatus(id);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'CcfCoreStatus' illegally returned null for id '"
+                            + id + "'");
+            boolean modified = dod.modifyCcfCoreStatus(obj);
+            java.lang.Integer currentVersion = obj.getVersion();
+            obj.flush();
+            org.junit.Assert
+                    .assertTrue(
+                            "Version for 'CcfCoreStatus' failed to increment on flush directive",
+                            (currentVersion != null && obj.getVersion() > currentVersion)
+                                    || !modified);
+                });
     }
 
     @Test
@@ -171,52 +169,53 @@ public class CcfCoreStatusIntegrationTest {
                                 || !modified);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testPersist() {
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                        dod.getRandomCcfCoreStatus());
-        Direction dir = directionDataOnDemand.getRandomDirection();
-        com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = CcfCoreStatus
-                .findCcfCoreStatus(dir.getId());
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to provide a new transient entity",
-                        obj);
-        obj.setId(null);
-        obj.setVersion(null);
-        org.junit.Assert.assertNull(
-                "Expected 'CcfCoreStatus' identifier to be null", obj.getId());
-        obj.persist();
-        obj.flush();
-        org.junit.Assert.assertNotNull(
-                "Expected 'CcfCoreStatus' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class, () -> {    
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
+                            dod.getRandomCcfCoreStatus());
+            Direction dir = directionDataOnDemand.getRandomDirection();
+            com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = CcfCoreStatus
+                    .findCcfCoreStatus(dir.getId());
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to provide a new transient entity",
+                            obj);
+            obj.setId(null);
+            obj.setVersion(null);
+            org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'CcfCoreStatus' identifier to be null");
+            obj.persist();
+            obj.flush();
+            org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'CcfCoreStatus' identifier to no longer be null");
+                });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = dod
-                .getRandomCcfCoreStatus();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
-                        id);
-        obj = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
-                .findCcfCoreStatus(id);
-        obj.remove();
-        obj.flush();
-        org.junit.Assert
-                .assertNull(
-                        "Failed to remove 'CcfCoreStatus' with identifier '"
-                                + id + "'",
-                        com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
-                                .findCcfCoreStatus(id));
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus obj = dod
+                    .getRandomCcfCoreStatus();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'CcfCoreStatus' failed to provide an identifier",
+                            id);
+            obj = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
+                    .findCcfCoreStatus(id);
+            obj.remove();
+            obj.flush();
+            org.junit.Assert
+                    .assertNull(
+                            "Failed to remove 'CcfCoreStatus' with identifier '"
+                                    + id + "'",
+                            com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
+                                    .findCcfCoreStatus(id));
+                });
     }
 }

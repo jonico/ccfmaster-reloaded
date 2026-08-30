@@ -5,7 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.io.IOException;
 import java.io.Writer;
 
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletResponse;
 
 import org.apache.commons.io.LineIterator;
 import org.springframework.stereotype.Controller;

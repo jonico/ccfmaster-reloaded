@@ -5,14 +5,13 @@ import static com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResu
 import static com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResult.MappingRules.XPATH_ELEMENT;
 import static com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResult.MappingRules.XPATH_CONDITIONAL_CONSTANT_ELEMENT;
 import static com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResult.MappingRules.XPATH_TOP_LEVEL_ATTRIBUTE;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.dom4j.Element;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMapping;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingDataOnDemand;
@@ -20,9 +19,22 @@ import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingKind;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRuleType;
 import com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResult.MappingRules;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
-public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class ConversionResultMappingRulesTest {
     private static final String           RULENAME      = "RULENAME";
 
     private static final String           CONDITION     = "CONDITION";
@@ -63,8 +75,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final String xpath = String.format(
                 "%s/xsl:template/xsl:if[@test='%s']/xsl:element[@name='%s']",
                 XPATH_CONDITIONAL_CONSTANT_ELEMENT, CONDITION, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -80,8 +92,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final String xpath = String.format(
                 "%s/xsl:template/xsl:if[@test='%s']/xsl:element[@name='%s']",
                 XPATH_CONDITIONAL_CONSTANT_ELEMENT, CONDITION, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -97,8 +109,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final String xpath = String.format(
                 "%s/xsl:template/xsl:if[@test='%s']/xsl:element[@name='%s']",
                 XPATH_ELEMENT, CONDITION, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -114,8 +126,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final String xpath = String.format(
                 "%s/xsl:template/xsl:if[@test='%s']/xsl:element[@name='%s']",
                 XPATH_TOP_LEVEL_ATTRIBUTE, CONDITION, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -130,8 +142,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final Element xsl = res.mappingRules().get().getXml();
         final String xpath = String.format("%s/xsl:element[@name='%s']",
                 XPATH_CONSTANT_ELEMENT, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -146,8 +158,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final Element xsl = res.mappingRules().get().getXml();
         final String xpath = String.format("%s/xsl:element[@name='%s']",
                 XPATH_CONSTANT_TOP_LEVEL_ATTRIBUTE, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -162,8 +174,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final Element xsl = res.mappingRules().get().getXml();
         final String xpath = String.format("%s//xsl:element[@name='%s']",
                 XPATH_ELEMENT, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -178,8 +190,8 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         final String xpath = String.format(
                 "%s/xsl:template/xsl:element[@name='%s']",
                 XPATH_TOP_LEVEL_ATTRIBUTE, TARGET);
-        assertFalse("couldn't find rule in result", xsl.selectNodes(xpath)
-                .isEmpty());
+        assertFalse(xsl.selectNodes(xpath)
+                .isEmpty(), "couldn't find rule in result");
     }
 
     @Test
@@ -189,8 +201,7 @@ public class ConversionResultMappingRulesTest extends AbstractTransactionalJUnit
         assertTrue(res.mappingRules().isSome());
         final MappingRules mappingRules = res.mappingRules().get();
         final Element xsl = mappingRules.getXml();
-        assertTrue("weird, I found a rule.",
-                xsl.selectNodes("//xsl:element[@name='TARGET']").isEmpty());
+        assertTrue(xsl.selectNodes("//xsl:element[@name='TARGET']").isEmpty(), "weird, I found a rule.");
     }
 
     @Test

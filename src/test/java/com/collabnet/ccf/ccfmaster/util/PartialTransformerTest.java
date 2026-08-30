@@ -1,9 +1,9 @@
 package com.collabnet.ccf.ccfmaster.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.collabnet.ccf.ccfmaster.util.PartialTransformer.Part;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PartialTransformerTest {
     final Part<Integer, Integer> positivePlus1  = new Part<Integer, Integer>() {
@@ -35,34 +35,38 @@ public class PartialTransformerTest {
 
                                                 };
 
-    @Test(expected = PartialTransformer.NotApplicableException.class)
+    @Test
     public void noApplicablePartsThrows() {
-        final Part<Integer, Integer> part = new Part<Integer, Integer>() {
-            @Override
-            public boolean appliesTo(Integer arg) {
-                return false;
-            }
-
-            @Override
-            public Integer transform(Integer t) {
-                return null;
-            }
-
-        };
-        @SuppressWarnings("unchecked")
-        Transformer<Integer, Integer> transformer = PartialTransformer
-                .create(part);
-        Integer n = transformer.transform(1);
-        fail("transformer returned " + n);
+        org.junit.jupiter.api.Assertions.assertThrows(PartialTransformer.NotApplicableException.class, () -> {    
+            final Part<Integer, Integer> part = new Part<Integer, Integer>() {
+                @Override
+                public boolean appliesTo(Integer arg) {
+                    return false;
+                }
+    
+                @Override
+                public Integer transform(Integer t) {
+                    return null;
+                }
+    
+            };
+            @SuppressWarnings("unchecked")
+            Transformer<Integer, Integer> transformer = PartialTransformer
+                    .create(part);
+            Integer n = transformer.transform(1);
+            fail("transformer returned " + n);
+                });
     }
 
-    @Test(expected = PartialTransformer.NotApplicableException.class)
+    @Test
     public void noPartsThrows() {
-        @SuppressWarnings("unchecked")
-        final Part<Integer, Integer>[] parts = new PartialTransformer.Part[0];
-        Transformer<Integer, Integer> transformer = PartialTransformer
-                .create(parts);
-        transformer.transform(1);
+        org.junit.jupiter.api.Assertions.assertThrows(PartialTransformer.NotApplicableException.class, () -> {    
+            @SuppressWarnings("unchecked")
+            final Part<Integer, Integer>[] parts = new PartialTransformer.Part[0];
+            Transformer<Integer, Integer> transformer = PartialTransformer
+                    .create(parts);
+            transformer.transform(1);
+                });
     }
 
     @Test

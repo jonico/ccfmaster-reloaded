@@ -1,5 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.web.project;
 
+import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.collabnet.ccf.ccfmaster.controller.web.ControllerConstants;
 import com.collabnet.ccf.ccfmaster.controller.web.LandscapeFieldMappingTemplatesController;
@@ -194,8 +195,18 @@ public class ProjectFieldMappingController extends AbstractProjectController {
             @ModelAttribute("fileUpload") FileUpload fileUpload,
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions directions,
             Model model, HttpServletRequest request, HttpSession session) {
-        CommonsMultipartFile commonsmultipartFile = fileUpload.getFile();
-        byte[] xmlContent = commonsmultipartFile.getFileItem().get();
+        MultipartFile commonsmultipartFile = fileUpload.getFile();
+        byte[] xmlContent;
+        try {
+            // Spring 6 dropped the Commons-FileUpload multipart support, so
+            // CommonsMultipartFile.getFileItem() is gone. MultipartFile.getBytes() is the
+            // equivalent, but it declares IOException where FileItem.get() threw an
+            // unchecked exception, so the checked one is rewrapped to keep the same
+            // failure mode.
+            xmlContent = commonsmultipartFile.getBytes();
+        } catch (IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
         ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlContent);
         FieldMappingExternalAppTemplateList fieldMappingExternalAppTemplateList = null;
         //un-marshal JAXB object

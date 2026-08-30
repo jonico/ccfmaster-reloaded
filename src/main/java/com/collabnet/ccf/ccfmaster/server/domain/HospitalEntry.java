@@ -1,18 +1,18 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.util.Date;
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.TypedQuery;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -240,7 +240,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("direction", direction);
         return q;
@@ -271,7 +271,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp = :externalApp ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp = :externalApp ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("externalApp", externalApp);
         return q;
@@ -288,7 +288,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp = :externalApp AND hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp = :externalApp AND hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("externalApp", externalApp);
         q.setParameter("direction", direction);
@@ -303,7 +303,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("landscape", landscape);
         return q;
@@ -316,7 +316,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.direction = :direction AND hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.direction = :direction AND hospitalentry.repositoryMappingDirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("landscape", landscape);
         q.setParameter("direction", direction);
@@ -330,7 +330,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping = :rm ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping = :rm ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("rm", rm);
         return q;
@@ -346,7 +346,7 @@ public class HospitalEntry {
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
                 .createQuery(
-                        "SELECT HospitalEntry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping = :rm AND hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
+                        "SELECT hospitalentry FROM HospitalEntry AS hospitalentry WHERE hospitalentry.repositoryMappingDirection.repositoryMapping = :rm AND hospitalentry.repositoryMappingDirection.direction = :direction ORDER BY hospitalentry.id",
                         HospitalEntry.class);
         q.setParameter("rm", rm);
         q.setParameter("direction", direction);

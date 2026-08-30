@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.collabnet.ccf.ccfmaster.server.domain.Direction;
@@ -23,7 +23,7 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
 
     private String                ccfHome = "/tmp";
 
-    @After
+    @AfterEach
     public void clear() {
         String deleteDirString = String.format("%s%d", "landscape", dod
                 .getSpecificDirection(0).getLandscape().getId());
@@ -31,7 +31,7 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
         FileUtils.deleteQuietly(deleteDir);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String logDirString = String.format("%s%d%s", "landscape", dod
                 .getSpecificDirection(0).getLandscape().getId(),
@@ -68,9 +68,8 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         LogFileList logObj = restTemplate.getForObject(ccfAPIUrl
                 + "/directions/" + id + "/logs/", LogFileList.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Direction' illegally returned null for id '"
-                        + id + "'", logObj);
+        org.junit.jupiter.api.Assertions.assertNotNull(logObj, "Find method for 'Direction' illegally returned null for id '"
+                        + id + "'");
     }
 
     /*
@@ -79,9 +78,9 @@ public class LogFileAPIIntegrationTest extends AbstractAPIIntegrationTest {
      * content-type is not set.
      * @Test public void testLogFile() throws IOException, URISyntaxException {
      * Direction obj = dod.getSpecificDirection(1);
-     * org.junit.Assert.assertNotNull
+     * org.junit.jupiter.api.Assertions.assertNotNull
      * ("Data on demand for 'Direction' failed to initialize correctly", obj);
-     * java.lang.Long id = obj.getId(); org.junit.Assert.assertNotNull(
+     * java.lang.Long id = obj.getId(); org.junit.jupiter.api.Assertions.assertNotNull(
      * "Data on demand for 'Direction' failed to provide an identifier", id);
      * String value = restTemplate.getForObject(ccfAPIUrl + "/directions/"+ id
      * +"/logs/sample-ccf-info.log?firstLine=1&maxlines=2",String.class); }

@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -111,9 +111,7 @@ public class IdentityMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegrat
         obj.setRepositoryMapping(randomObject.getRepositoryMapping());
         obj = restTemplate.postForObject(ccfAPIUrl + linkIdPathSegment, obj,
                 IdentityMapping.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'IdentityMapping' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'IdentityMapping' identifier to no longer be null");
     }
 
     @Test
@@ -135,104 +133,107 @@ public class IdentityMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegrat
                 + "/identitymappings/";
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 IdentityMapping.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'IdentityMapping' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'IdentityMapping' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'IdentityMapping' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testReGrandparenting() {
-        com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
-                .getRandomIdentityMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
-                IdentityMapping.class);
-        ExternalApp ea = dodEA.getNewTransientExternalApp(42);
-        ea.persist();
-
-        org.junit.Assert.assertNotNull(
-                "Find method for 'IdentityMapping' illegally returned null for id '"
-                        + id + "'", obj);
-        String linkIdPathSegment = "/linkid/" + ea.getLinkId()
-                + "/identitymappings/";
-
-        try {
-            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 403", 403, e.getStatusCode().value());
-            throw e;
-        }
-    }
-
-    @Test(expected = HttpClientErrorException.class)
-    public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
-                .getRandomIdentityMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to provide an identifier",
-                        id);
-        String linkIdPathSegment = "/linkid/"
-                + obj.getRepositoryMapping().getExternalApp().getLinkId()
-                + "/identitymappings/";
-        restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
+                    .getRandomIdentityMapping();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
                     IdentityMapping.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+            ExternalApp ea = dodEA.getNewTransientExternalApp(42);
+            ea.persist();
+    
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'IdentityMapping' illegally returned null for id '"
+                            + id + "'");
+            String linkIdPathSegment = "/linkid/" + ea.getLinkId()
+                    + "/identitymappings/";
+    
+            try {
+                restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(403, e.getStatusCode().value(), "Expected 403");
+                throw e;
+            }
+                });
     }
 
-    @Test(expected = HttpClientErrorException.class)
-    public void testReparenting() {
-        com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
-                .getRandomIdentityMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
-                IdentityMapping.class);
-        RepositoryMapping rm = dodRM.getNewTransientRepositoryMapping(42);
-        rm.persist();
-        obj.setRepositoryMapping(rm);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'IdentityMapping' illegally returned null for id '"
-                        + id + "'", obj);
-        String linkIdPathSegment = "/linkid/"
-                + obj.getRepositoryMapping().getExternalApp().getLinkId()
-                + "/identitymappings/";
+    @Test
+    public void testRemove() {
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
+                    .getRandomIdentityMapping();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to provide an identifier",
+                            id);
+            String linkIdPathSegment = "/linkid/"
+                    + obj.getRepositoryMapping().getExternalApp().getLinkId()
+                    + "/identitymappings/";
+            restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
+                        IdentityMapping.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
+    }
 
-        try {
-            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 403", 403, e.getStatusCode().value());
-            throw e;
-        }
+    @Test
+    public void testReparenting() {
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
+                    .getRandomIdentityMapping();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
+                    IdentityMapping.class);
+            RepositoryMapping rm = dodRM.getNewTransientRepositoryMapping(42);
+            rm.persist();
+            obj.setRepositoryMapping(rm);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'IdentityMapping' illegally returned null for id '"
+                            + id + "'");
+            String linkIdPathSegment = "/linkid/"
+                    + obj.getRepositoryMapping().getExternalApp().getLinkId()
+                    + "/identitymappings/";
+    
+            try {
+                restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(403, e.getStatusCode().value(), "Expected 403");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -251,9 +252,8 @@ public class IdentityMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegrat
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
                 IdentityMapping.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'IdentityMapping' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'IdentityMapping' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyIdentityMapping(obj);
         String linkIdPathSegment = "/linkid/"
                 + obj.getRepositoryMapping().getExternalApp().getLinkId()
@@ -276,38 +276,35 @@ public class IdentityMappingLinkIdAPIIntegrationTest extends AbstractAPIIntegrat
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 IdentityMapping.class);
-        org.junit.Assert.assertFalse("source artifact id should be immutable",
-                "foo".equals(obj.getSourceArtifactId()));
-        org.junit.Assert.assertFalse("target artifact id should be immutable",
-                "bar".equals(obj.getTargetArtifactId()));
-        org.junit.Assert.assertTrue(
-                "last modification time should be changeable",
-                currentDate.equals(obj.getTargetLastModificationTime()));
+        org.junit.jupiter.api.Assertions.assertFalse("foo".equals(obj.getSourceArtifactId()), "source artifact id should be immutable");
+        org.junit.jupiter.api.Assertions.assertFalse("bar".equals(obj.getTargetArtifactId()), "target artifact id should be immutable");
+        org.junit.jupiter.api.Assertions.assertTrue(currentDate.equals(obj.getTargetLastModificationTime()), "last modification time should be changeable");
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
-                .getRandomIdentityMapping();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'IdentityMapping' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
-                IdentityMapping.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'IdentityMapping' illegally returned null for id '"
-                        + id + "'", obj);
-        String linkIdPathSegment = "/linkid/"
-                + obj.getRepositoryMapping().getExternalApp().getLinkId()
-                + "/identitymappings/";
-        //test with wrong id
-        restTemplate.put(ccfAPIUrl + linkIdPathSegment + id + 42, obj);
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.IdentityMapping obj = dod
+                    .getRandomIdentityMapping();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'IdentityMapping' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/identitymappings/" + id,
+                    IdentityMapping.class);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'IdentityMapping' illegally returned null for id '"
+                            + id + "'");
+            String linkIdPathSegment = "/linkid/"
+                    + obj.getRepositoryMapping().getExternalApp().getLinkId()
+                    + "/identitymappings/";
+            //test with wrong id
+            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id + 42, obj);
+                });
     }
 
 }

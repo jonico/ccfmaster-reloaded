@@ -2,17 +2,17 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.io.File;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.persistence.UniqueConstraint;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.TypedQuery;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.UniqueConstraint;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -32,7 +32,7 @@ import org.springframework.util.Assert;
         "findDirectionsByDirection" })
 public class Direction {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, Direction> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, Direction> {
 
         @Override
         public Long marshal(Direction v) throws Exception {
@@ -169,7 +169,7 @@ public class Direction {
         EntityManager em = entityManager();
         TypedQuery<Direction> q = em
                 .createQuery(
-                        "SELECT Direction FROM Direction AS direction WHERE direction.direction = :direction",
+                        "SELECT direction FROM Direction AS direction WHERE direction.direction = :direction",
                         Direction.class);
         q.setParameter("direction", direction);
         return q;
@@ -183,7 +183,7 @@ public class Direction {
         EntityManager em = entityManager();
         TypedQuery<Direction> q = em
                 .createQuery(
-                        "SELECT Direction FROM Direction AS direction WHERE direction.landscape = :landscape",
+                        "SELECT direction FROM Direction AS direction WHERE direction.landscape = :landscape",
                         Direction.class);
         q.setParameter("landscape", landscape);
         return q;
@@ -200,7 +200,7 @@ public class Direction {
         EntityManager em = entityManager();
         TypedQuery<Direction> q = em
                 .createQuery(
-                        "SELECT Direction FROM Direction AS direction WHERE direction.landscape = :landscape  AND direction.direction = :direction",
+                        "SELECT direction FROM Direction AS direction WHERE direction.landscape = :landscape  AND direction.direction = :direction",
                         Direction.class);
         q.setParameter("landscape", landscape);
         q.setParameter("direction", direction);

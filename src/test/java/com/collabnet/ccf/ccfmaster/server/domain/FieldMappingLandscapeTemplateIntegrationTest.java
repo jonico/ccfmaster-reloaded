@@ -1,11 +1,11 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.test.RooIntegrationTest;
 
@@ -24,17 +24,15 @@ public class FieldMappingLandscapeTemplateIntegrationTest {
         MockFieldMappingLandscapeTemplatePersisterFactory mockFmltpf = new MockFieldMappingLandscapeTemplatePersisterFactory();
         fmlt.setPersisterFactory(mockFmltpf);
         fmlt.persist();
-        assertTrue("save wasn't called on persist().", mockFmltpf.calledSave);
+        assertTrue(mockFmltpf.calledSave, "save wasn't called on persist().");
 
         mockFmltpf = new MockFieldMappingLandscapeTemplatePersisterFactory();
         fmlt = FieldMappingLandscapeTemplate
                 .findFieldMappingLandscapeTemplate(fmlt.getId());
-        assertNotNull(
-                "couldn't find fieldMappingLandscapeTemplate after persist.",
-                fmlt);
+        assertNotNull(fmlt, "couldn't find fieldMappingLandscapeTemplate after persist.");
         fmlt.setPersisterFactory(mockFmltpf);
         fmlt = fmlt.merge();
-        assertTrue("save wasn't called on merge().", mockFmltpf.calledSave);
+        assertTrue(mockFmltpf.calledSave, "save wasn't called on merge().");
 
     }
 
@@ -42,11 +40,13 @@ public class FieldMappingLandscapeTemplateIntegrationTest {
     public void testMarkerMethod() {
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void throwsWhenBadName() {
-        FieldMappingLandscapeTemplate fmlt = fmltdod
-                .getNewTransientFieldMappingLandscapeTemplate(42);
-        fmlt.setName("$!@invalid");
-        fmlt.persist();
+        org.junit.jupiter.api.Assertions.assertThrows(ConstraintViolationException.class, () -> {    
+            FieldMappingLandscapeTemplate fmlt = fmltdod
+                    .getNewTransientFieldMappingLandscapeTemplate(42);
+            fmlt.setName("$!@invalid");
+            fmlt.persist();
+                });
     }
 }

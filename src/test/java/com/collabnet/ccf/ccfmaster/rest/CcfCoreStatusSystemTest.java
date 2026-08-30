@@ -1,21 +1,20 @@
 package com.collabnet.ccf.ccfmaster.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus;
 import com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus.CoreState;
@@ -29,9 +28,22 @@ import com.collabnet.ccf.ccfmaster.server.domain.Participant;
 import com.collabnet.ccf.ccfmaster.server.domain.ParticipantConfig;
 import com.collabnet.ccf.ccfmaster.server.domain.SystemKind;
 import com.collabnet.ccf.ccfmaster.server.domain.Timezone;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
-public class CcfCoreStatusSystemTest extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class CcfCoreStatusSystemTest {
 
     @Autowired
     @Qualifier("ccfHome")
@@ -47,7 +59,7 @@ public class CcfCoreStatusSystemTest extends AbstractTransactionalJUnit4SpringCo
     protected Direction   tf2swp;
     private CcfCoreStatus coreStatus;
 
-    @After
+    @AfterEach
     public void cleanup() throws InterruptedException, IOException {
         coreStatus.setExecutedCommand(ExecutedCommand.STOP);
         coreStatus.merge();
@@ -55,7 +67,7 @@ public class CcfCoreStatusSystemTest extends AbstractTransactionalJUnit4SpringCo
         FileUtils.forceDelete(new File(ccfHome, "landscape" + swptf.getId()));
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         tf = new Participant();
         tf.setDescription("Description for TF landscape");

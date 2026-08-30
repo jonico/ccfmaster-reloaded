@@ -8,10 +8,9 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.zip.ZipException;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +18,7 @@ import com.collabnet.ccf.ccfmaster.config.Version;
 import com.google.common.io.Closeables;
 import com.google.common.io.Resources;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CoreZipFileTest {
 
@@ -27,25 +26,33 @@ public class CoreZipFileTest {
     private static final String INVALID_ZIP_FILE_NAME = "invalid.zip";
     private static final String BAD_ZIP_FILE_NAME     = "bad.zip";
 
-    @Rule
-    public TemporaryFolder      folder                = new TemporaryFolder();
+    // JUnit 5 has no @Rule; @TempDir is the replacement for TemporaryFolder. It injects
+    // the directory itself rather than a rule object, so getRoot() becomes the field and
+    // newFile(name) becomes an explicit File + createNewFile().
+    @TempDir
+    File                        folder;
 
     private File                propFile              = null;
 
-    @Before
+    @BeforeEach
     public void init() throws IOException {
-        propFile = folder.newFile(CoreProperties.META_INFORMATION_FILENAME);
+        propFile = new File(folder, CoreProperties.META_INFORMATION_FILENAME);
+        propFile.createNewFile();
     }
 
-    @Test(expected = ZipException.class)
+    @Test
     public void unzipBadZipFileThrowsZipFileException() throws ZipException,
             IOException {
-        CoreZipFile czf = null;
-        try {
-            czf = createCoreZipFile(BAD_ZIP_FILE_NAME);
-        } finally {
-            Closeables.closeQuietly(czf);
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(ZipException.class, () -> {    
+            CoreZipFile czf = null;
+            try {
+                czf = createCoreZipFile(BAD_ZIP_FILE_NAME);
+            } finally {
+                // Guava dropped Closeables.closeQuietly(Closeable); close(x, true) is
+                // the replacement that swallows IOException
+                Closeables.close(czf, true);
+            }
+                });
     }
 
     @Test
@@ -55,31 +62,33 @@ public class CoreZipFileTest {
         boolean threw = true;
         try {
             czf = createCoreZipFile(VALID_ZIP_FILE_NAME);
-            assertNotNull("creating CoreZipFile failed.", czf);
-            assertTrue("validating valid zip file failed", czf.validate());
-            final File root = folder.getRoot();
+            assertNotNull(czf, "creating CoreZipFile failed.");
+            assertTrue(czf.validate(), "validating valid zip file failed");
+            final File root = folder;
             int before = root.list().length;
             czf.unzipTo(root);
             int after = root.list().length;
-            assertTrue("no new files in " + root, before < after);
+            assertTrue(before < after, "no new files in " + root);
             threw = false;
         } finally {
             Closeables.close(czf, threw);
         }
     }
 
-    @Test(expected = CoreUpdateException.class)
+    @Test
     public void unzipDoesntOverwriteNewerLandscape() throws IOException {
-        writeCorePropFile(propFile, new Version(200, 0, 0, ""), "foo");
-        CoreZipFile czf = null;
-        boolean threw = true;
-        try {
-            czf = createCoreZipFile(VALID_ZIP_FILE_NAME);
-            czf.unzipTo(folder.getRoot());
-            threw = false;
-        } finally {
-            Closeables.close(czf, threw);
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(CoreUpdateException.class, () -> {    
+            writeCorePropFile(propFile, new Version(200, 0, 0, ""), "foo");
+            CoreZipFile czf = null;
+            boolean threw = true;
+            try {
+                czf = createCoreZipFile(VALID_ZIP_FILE_NAME);
+                czf.unzipTo(folder);
+                threw = false;
+            } finally {
+                Closeables.close(czf, threw);
+            }
+                });
     }
 
     @Test
@@ -89,8 +98,8 @@ public class CoreZipFileTest {
         boolean threw = true;
         try {
             czf = createCoreZipFile(INVALID_ZIP_FILE_NAME);
-            assertNotNull("creating CoreZipFile failed", czf);
-            assertFalse("validating invalid zip should fail", czf.validate());
+            assertNotNull(czf, "creating CoreZipFile failed");
+            assertFalse(czf.validate(), "validating invalid zip should fail");
             threw = false;
         } finally {
             Closeables.close(czf, threw);
@@ -123,8 +132,9 @@ public class CoreZipFileTest {
             ZipException {
         URL testCoreZip = Resources
                 .getResource(CoreZipFileTest.class, fileName);
+        // Guava replaced InputSupplier with ByteSource
         MultipartFile upload = new MockMultipartFile("file", Resources
-                .newInputStreamSupplier(testCoreZip).getInput());
+                .asByteSource(testCoreZip).openStream());
         return CoreZipFile.fromMultipartFile(upload);
     }
 

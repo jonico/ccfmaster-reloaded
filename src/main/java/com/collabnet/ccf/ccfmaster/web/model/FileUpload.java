@@ -1,17 +1,17 @@
 package com.collabnet.ccf.ccfmaster.web.model;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 public class FileUpload {
 
-    CommonsMultipartFile file;
+    MultipartFile file;
     private String       fieldmappingName = "";
 
     public String getFieldmappingName() {
         return fieldmappingName;
     }
 
-    public CommonsMultipartFile getFile() {
+    public MultipartFile getFile() {
         return file;
     }
 
@@ -19,7 +19,7 @@ public class FileUpload {
         this.fieldmappingName = fieldmappingName;
     }
 
-    public void setFile(CommonsMultipartFile file) {
+    public void setFile(MultipartFile file) {
         this.file = file;
     }
 

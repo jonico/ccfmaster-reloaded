@@ -1,14 +1,14 @@
 package com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.net.URL;
 
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
@@ -27,8 +27,8 @@ public class XsltValidatorTest {
             final Element rootElement = DocumentHelper.parseText(xslt)
                     .getRootElement();
             final String functionName = "encodeHTMLToEntityReferences";
-            assertFalse("no function calls in " + resourceName, XsltValidator
-                    .findFunctionCalls(rootElement, functionName).isEmpty());
+            assertFalse(XsltValidator
+                    .findFunctionCalls(rootElement, functionName).isEmpty(), "no function calls in " + resourceName);
         }
     }
 

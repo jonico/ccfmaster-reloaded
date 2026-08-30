@@ -4,20 +4,32 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.core.PropertiesConfigItemPersister;
 import com.collabnet.ccf.ccfmaster.server.domain.ParticipantConfig;
 import com.collabnet.ccf.ccfmaster.server.domain.ParticipantConfigDataOnDemand;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration()
-public class PropertiesParticipantConfigStrategyTest extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class PropertiesParticipantConfigStrategyTest {
 
     @Autowired
     private ParticipantConfigDataOnDemand dod;
@@ -30,18 +42,16 @@ public class PropertiesParticipantConfigStrategyTest extends AbstractTransaction
         pc.remove();
         final File propFile = strategy.getPropFile();
         try {
-            assertTrue(propFile + " doesn't exist.", propFile.exists());
+            assertTrue(propFile.exists(), propFile + " doesn't exist.");
             Properties props = strategy.loadProperties(propFile);
-            assertFalse("properties have key " + pc.getName(),
-                    props.containsKey(pc.getName()));
-            assertNull("value " + pc.getVal() + " in properties.",
-                    props.getProperty(pc.getName()));
+            assertFalse(props.containsKey(pc.getName()), "properties have key " + pc.getName());
+            assertNull(props.getProperty(pc.getName()), "value " + pc.getVal() + " in properties.");
         } finally {
             propFile.delete();
         }
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         this.pc = dod.getRandomParticipantConfig();
     }
@@ -55,12 +65,10 @@ public class PropertiesParticipantConfigStrategyTest extends AbstractTransaction
         pc.merge();
         final File propFile = strategy.getPropFile();
         try {
-            assertTrue(propFile + " doesn't exist.", propFile.exists());
+            assertTrue(propFile.exists(), propFile + " doesn't exist.");
             Properties props = strategy.loadProperties(propFile);
-            assertTrue("properties don't have key " + pc.getName(),
-                    props.containsKey(pc.getName()));
-            assertEquals("value " + pc.getVal() + " not in properties.",
-                    newVal, props.getProperty(pc.getName()));
+            assertTrue(props.containsKey(pc.getName()), "properties don't have key " + pc.getName());
+            assertEquals(newVal, props.getProperty(pc.getName()), "value " + pc.getVal() + " not in properties.");
         } finally {
             propFile.delete();
         }
@@ -73,12 +81,10 @@ public class PropertiesParticipantConfigStrategyTest extends AbstractTransaction
         pc.persist();
         final File propFile = strategy.getPropFile();
         try {
-            assertTrue(propFile + " doesn't exist.", propFile.exists());
+            assertTrue(propFile.exists(), propFile + " doesn't exist.");
             Properties props = strategy.loadProperties(propFile);
-            assertTrue("properties don't have key " + pc.getName(),
-                    props.containsKey(pc.getName()));
-            assertEquals("value " + pc.getVal() + " not in properties.",
-                    pc.getVal(), props.getProperty(pc.getName()));
+            assertTrue(props.containsKey(pc.getName()), "properties don't have key " + pc.getName());
+            assertEquals(pc.getVal(), props.getProperty(pc.getName()), "value " + pc.getVal() + " not in properties.");
         } finally {
             propFile.delete();
         }
@@ -92,12 +98,10 @@ public class PropertiesParticipantConfigStrategyTest extends AbstractTransaction
                 propFile);
         strategy.save(pc);
         strategy.delete(pc);
-        assertTrue(propFile + " doesn't exist.", propFile.exists());
+        assertTrue(propFile.exists(), propFile + " doesn't exist.");
         Properties props = strategy.loadProperties(propFile);
-        assertFalse("properties have key " + pc.getName(),
-                props.containsKey(pc.getName()));
-        assertNull("value " + pc.getVal() + " in properties.",
-                props.getProperty(pc.getName()));
+        assertFalse(props.containsKey(pc.getName()), "properties have key " + pc.getName());
+        assertNull(props.getProperty(pc.getName()), "value " + pc.getVal() + " in properties.");
     }
 
     @Test
@@ -107,12 +111,10 @@ public class PropertiesParticipantConfigStrategyTest extends AbstractTransaction
         final PropertiesConfigItemPersister<ParticipantConfig> strategy = new PropertiesConfigItemPersister<ParticipantConfig>(
                 propFile);
         strategy.save(pc);
-        assertTrue(propFile + " doesn't exist.", propFile.exists());
+        assertTrue(propFile.exists(), propFile + " doesn't exist.");
         Properties props = strategy.loadProperties(propFile);
-        assertTrue("properties don't have key " + pc.getName(),
-                props.containsKey(pc.getName()));
-        assertEquals("value " + pc.getVal() + " not in properties.",
-                pc.getVal(), props.getProperty(pc.getName()));
+        assertTrue(props.containsKey(pc.getName()), "properties don't have key " + pc.getName());
+        assertEquals(pc.getVal(), props.getProperty(pc.getName()), "value " + pc.getVal() + " not in properties.");
     }
 
 }

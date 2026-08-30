@@ -48,11 +48,13 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         registry.addConverter(new RepositoryMappingDirectionConverter());
     }
     
-    public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {
-        super.afterPropertiesSet();
-        installLabelConverters(getObject());
-    }
-    
+    // afterPropertiesSet() has been pushed into ApplicationConversionServiceFactoryBean
+    // (the mechanism this file's own header describes) because Spring 3.1 deleted
+    // FormattingConversionServiceFactoryBean.installFormatters(), which is where the two
+    // hand-written application converters used to be registered. There is nowhere else to
+    // hook them in: installLabelConverters() below is an ITD on the same class, so the
+    // .java cannot override it, and the class had no other lifecycle callback left.
+
     static class com.collabnet.ccf.ccfmaster.controller.ApplicationConversionServiceFactoryBean.CcfCoreStatusConverter implements Converter<CcfCoreStatus, String>  {
         public String convert(CcfCoreStatus ccfCoreStatus) {
         return new StringBuilder().append(ccfCoreStatus.getCurrentStatus()).append(" ").append(ccfCoreStatus.getExecutedCommand()).toString();

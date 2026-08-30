@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.config;
 import java.io.Serializable;
 import java.util.Properties;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;

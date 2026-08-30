@@ -1,26 +1,38 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMapping;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
 import com.collabnet.ccf.ccfmaster.server.domain.Mapping;
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
-public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class StorageDirectoryTest {
     @Autowired
     private FieldMappingDataOnDemand                    fmDod;
     @Autowired
@@ -30,7 +42,7 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
 
     private File                                        baseDir = null;
 
-    @Before
+    @BeforeEach
     public void createTempDir() throws IOException {
         baseDir = File.createTempFile(StorageDirectoryTest.class.getName(),
                 "dir");
@@ -38,7 +50,7 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
         baseDir.mkdir();
     }
 
-    @After
+    @AfterEach
     public void removeTempDir() throws IOException {
         FileUtils.forceDelete(baseDir);
     }
@@ -48,8 +60,7 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
         final FieldMapping fm = fmDod.getNewTransientFieldMapping(0);
         final RepositoryMappingDirection rmd = fm.getParent();
         final File dir = mappingStorageDirectoryTests(fm);
-        assertTrue("RMD direction not in directory",
-                dir.toString().contains(rmd.getDirection().toString()));
+        assertTrue(dir.toString().contains(rmd.getDirection().toString()), "RMD direction not in directory");
     }
 
     @Test
@@ -57,13 +68,11 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
         final FieldMappingExternalAppTemplate fmeat = fmeatDod
                 .getNewTransientFieldMappingExternalAppTemplate(0);
         final File dir = mappingStorageDirectoryTests(fmeat);
-        assertTrue(
-                "template direction not in directory " + dir,
-                dir.toString()
+        assertTrue(dir.toString()
                         .toLowerCase()
-                        .contains(fmeat.getDirection().toString().toLowerCase()));
-        assertTrue("linkId not in directory " + dir, dir.toString()
-                .toLowerCase().matches(".*?prpl\\d+.*"));
+                        .contains(fmeat.getDirection().toString().toLowerCase()), "template direction not in directory " + dir);
+        assertTrue(dir.toString()
+                .toLowerCase().matches(".*?prpl\\d+.*"), "linkId not in directory " + dir);
     }
 
     @Test
@@ -71,11 +80,9 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
         final FieldMappingLandscapeTemplate fmeat = fmltDod
                 .getNewTransientFieldMappingLandscapeTemplate(0);
         final File dir = mappingStorageDirectoryTests(fmeat);
-        assertTrue(
-                "template direction not in directory " + dir,
-                dir.toString()
+        assertTrue(dir.toString()
                         .toLowerCase()
-                        .contains(fmeat.getDirection().toString().toLowerCase()));
+                        .contains(fmeat.getDirection().toString().toLowerCase()), "template direction not in directory " + dir);
     }
 
     private File mappingStorageDirectoryTests(Mapping<?> mapping) {
@@ -83,8 +90,8 @@ public class StorageDirectoryTest extends AbstractTransactionalJUnit4SpringConte
         System.out.println(dir);
         //		assertTrue(dir + " doesn't exist " + dir, dir.exists());
         //		assertTrue(dir + " is not a directory " + dir, dir.isDirectory());
-        assertTrue("landscape not in directory path " + dir, dir.toString()
-                .toLowerCase().matches(".*?landscape\\d+.*"));
+        assertTrue(dir.toString()
+                .toLowerCase().matches(".*?landscape\\d+.*"), "landscape not in directory path " + dir);
         return dir;
     }
 }

@@ -8,8 +8,8 @@ import javax.xml.transform.TransformerConfigurationException;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.core.CoreConfigurationException;
 import com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.ConversionResult.CustomXsl;
@@ -17,11 +17,11 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AbstractPersisterTest {
 
-    @Ignore("methods are only rejected during XSLT runtime")
+    @Disabled("methods are only rejected during XSLT runtime")
     @Test
     public void callingNonWhiteListedMethodsFails() throws IOException,
             DocumentException {
@@ -36,22 +36,26 @@ public class AbstractPersisterTest {
 
     }
 
-    @Test(expected = CoreConfigurationException.class)
+    @Test
     public void nonXsltXmlThrows() throws DocumentException, IOException,
             TransformerConfigurationException {
-        final String resourceName = "bad_xslt.txt";
-        validateResource(resourceName);
+        org.junit.jupiter.api.Assertions.assertThrows(CoreConfigurationException.class, () -> {    
+            final String resourceName = "bad_xslt.txt";
+            validateResource(resourceName);
+                });
     }
 
-    @Ignore("this test is slow and only shows bad Xalan behaviour which we can't do anything about.")
-    @Test(expected = StackOverflowError.class)
+    @Disabled("this test is slow and only shows bad Xalan behaviour which we can't do anything about.")
+    @Test
     public void xalanCrashesInsteadOfThrowingException()
             throws DocumentException, TransformerConfigurationException {
-        final String xslt = "<valid-xml-but-not-xslt xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
-                + "	<xsl:variable select=\"document(\" />"
-                + "</valid-xml-but-not-xslt>";
-        final ConversionResult conversionResult = str2ConversionResult(xslt);
-        AbstractPersister.validate(conversionResult);
+        org.junit.jupiter.api.Assertions.assertThrows(StackOverflowError.class, () -> {    
+            final String xslt = "<valid-xml-but-not-xslt xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
+                    + "	<xsl:variable select=\"document(\" />"
+                    + "</valid-xml-but-not-xslt>";
+            final ConversionResult conversionResult = str2ConversionResult(xslt);
+            AbstractPersister.validate(conversionResult);
+                });
     }
 
     @Test

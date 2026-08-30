@@ -1,7 +1,6 @@
 package com.collabnet.ccf.ccfmaster.web.helper;
 
 import java.rmi.RemoteException;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -15,8 +14,10 @@ import com.collabnet.teamforge.api.tracker.ArtifactDO;
 import com.collabnet.teamforge.api.tracker.TrackerClient;
 import com.collabnet.teamforge.api.tracker.TrackerDO;
 import com.google.common.base.Function;
-import com.google.common.collect.ComputationException;
-import com.google.common.collect.MapMaker;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 
 public class RepositoryConnections {
 
@@ -77,7 +78,7 @@ public class RepositoryConnections {
                         .teamForgeConnection();
                 return detailsForArtifactId(connection, artifactId);
             } catch (RemoteException e) {
-                throw new ComputationException(e);
+                throw new UncheckedExecutionException(e);
             }
         }
 
@@ -124,7 +125,7 @@ public class RepositoryConnections {
                         .teamForgeConnection();
                 return detailsFor(connection, repositoryId);
             } catch (RemoteException e) {
-                throw new ComputationException(e);
+                throw new UncheckedExecutionException(e);
             }
         }
 
@@ -166,25 +167,33 @@ public class RepositoryConnections {
     private static final Logger                                  log                   = LoggerFactory
                                                                                                .getLogger(RepositoryConnections.class);
 
-    private static final ConcurrentMap<String, RepositoryDetail> repositoryDetailCache = new MapMaker()
-                                                                                               .maximumSize(
-                                                                                                       1000)
-                                                                                               .expireAfterWrite(
-                                                                                                       20,
-                                                                                                       TimeUnit.MINUTES)
-                                                                                               .softValues()
-                                                                                               .makeComputingMap(
-                                                                                                       new RepositoryDetailFinder());
+    /*
+     * MapMaker.maximumSize/expireAfterWrite/softValues/makeComputingMap were moved out of
+     * MapMaker into CacheBuilder in Guava 11-13 and then deleted. CacheBuilder with a
+     * CacheLoader is the documented replacement and keeps the same four properties;
+     * LoadingCache.getUnchecked() is the equivalent of the computing map's get().
+     */
+    private static final LoadingCache<String, RepositoryDetail> repositoryDetailCache = CacheBuilder
+                                                                                              .newBuilder()
+                                                                                              .maximumSize(
+                                                                                                      1000)
+                                                                                              .expireAfterWrite(
+                                                                                                      20,
+                                                                                                      TimeUnit.MINUTES)
+                                                                                              .softValues()
+                                                                                              .build(CacheLoader
+                                                                                                      .from(new RepositoryDetailFinder()));
 
-    private static final ConcurrentMap<String, ArtifactDetail>   artifactDetailCache   = new MapMaker()
-                                                                                               .maximumSize(
-                                                                                                       1000)
-                                                                                               .expireAfterWrite(
-                                                                                                       20,
-                                                                                                       TimeUnit.MINUTES)
-                                                                                               .softValues()
-                                                                                               .makeComputingMap(
-                                                                                                       new ArtifactDetailFinder());
+    private static final LoadingCache<String, ArtifactDetail>   artifactDetailCache   = CacheBuilder
+                                                                                              .newBuilder()
+                                                                                              .maximumSize(
+                                                                                                      1000)
+                                                                                              .expireAfterWrite(
+                                                                                                      20,
+                                                                                                      TimeUnit.MINUTES)
+                                                                                              .softValues()
+                                                                                              .build(CacheLoader
+                                                                                                      .from(new ArtifactDetailFinder()));
 
     // prevent instantiation
     private RepositoryConnections() {
@@ -192,8 +201,8 @@ public class RepositoryConnections {
 
     public static ArtifactDetail detailsForArtifact(String tfRepositoryId) {
         try {
-            return artifactDetailCache.get(tfRepositoryId);
-        } catch (ComputationException e) {
+            return artifactDetailCache.getUnchecked(tfRepositoryId);
+        } catch (UncheckedExecutionException e) {
             log.info("caught RemoteException while getting details for "
                     + tfRepositoryId + ", returning dummy.", e);
             return new ArtifactDetail("null", "null", tfRepositoryId);
@@ -202,8 +211,8 @@ public class RepositoryConnections {
 
     public static RepositoryDetail detailsForRepository(String tfRepositoryId) {
         try {
-            return repositoryDetailCache.get(tfRepositoryId);
-        } catch (ComputationException e) {
+            return repositoryDetailCache.getUnchecked(tfRepositoryId);
+        } catch (UncheckedExecutionException e) {
             log.info("caught RemoteException while getting details for "
                     + tfRepositoryId + ", returning dummy.", e);
             return new RepositoryDetail("null", "null", tfRepositoryId);

@@ -1,11 +1,11 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PrefixGeneratorTest {
 
@@ -24,14 +24,18 @@ public class PrefixGeneratorTest {
         }
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void prefixForLessThanZeroThrows() {
-        CreateIntegratedAppStrategy.prefixFor(-1);
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            CreateIntegratedAppStrategy.prefixFor(-1);
+                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void prefixForTooLargeThrows() {
-        CreateIntegratedAppStrategy.prefixFor(0x1000000);
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            CreateIntegratedAppStrategy.prefixFor(0x1000000);
+                });
     }
 
     @Test

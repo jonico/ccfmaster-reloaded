@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 					
-	<!-- JSON Marshaling -->
-	<util:constant id="jsonBasicClassIntrospector" static-field="org.codehaus.jackson.map.introspect.BasicClassIntrospector.instance"/>
+	<!--
+		JSON Marshaling.
 
-	<bean class="org.codehaus.jackson.xc.JaxbAnnotationIntrospector" id="jsonJaxbAnnotationIntrospector"/>
+		Jackson 1 (org.codehaus.jackson) is dead; this is Jackson 2, and
+		jackson-module-jakarta-xmlbind-annotations replaces jackson-xc.
 
-	<bean class="org.codehaus.jackson.map.introspect.VisibilityChecker.Std" factory-method="defaultInstance" id="visibilityChecker"/>
-
-	<bean class="org.codehaus.jackson.map.ObjectMapper" id="jsonObjectMapper">
-		<property name="serializationConfig">
-			<bean class="org.codehaus.jackson.map.SerializationConfig">
-				<constructor-arg ref="jsonBasicClassIntrospector"/>
-				<constructor-arg ref="jsonJaxbAnnotationIntrospector"/>
-				<constructor-arg ref="visibilityChecker"/>				
-			</bean>
-		</property>
-		<property name="deserializationConfig">
-			<bean class="org.codehaus.jackson.map.DeserializationConfig">
-				 <constructor-arg ref="jsonBasicClassIntrospector"/>
-				<constructor-arg ref="jsonJaxbAnnotationIntrospector"/>
-				<constructor-arg ref="visibilityChecker"/>				
+		The three helper beans have gone because in Jackson 2 they are the defaults and are
+		no longer constructor arguments: SerializationConfig and DeserializationConfig are
+		not publicly constructible, BasicClassIntrospector.instance is already the default
+		class introspector, and VisibilityChecker.Std.defaultInstance() is already the
+		default visibility checker. So the only thing this configuration ever actually
+		changed - using the JAXB annotations rather than Jackson's own - is what is left.
+	-->
+	<bean class="com.fasterxml.jackson.databind.ObjectMapper" id="jsonObjectMapper">
+		<property name="annotationIntrospector">
+			<bean class="com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector" id="jsonJaxbAnnotationIntrospector">
+				<constructor-arg>
+					<bean class="com.fasterxml.jackson.databind.type.TypeFactory" factory-method="defaultInstance"/>
+				</constructor-arg>
 			</bean>
 		</property>
 	</bean>

@@ -3,7 +3,7 @@
 
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 privileged aspect CcfCoreStatus_Roo_Entity {
     

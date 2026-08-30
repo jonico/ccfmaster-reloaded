@@ -1,15 +1,15 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.rmi.RemoteException;
 
 import mockit.Mocked;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.controller.web.UIPathConstants;
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
@@ -93,19 +93,16 @@ public class CreateIntegratedAppStrategyTest {
         final String baseUrl = "foo";
         new CreateIntegratedAppStrategy(baseUrl, "iafEndpoint", client,
                 fileStorageClient, isCTF8Support).beforeCreate(landscape);
-        assertTrue("createIntegratedApplication not called", createCalled);
-        assertFalse("getIntegratedApplicationByName was called",
-                getAppByNameCalled);
-        assertTrue("setPluggableAppMessageResource was not called",
-                setPluggableAppMessageResourceCalled);
-        assertEquals("bad adminUrl", baseUrl
-                + UIPathConstants.CREATELANDSCAPE_CCFMASTER, adminUrl);
-        assertEquals("plugId not set correctly by beforeCreate", plugId,
-                landscape.getPlugId());
+        assertTrue(createCalled, "createIntegratedApplication not called");
+        assertFalse(getAppByNameCalled, "getIntegratedApplicationByName was called");
+        assertTrue(setPluggableAppMessageResourceCalled, "setPluggableAppMessageResource was not called");
+        assertEquals(baseUrl
+                + UIPathConstants.CREATELANDSCAPE_CCFMASTER, adminUrl, "bad adminUrl");
+        assertEquals(plugId, landscape.getPlugId(), "plugId not set correctly by beforeCreate");
 
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         createCalled = false;
         getAppByNameCalled = false;

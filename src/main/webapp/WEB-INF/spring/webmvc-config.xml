@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 	<sec:global-method-security pre-post-annotations="enabled">
 		<sec:expression-handler ref="methodSecurityExpressionHandler"/>
 	</sec:global-method-security>
@@ -11,9 +11,29 @@
 
 	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
 	     Also registers default Formatters and Validators for use across all @Controllers -->
-   	<mvc:annotation-driven conversion-service="applicationConversionService"/>
+   	<!--
+		Spring 6.0 flipped the default of trailing-slash matching from true to false, so
+		"/api/hospitalentrys/" stopped matching @RequestMapping("/api/hospitalentrys"). The
+		REST API and its tests are full of trailing slashes, so the old behaviour is asked
+		for explicitly. The attribute is deprecated (Spring intends URLs to be canonical) but
+		flipping it here is the migration-faithful choice; changing every URL would be an API
+		change.
+	-->
+	<mvc:annotation-driven conversion-service="applicationConversionService">
+		<mvc:path-matching trailing-slash="true"/>
+	</mvc:annotation-driven>
     <!--
-	<mvc:annotation-driven conversion-service="conversionService"/>
+	<!--
+		Spring 6.0 flipped the default of trailing-slash matching from true to false, so
+		"/api/hospitalentrys/" stopped matching @RequestMapping("/api/hospitalentrys"). The
+		REST API and its tests are full of trailing slashes, so the old behaviour is asked
+		for explicitly. The attribute is deprecated (Spring intends URLs to be canonical) but
+		flipping it here is the migration-faithful choice; changing every URL would be an API
+		change.
+	-->
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:path-matching trailing-slash="true"/>
+	</mvc:annotation-driven>
 	<bean
 	    id="conversionService"
 		class="com.collabnet.ccf.ccfmaster.controller.CCFConversionServiceFactoryBean" />
@@ -92,7 +112,26 @@
 	</bean>
 	
 	<!-- allows for integration of file upload functionality -->
-	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
+	<!-- Spring 6 removed the Commons-FileUpload multipart support;
+	     StandardServletMultipartResolver is its replacement and relies on the
+	     <multipart-config> element added to web.xml. -->
+	<bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver" id="multipartResolver"/>
+<!--
+    ==========================================================================================
+    NOT MIGRATED. These two beans still name org.springframework.web.servlet.view.tiles2.*,
+    which Spring stopped shipping in 4.0 (tiles2) and 6.0 (tiles3). There is nothing to move
+    them to: Apache Tiles was retired to the Attic in 2018 and never produced a
+    jakarta.servlet release, so neither Spring nor Tiles offers a jakarta-era Tiles view.
+
+    This application's whole view layer is Tiles - /WEB-INF/layouts/layouts.xml plus the
+    per-view views.xml files - so replacing it means choosing a different templating
+    technology and re-authoring the layouts. That is a rewrite of the view tier, not a stack
+    migration, and it would change behaviour, so it has deliberately been left alone rather
+    than quietly disabled. The war compiles and packages; this context will not start until
+    the view layer is dealt with separately. Nothing under src/test touches it - the test
+    contexts have had the Tiles beans commented out since long before this migration.
+    ==========================================================================================
+  -->
 <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
   </bean>

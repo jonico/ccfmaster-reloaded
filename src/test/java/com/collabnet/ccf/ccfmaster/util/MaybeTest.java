@@ -2,27 +2,29 @@ package com.collabnet.ccf.ccfmaster.util;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static com.collabnet.ccf.ccfmaster.util.Maybe.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MaybeTest {
     @Test
     public void callMapOnNoneIsNone() {
         Maybe<Object> m = none().map(identity());
-        assertTrue("none().map didn't return None", m instanceof None);
+        assertTrue(m instanceof None, "none().map didn't return None");
     }
 
     @Test
     public void callMapOnSome() {
         Maybe<Object> m = some(new Object());
         Maybe<Integer> n = m.map(constant(1));
-        assertTrue("some().map didn't return Some", n instanceof Some);
+        assertTrue(n instanceof Some, "some().map didn't return Some");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getOnNoneThrows() {
-        none().get();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            none().get();
+                });
     }
 
     @Test
@@ -60,48 +62,56 @@ public class MaybeTest {
         assertEquals(23, m.hashCode());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void increaseCoreCoverageNoneCallNext() {
-        Iterator<Object> it = none().iterator();
-        it.next();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> {    
+            Iterator<Object> it = none().iterator();
+            it.next();
+                });
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void increaseCoreCoverageSomeCallNextTwice() {
-        Iterator<Integer> it = some(1).iterator();
-        it.next();
-        it.next();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> {    
+            Iterator<Integer> it = some(1).iterator();
+            it.next();
+            it.next();
+                });
     }
 
     @Test
     public void mapToNullReturnsNone() {
         Maybe<Object> m = some(new Object());
         Maybe<Integer> n = m.map(constant((Integer) null));
-        assertTrue("some().map didn't return None", n instanceof None);
+        assertTrue(n instanceof None, "some().map didn't return None");
     }
 
     @Test
     public void maybeNullReturnsNone() {
         Maybe<Integer> m = maybe(null);
-        assertTrue("maybe(null) didn't return None", m instanceof None);
+        assertTrue(m instanceof None, "maybe(null) didn't return None");
     }
 
     @Test
     public void maybeNullReturnsSome() {
         Maybe<Integer> m = maybe(1);
-        assertTrue("maybe(1) didn't return None", m instanceof Some);
+        assertTrue(m instanceof Some, "maybe(1) didn't return None");
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void noneGetOrThrowException() throws Exception {
-        Maybe<Integer> s = none();
-        s.getOrThrow(new Exception("should be thrown."));
+        org.junit.jupiter.api.Assertions.assertThrows(Exception.class, () -> {    
+            Maybe<Integer> s = none();
+            s.getOrThrow(new Exception("should be thrown."));
+                });
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void noneGetOrThrowRuntimeException() /* no throws needed :) */{
-        Maybe<Integer> s = none();
-        s.getOrThrow(new RuntimeException("should be thrown."));
+        org.junit.jupiter.api.Assertions.assertThrows(Exception.class, () -> {    
+            Maybe<Integer> s = none();
+            s.getOrThrow(new RuntimeException("should be thrown."));
+                });
     }
 
     @Test
@@ -142,11 +152,11 @@ public class MaybeTest {
     public void testIsSomeAndIsNone() {
         Integer i = 1;
         Maybe<Integer> some = some(i);
-        assertTrue("some.isSome didn't return true", some.isSome());
-        assertFalse("some.isNone didn't return false", some.isNone());
+        assertTrue(some.isSome(), "some.isSome didn't return true");
+        assertFalse(some.isNone(), "some.isNone didn't return false");
         Maybe<?> none = none();
-        assertFalse("none.isSome didn't return false", none.isSome());
-        assertTrue("none.isNone didn't return true", none.isNone());
+        assertFalse(none.isSome(), "none.isSome didn't return false");
+        assertTrue(none.isNone(), "none.isNone didn't return true");
     }
 
     static <T, U> Transformer<T, U> constant(final U result) {

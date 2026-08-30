@@ -4,16 +4,16 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import com.collabnet.ccf.ccfmaster.server.domain.HospitalEntryDataOnDemand;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 privileged aspect HospitalEntryIntegrationTest_Roo_IntegrationTest {
     
-    declare @type: HospitalEntryIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
+    declare @type: HospitalEntryIntegrationTest: @ExtendWith(SpringExtension.class);
     
     declare @type: HospitalEntryIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext.xml");
     
@@ -24,92 +24,92 @@ privileged aspect HospitalEntryIntegrationTest_Roo_IntegrationTest {
     
     @Test
     public void HospitalEntryIntegrationTest.testCountHospitalEntrys() {
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", dod.getRandomHospitalEntry());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomHospitalEntry(), "Data on demand for 'HospitalEntry' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.countHospitalEntrys();
-        org.junit.Assert.assertTrue("Counter for 'HospitalEntry' incorrectly reported there were no entries", count > 0);
+        org.junit.jupiter.api.Assertions.assertTrue(count > 0, "Counter for 'HospitalEntry' incorrectly reported there were no entries");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testFindHospitalEntry() {
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod.getRandomHospitalEntry();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'HospitalEntry' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'HospitalEntry' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id);
-        org.junit.Assert.assertNotNull("Find method for 'HospitalEntry' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'HospitalEntry' returned the incorrect identifier", id, obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'HospitalEntry' illegally returned null for id '" + id + "'");
+        org.junit.jupiter.api.Assertions.assertEquals(id, obj.getId(), "Find method for 'HospitalEntry' returned the incorrect identifier");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testFindAllHospitalEntrys() {
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", dod.getRandomHospitalEntry());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomHospitalEntry(), "Data on demand for 'HospitalEntry' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.countHospitalEntrys();
-        org.junit.Assert.assertTrue("Too expensive to perform a find all test for 'HospitalEntry', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
+        org.junit.jupiter.api.Assertions.assertTrue(count < 250, "Too expensive to perform a find all test for 'HospitalEntry', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test");
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry> result = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findAllHospitalEntrys();
-        org.junit.Assert.assertNotNull("Find all method for 'HospitalEntry' illegally returned null", result);
-        org.junit.Assert.assertTrue("Find all method for 'HospitalEntry' failed to return any data", result.size() > 0);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find all method for 'HospitalEntry' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertTrue(result.size() > 0, "Find all method for 'HospitalEntry' failed to return any data");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testFindHospitalEntryEntries() {
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", dod.getRandomHospitalEntry());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomHospitalEntry(), "Data on demand for 'HospitalEntry' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.countHospitalEntrys();
         if (count > 20) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry> result = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntryEntries(0, (int) count);
-        org.junit.Assert.assertNotNull("Find entries method for 'HospitalEntry' illegally returned null", result);
-        org.junit.Assert.assertEquals("Find entries method for 'HospitalEntry' returned an incorrect number of entries", count, result.size());
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'HospitalEntry' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'HospitalEntry' returned an incorrect number of entries");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testFlush() {
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod.getRandomHospitalEntry();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'HospitalEntry' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'HospitalEntry' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id);
-        org.junit.Assert.assertNotNull("Find method for 'HospitalEntry' illegally returned null for id '" + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'HospitalEntry' illegally returned null for id '" + id + "'");
         boolean modified =  dod.modifyHospitalEntry(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         obj.flush();
-        org.junit.Assert.assertTrue("Version for 'HospitalEntry' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'HospitalEntry' failed to increment on flush directive");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testMerge() {
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod.getRandomHospitalEntry();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'HospitalEntry' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'HospitalEntry' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id);
         boolean modified =  dod.modifyHospitalEntry(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry merged = (com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry) obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
-        org.junit.Assert.assertTrue("Version for 'HospitalEntry' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertEquals(merged.getId(), id, "Identifier of merged object not the same as identifier of original object");
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'HospitalEntry' failed to increment on merge and flush directive");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testPersist() {
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", dod.getRandomHospitalEntry());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomHospitalEntry(), "Data on demand for 'HospitalEntry' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod.getNewTransientHospitalEntry(Integer.MAX_VALUE);
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'HospitalEntry' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'HospitalEntry' failed to provide a new transient entity");
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'HospitalEntry' identifier to be null");
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'HospitalEntry' identifier to no longer be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'HospitalEntry' identifier to no longer be null");
     }
     
     @Test
     public void HospitalEntryIntegrationTest.testRemove() {
         com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod.getRandomHospitalEntry();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'HospitalEntry' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'HospitalEntry' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'HospitalEntry' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id);
         obj.remove();
         obj.flush();
-        org.junit.Assert.assertNull("Failed to remove 'HospitalEntry' with identifier '" + id + "'", com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id));
+        org.junit.jupiter.api.Assertions.assertNull(com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntry(id), "Failed to remove 'HospitalEntry' with identifier '" + id + "'");
     }
     
 }

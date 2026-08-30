@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -139,64 +139,68 @@ public class FieldMappingExternalAppTemplateLinkIdAPIIntegrationTest extends Abs
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
-                .getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
-                        id);
-        String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
-                + "/fieldmappingexternalapptemplates/";
-        restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
-                    FieldMappingExternalAppTemplate.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
+                    .getRandomFieldMappingExternalAppTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
+                            id);
+            String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
+                    + "/fieldmappingexternalapptemplates/";
+            restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
+                        FieldMappingExternalAppTemplate.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testReparenting() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
-                .getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl
-                + "/fieldmappingexternalapptemplates/" + id,
-                FieldMappingExternalAppTemplate.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
-                                + id + "'", obj);
-        dod.modifyFieldMappingExternalAppTemplate(obj);
-        ExternalApp ea = dodEA.getNewTransientExternalApp(42);
-        ea.persist();
-        obj.setParent(ea);
-        String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
-                + "/fieldmappingexternalapptemplates/";
-
-        try {
-            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 403", 403, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
+                    .getRandomFieldMappingExternalAppTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl
+                    + "/fieldmappingexternalapptemplates/" + id,
+                    FieldMappingExternalAppTemplate.class);
+            org.junit.Assert
+                    .assertNotNull(
+                            "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
+                                    + id + "'", obj);
+            dod.modifyFieldMappingExternalAppTemplate(obj);
+            ExternalApp ea = dodEA.getNewTransientExternalApp(42);
+            ea.persist();
+            obj.setParent(ea);
+            String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
+                    + "/fieldmappingexternalapptemplates/";
+    
+            try {
+                restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(403, e.getStatusCode().value(), "Expected 403");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -233,65 +237,69 @@ public class FieldMappingExternalAppTemplateLinkIdAPIIntegrationTest extends Abs
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWithWrongParentIdInPath() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
-                .getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl
-                + "/fieldmappingexternalapptemplates/" + id,
-                FieldMappingExternalAppTemplate.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
-                                + id + "'", obj);
-        dod.modifyFieldMappingExternalAppTemplate(obj);
-        ExternalApp ea = dodEA.getNewTransientExternalApp(42);
-        ea.persist();
-        String linkIdPathSegment = "/linkid/" + ea.getLinkId()
-                + "/fieldmappingexternalapptemplates/";
-
-        try {
-            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 403", 403, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
+                    .getRandomFieldMappingExternalAppTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl
+                    + "/fieldmappingexternalapptemplates/" + id,
+                    FieldMappingExternalAppTemplate.class);
+            org.junit.Assert
+                    .assertNotNull(
+                            "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
+                                    + id + "'", obj);
+            dod.modifyFieldMappingExternalAppTemplate(obj);
+            ExternalApp ea = dodEA.getNewTransientExternalApp(42);
+            ea.persist();
+            String linkIdPathSegment = "/linkid/" + ea.getLinkId()
+                    + "/fieldmappingexternalapptemplates/";
+    
+            try {
+                restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(403, e.getStatusCode().value(), "Expected 403");
+                throw e;
+            }
+                });
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
-                .getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl
-                + "/fieldmappingexternalapptemplates/" + id,
-                FieldMappingExternalAppTemplate.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
-                                + id + "'", obj);
-        dod.modifyFieldMappingExternalAppTemplate(obj);
-        String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
-                + "/fieldmappingexternalapptemplates/";
-        restTemplate.put(ccfAPIUrl + linkIdPathSegment + id + 42, obj);
-
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod
+                    .getRandomFieldMappingExternalAppTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl
+                    + "/fieldmappingexternalapptemplates/" + id,
+                    FieldMappingExternalAppTemplate.class);
+            org.junit.Assert
+                    .assertNotNull(
+                            "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '"
+                                    + id + "'", obj);
+            dod.modifyFieldMappingExternalAppTemplate(obj);
+            String linkIdPathSegment = "/linkid/" + obj.getParent().getLinkId()
+                    + "/fieldmappingexternalapptemplates/";
+            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id + 42, obj);
+    
+                });
     }
 
 }

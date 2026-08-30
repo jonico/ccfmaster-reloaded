@@ -3,14 +3,14 @@
 
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 privileged aspect CcfCoreStatusIntegrationTest_Roo_IntegrationTest {
     
-    declare @type: CcfCoreStatusIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
+    declare @type: CcfCoreStatusIntegrationTest: @ExtendWith(SpringExtension.class);
     
     declare @type: CcfCoreStatusIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext.xml");
     

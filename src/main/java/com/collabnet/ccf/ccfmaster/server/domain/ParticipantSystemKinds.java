@@ -2,7 +2,7 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.SystemUtils;
 

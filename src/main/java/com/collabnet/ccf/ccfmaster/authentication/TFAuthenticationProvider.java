@@ -82,7 +82,7 @@ public class TFAuthenticationProvider extends AbstractUserDetailsAuthenticationP
                  * the username.
                  */
                 String[] userParts = username.split("/", 2);
-                Assert.isTrue(userParts.length == 2);
+                Assert.isTrue(userParts.length == 2, "[Assertion failed] - this expression must be true");
                 String linkId = userParts[1];
                 String sessionId = token.getCredentials().toString();
                 Connection connection = connectionBuilder.sessionId(sessionId)

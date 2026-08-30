@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.staticmock.MockStaticEntityMethods;
 
 @MockStaticEntityMethods
@@ -14,7 +14,7 @@ public class HospitalEntryTest {
                 .expectReturn(expectedCount);
         org.springframework.mock.staticmock.AnnotationDrivenStaticEntityMockingControl
                 .playback();
-        org.junit.Assert.assertEquals(expectedCount,
+        org.junit.jupiter.api.Assertions.assertEquals(expectedCount,
                 HospitalEntry.countHospitalEntrys());
     }
 }

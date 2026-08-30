@@ -38,9 +38,21 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         }
     }
 
+    /*
+     * Spring 3.1 removed FormattingConversionServiceFactoryBean.installFormatters(), which
+     * is the hook this class used to override. afterPropertiesSet() - previously an ITD in
+     * ApplicationConversionServiceFactoryBean_Roo_ConversionService - has been pushed in
+     * here so that the Roo-generated label converters and the two hand-written ones are
+     * both registered, in that order, exactly as before.
+     */
     @Override
+    public void afterPropertiesSet() {
+        super.afterPropertiesSet();
+        installLabelConverters(getObject());
+        installFormatters(getObject());
+    }
+
     protected void installFormatters(FormatterRegistry registry) {
-        super.installFormatters(registry);
         // Register application converters and formatters
         registry.addConverter(new StringToExternalAppConverter());
         registry.addConverter(new StringToLandscapeConverter());

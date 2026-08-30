@@ -6,8 +6,8 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 import com.collabnet.ccf.ccfmaster.server.domain.Direction;
 import com.collabnet.ccf.ccfmaster.server.domain.DirectionConfig;
 import java.lang.String;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 privileged aspect DirectionConfig_Roo_Finder {
     

@@ -6,8 +6,8 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
 import com.collabnet.ccf.ccfmaster.server.domain.LandscapeConfig;
 import java.lang.String;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 privileged aspect LandscapeConfig_Roo_Finder {
     

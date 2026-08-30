@@ -1,6 +1,6 @@
 package com.collabnet.ccf.ccfmaster.controller.web;
 
-import javax.persistence.TypedQuery;
+import jakarta.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

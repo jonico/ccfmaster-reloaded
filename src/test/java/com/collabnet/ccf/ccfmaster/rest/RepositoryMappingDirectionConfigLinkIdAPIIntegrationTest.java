@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -110,31 +110,33 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
-                .getRandomRepositoryMappingDirectionConfig();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                        id);
-        String linkIdPathSegment = "/linkid/"
-                + obj.getRepositoryMappingDirection().getRepositoryMapping()
-                        .getExternalApp().getLinkId()
-                + "/repositorymappingdirectionconfigs/";
-        restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
-                    RepositoryMappingDirectionConfig.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
+                    .getRandomRepositoryMappingDirectionConfig();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
+                            id);
+            String linkIdPathSegment = "/linkid/"
+                    + obj.getRepositoryMappingDirection().getRepositoryMapping()
+                            .getExternalApp().getLinkId()
+                    + "/repositorymappingdirectionconfigs/";
+            restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
+                        RepositoryMappingDirectionConfig.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -173,37 +175,39 @@ public class RepositoryMappingDirectionConfigLinkIdAPIIntegrationTest extends Ab
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWithWrongGrandparentIdInPath() {
-        com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
-                .getRandomRepositoryMappingDirectionConfig();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl
-                + "/repositorymappingdirectionconfigs/" + id,
-                RepositoryMappingDirectionConfig.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
-                                + id + "'", obj);
-        ExternalApp ea = dodEA.getNewTransientExternalApp(42);
-        ea.persist();
-        String linkIdPathSegment = "/linkid/" + ea.getLinkId()
-                + "/repositorymappingdirectionconfigs/";
-
-        try {
-            restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 403", 403, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig obj = dodRMDC
+                    .getRandomRepositoryMappingDirectionConfig();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'RepositoryMappingDirectionConfig' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl
+                    + "/repositorymappingdirectionconfigs/" + id,
+                    RepositoryMappingDirectionConfig.class);
+            org.junit.Assert
+                    .assertNotNull(
+                            "Find method for 'RepositoryMappingDirectionConfig' illegally returned null for id '"
+                                    + id + "'", obj);
+            ExternalApp ea = dodEA.getNewTransientExternalApp(42);
+            ea.persist();
+            String linkIdPathSegment = "/linkid/" + ea.getLinkId()
+                    + "/repositorymappingdirectionconfigs/";
+    
+            try {
+                restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(403, e.getStatusCode().value(), "Expected 403");
+                throw e;
+            }
+                });
     }
 
 }

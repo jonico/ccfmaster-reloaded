@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -56,13 +56,10 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'Participant' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'Participant' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Participant' identifier to be null");
         obj = restTemplate.postForObject(ccfAPIUrl + "/participants/", obj,
                 Participant.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'Participant' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'Participant' identifier to no longer be null");
     }
 
     @Test
@@ -80,36 +77,37 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                 Participant.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Participant' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Participant' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'Participant' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
-                .getRandomParticipant();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to provide an identifier",
-                        id);
-        restTemplate.delete(ccfAPIUrl + "/participants/" + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
-                    Participant.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
+                    .getRandomParticipant();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Participant' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Participant' failed to provide an identifier",
+                            id);
+            restTemplate.delete(ccfAPIUrl + "/participants/" + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
+                        Participant.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -128,9 +126,8 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
                 Participant.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Participant' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Participant' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyParticipant(obj);
         restTemplate.put(ccfAPIUrl + "/participants/" + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
@@ -142,26 +139,27 @@ public class ParticipantAPIIntegrationTest extends AbstractAPIIntegrationTest {
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
-                .getRandomParticipant();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Participant' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
-                Participant.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Participant' illegally returned null for id '"
-                        + id + "'", obj);
-        //test with wrong id
-        restTemplate.put(ccfAPIUrl + "/participants/" + id + 42, obj);
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Participant obj = dod
+                    .getRandomParticipant();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Participant' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Participant' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/participants/" + id,
+                    Participant.class);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Participant' illegally returned null for id '"
+                            + id + "'");
+            //test with wrong id
+            restTemplate.put(ccfAPIUrl + "/participants/" + id + 42, obj);
+                });
     }
 
 }

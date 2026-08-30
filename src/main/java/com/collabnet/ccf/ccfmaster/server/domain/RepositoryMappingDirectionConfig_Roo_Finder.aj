@@ -5,8 +5,8 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection;
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 privileged aspect RepositoryMappingDirectionConfig_Roo_Finder {
     

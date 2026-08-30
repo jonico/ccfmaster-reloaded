@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -87,13 +87,10 @@ public class ExternalAppAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'ExternalApp' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'ExternalApp' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'ExternalApp' identifier to be null");
         obj = restTemplate.postForObject(ccfAPIUrl + "/externalapps/", obj,
                 ExternalApp.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'ExternalApp' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'ExternalApp' identifier to no longer be null");
     }
 
     @Test
@@ -111,9 +108,8 @@ public class ExternalAppAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
                 ExternalApp.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'ExternalApp' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'ExternalApp' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'ExternalApp' returned the incorrect identifier",
@@ -136,36 +132,37 @@ public class ExternalAppAPIIntegrationTest extends AbstractAPIIntegrationTest {
         obj = restTemplate.getForObject(
                 ccfAPIUrl + "/externalapps/" + obj.getLinkId(),
                 ExternalApp.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'ExternalApp' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'ExternalApp' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'ExternalApp' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.ExternalApp obj = dod
-                .getRandomExternalApp();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'ExternalApp' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'ExternalApp' failed to provide an identifier",
-                        id);
-        restTemplate.delete(ccfAPIUrl + "/externalapps/" + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
-                    ExternalApp.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.ExternalApp obj = dod
+                    .getRandomExternalApp();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'ExternalApp' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'ExternalApp' failed to provide an identifier",
+                            id);
+            restTemplate.delete(ccfAPIUrl + "/externalapps/" + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
+                        ExternalApp.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -184,9 +181,8 @@ public class ExternalAppAPIIntegrationTest extends AbstractAPIIntegrationTest {
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
                 ExternalApp.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'ExternalApp' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'ExternalApp' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyExternalApp(obj);
         restTemplate.put(ccfAPIUrl + "/externalapps/" + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
@@ -198,25 +194,26 @@ public class ExternalAppAPIIntegrationTest extends AbstractAPIIntegrationTest {
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.ExternalApp obj = dod
-                .getRandomExternalApp();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'ExternalApp' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'ExternalApp' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
-                ExternalApp.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'ExternalApp' illegally returned null for id '"
-                        + id + "'", obj);
-        restTemplate.put(ccfAPIUrl + "/externalapps/" + id + 42, obj);
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.ExternalApp obj = dod
+                    .getRandomExternalApp();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'ExternalApp' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'ExternalApp' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/externalapps/" + id,
+                    ExternalApp.class);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'ExternalApp' illegally returned null for id '"
+                            + id + "'");
+            restTemplate.put(ccfAPIUrl + "/externalapps/" + id + 42, obj);
+                });
     }
 
 }

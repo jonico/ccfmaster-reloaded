@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.io.LineIterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class LogFile {
 
     LogFile(File ccfHome, Direction direction, String fileName)
             throws IOException {
-        Assert.notNull(fileName);
+        Assert.notNull(fileName, "[Assertion failed] - this argument is required; it must not be null");
         final File baseDir = direction.determineBaseDirectory(ccfHome);
         final File logDir = new File(baseDir, "logs");
         this.direction = direction;

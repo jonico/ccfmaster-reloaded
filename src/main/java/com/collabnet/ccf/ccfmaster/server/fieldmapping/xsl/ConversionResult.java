@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -123,7 +123,7 @@ public class ConversionResult {
 
         public MappingRules(final Mapping<?> mapping) {
             this.mapping = mapping;
-            Assert.notNull(mapping);
+            Assert.notNull(mapping, "[Assertion failed] - this argument is required; it must not be null");
             Assert.isTrue(mapping.getKind() == FieldMappingKind.MAPPING_RULES,
                     "bad mapping kind: " + mapping.getKind());
             mappingRuleXsltHandler();

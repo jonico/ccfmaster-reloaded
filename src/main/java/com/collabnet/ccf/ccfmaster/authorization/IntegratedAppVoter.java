@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 import com.collabnet.ccf.ccfmaster.authentication.IafUserDetails;
 import com.collabnet.ccf.ccfmaster.authentication.TFUserDetails;
 
-public class IntegratedAppVoter implements AccessDecisionVoter {
+public class IntegratedAppVoter implements AccessDecisionVoter<Object> {
 
     public static final String   INTEGRATED_APPLICATION_CHECK = "INTEGRATED_APPLICATION_CHECK";
     private static final Logger  log                          = LoggerFactory
@@ -63,9 +63,9 @@ public class IntegratedAppVoter implements AccessDecisionVoter {
     @Override
     public int vote(Authentication authentication, Object object,
             Collection<ConfigAttribute> attributes) {
-        Assert.notNull(authentication);
-        Assert.notNull(object);
-        Assert.notNull(attributes);
+        Assert.notNull(authentication, "[Assertion failed] - this argument is required; it must not be null");
+        Assert.notNull(object, "[Assertion failed] - this argument is required; it must not be null");
+        Assert.notNull(attributes, "[Assertion failed] - this argument is required; it must not be null");
         log.debug("checking if linkId is correct");
         // logic inspired by RoleVoter
         int result = ACCESS_ABSTAIN;

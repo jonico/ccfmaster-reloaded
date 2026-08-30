@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMapEntry;
 
 import static com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl.FieldMappingRuleConverter.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldMappingRuleConverterTest {
     private static final String             VALUEMAPNAME      = "VALUEMAPNAME";
@@ -45,7 +45,7 @@ public class FieldMappingRuleConverterTest {
     private FieldMappingValueMap            valueMap;
     private List<FieldMappingValueMapEntry> entries;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         rule = new FieldMappingRule();
         rule.setTarget(target);
@@ -238,7 +238,7 @@ public class FieldMappingRuleConverterTest {
         }
 
         Element choose = result.element(XSL_CHOOSE);
-        assertNotNull("no choose clause", choose);
+        assertNotNull(choose, "no choose clause");
 
         List<Element> whens = choose.elements(XSL_WHEN);
         assertEquals(entries.size(), whens.size());

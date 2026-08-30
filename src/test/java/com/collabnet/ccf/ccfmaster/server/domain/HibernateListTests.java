@@ -2,12 +2,11 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMapping;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate;
@@ -15,9 +14,22 @@ import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
-public class HibernateListTests extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class HibernateListTests {
 
     @Autowired
     FieldMappingDataOnDemand                    fmdod;
@@ -41,17 +53,17 @@ public class HibernateListTests extends AbstractTransactionalJUnit4SpringContext
         FieldMappingValueMap removed = fm.getValueMaps().remove(0);
         fm.getValueMaps().add(removed);
         fm.merge();
-        Assert.assertNotNull(FieldMappingValueMap
+        Assertions.assertNotNull(FieldMappingValueMap
                 .findFieldMappingValueMap(removed.getId()));
         for (FieldMappingValueMap fmvm : fmltValueMaps) {
-            Assert.assertTrue(String.format("missing fmltValueMaps[%d]: %s",
-                    fmltValueMaps.indexOf(fmvm), fmvm), fmlt.getValueMaps()
-                    .contains(fmvm));
+            Assertions.assertTrue(fmlt.getValueMaps()
+                    .contains(fmvm), String.format("missing fmltValueMaps[%d]: %s",
+                    fmltValueMaps.indexOf(fmvm), fmvm));
         }
         for (FieldMappingValueMap fmvm : fmeatValueMaps) {
-            Assert.assertTrue(String.format("missing fmeatValueMaps[%d]: %s",
-                    fmeatValueMaps.indexOf(fmvm), fmvm), fmeat.getValueMaps()
-                    .contains(fmvm));
+            Assertions.assertTrue(fmeat.getValueMaps()
+                    .contains(fmvm), String.format("missing fmeatValueMaps[%d]: %s",
+                    fmeatValueMaps.indexOf(fmvm), fmvm));
         }
     }
 
@@ -59,23 +71,23 @@ public class HibernateListTests extends AbstractTransactionalJUnit4SpringContext
     public void removeDoesNotDeleteOtherValueMaps() {
         FieldMappingValueMap removed = fm.getValueMaps().remove(0);
         fm.merge();
-        Assert.assertNull(FieldMappingValueMap.findFieldMappingValueMap(removed
+        Assertions.assertNull(FieldMappingValueMap.findFieldMappingValueMap(removed
                 .getId()));
         for (FieldMappingValueMap fmvm : fmltValueMaps) {
-            Assert.assertTrue(String.format("missing fmltValueMaps[%d]: %s",
-                    fmltValueMaps.indexOf(fmvm), fmvm), fmlt.getValueMaps()
-                    .contains(fmvm));
+            Assertions.assertTrue(fmlt.getValueMaps()
+                    .contains(fmvm), String.format("missing fmltValueMaps[%d]: %s",
+                    fmltValueMaps.indexOf(fmvm), fmvm));
         }
         for (FieldMappingValueMap fmvm : fmeatValueMaps) {
-            Assert.assertTrue(String.format("missing fmeatValueMaps[%d]: %s",
-                    fmeatValueMaps.indexOf(fmvm), fmvm), fmeat.getValueMaps()
-                    .contains(fmvm));
+            Assertions.assertTrue(fmeat.getValueMaps()
+                    .contains(fmvm), String.format("missing fmeatValueMaps[%d]: %s",
+                    fmeatValueMaps.indexOf(fmvm), fmvm));
         }
-        //		Assert.assertEquals(fmltValueMaps, fmlt.getValueMaps());
-        //		Assert.assertEquals(fmeatValueMaps, fmeat.getValueMaps());
+        //		Assertions.assertEquals(fmltValueMaps, fmlt.getValueMaps());
+        //		Assertions.assertEquals(fmeatValueMaps, fmeat.getValueMaps());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fmValueMaps = fiveValueMaps();
         fm = fmdod.getRandomFieldMapping();

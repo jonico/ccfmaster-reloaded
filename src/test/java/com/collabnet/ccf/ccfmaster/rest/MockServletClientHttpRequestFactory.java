@@ -1,6 +1,8 @@
 package com.collabnet.ccf.ccfmaster.rest;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -8,8 +10,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +29,32 @@ public class MockServletClientHttpRequestFactory implements ClientHttpRequestFac
 
     public class MockServletClientHttpRequest extends AbstractClientHttpRequest {
 
-        private Servlet    servlet;
-        private URI        uri;
-        private HttpMethod httpMethod;
-        private String     servletName;
+        private Servlet                     servlet;
+        private URI                         uri;
+        private HttpMethod                  httpMethod;
+        private String                      servletName;
+
+        /*
+         * Spring 3.1 split AbstractClientHttpRequest into a plain and a buffering half, and
+         * the buffering half - which is what supplied getBodyInternal() and the
+         * executeInternal(HttpHeaders, byte[]) overload this class used to override - is
+         * package private, so it cannot be extended from here. Buffering the body in a
+         * ByteArrayOutputStream and overriding the two abstract methods that are public API
+         * reproduces it in five lines.
+         */
+        private final ByteArrayOutputStream bufferedOutput = new ByteArrayOutputStream();
+
+        @Override
+        protected OutputStream getBodyInternal(HttpHeaders headers)
+                throws IOException {
+            return bufferedOutput;
+        }
+
+        @Override
+        protected ClientHttpResponse executeInternal(HttpHeaders headers)
+                throws IOException {
+            return executeInternal(headers, bufferedOutput.toByteArray());
+        }
 
         public MockServletClientHttpRequest(URI uri, HttpMethod httpMethod,
                 Servlet servlet, String servletName) {
@@ -50,8 +74,7 @@ public class MockServletClientHttpRequestFactory implements ClientHttpRequestFac
             return uri;
         }
 
-        @Override
-        protected ClientHttpResponse executeInternal(HttpHeaders headers,
+        private ClientHttpResponse executeInternal(HttpHeaders headers,
                 byte[] bufferedOutput) throws IOException {
             // removes servlet path from the request path
             String requestPath = uri.getPath().substring(

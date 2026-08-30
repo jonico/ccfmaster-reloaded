@@ -2,11 +2,11 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.util.List;
 
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
 
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -20,7 +20,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class FieldMappingValueMap {
     private String                          name;
 
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     private List<FieldMappingValueMapEntry> entries;
     /**
      * default value, only applied if hasDefault is true. If set to null, the

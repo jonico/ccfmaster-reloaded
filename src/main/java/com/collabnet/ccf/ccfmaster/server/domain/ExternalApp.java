@@ -1,18 +1,18 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.rmi.RemoteException;
-import javax.persistence.Column;
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.TypedQuery;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -42,7 +42,7 @@ import com.collabnet.teamforge.api.pluggable.IntegratedApplicationClient;
         "findExternalAppsByLandscape" })
 public class ExternalApp {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, ExternalApp> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, ExternalApp> {
 
         @Override
         public Long marshal(ExternalApp v) throws Exception {
@@ -132,7 +132,7 @@ public class ExternalApp {
         EntityManager em = entityManager();
         TypedQuery<ExternalApp> q = em
                 .createQuery(
-                        "SELECT ExternalApp FROM ExternalApp AS externalapp WHERE externalapp.landscape = :landscape",
+                        "SELECT externalapp FROM ExternalApp AS externalapp WHERE externalapp.landscape = :landscape",
                         ExternalApp.class);
         q.setParameter("landscape", landscape);
         return q;

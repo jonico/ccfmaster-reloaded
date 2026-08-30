@@ -1,4 +1,4 @@
-<jsp:root xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:root xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:c="jakarta.tags.core" xmlns:fn="jakarta.tags.functions" xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   <jsp:directive.tag  dynamic-attributes="params"/>
   <jsp:output omit-xml-declaration="yes" />
   <jsp:directive.attribute name="maxPages" type="java.lang.Integer" required="true" rtexprvalue="true" description="The maximum number of pages available (ie tableRecordCount / size)" />

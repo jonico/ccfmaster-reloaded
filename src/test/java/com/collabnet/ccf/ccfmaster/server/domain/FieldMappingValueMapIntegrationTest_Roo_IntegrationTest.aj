@@ -4,16 +4,16 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMapDataOnDemand;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 privileged aspect FieldMappingValueMapIntegrationTest_Roo_IntegrationTest {
     
-    declare @type: FieldMappingValueMapIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
+    declare @type: FieldMappingValueMapIntegrationTest: @ExtendWith(SpringExtension.class);
     
     declare @type: FieldMappingValueMapIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext.xml");
     
@@ -24,92 +24,92 @@ privileged aspect FieldMappingValueMapIntegrationTest_Roo_IntegrationTest {
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testCountFieldMappingValueMaps() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", dod.getRandomFieldMappingValueMap());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingValueMap(), "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.countFieldMappingValueMaps();
-        org.junit.Assert.assertTrue("Counter for 'FieldMappingValueMap' incorrectly reported there were no entries", count > 0);
+        org.junit.jupiter.api.Assertions.assertTrue(count > 0, "Counter for 'FieldMappingValueMap' incorrectly reported there were no entries");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testFindFieldMappingValueMap() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap obj = dod.getRandomFieldMappingValueMap();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingValueMap' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingValueMap' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'FieldMappingValueMap' returned the incorrect identifier", id, obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingValueMap' illegally returned null for id '" + id + "'");
+        org.junit.jupiter.api.Assertions.assertEquals(id, obj.getId(), "Find method for 'FieldMappingValueMap' returned the incorrect identifier");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testFindAllFieldMappingValueMaps() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", dod.getRandomFieldMappingValueMap());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingValueMap(), "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.countFieldMappingValueMaps();
-        org.junit.Assert.assertTrue("Too expensive to perform a find all test for 'FieldMappingValueMap', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
+        org.junit.jupiter.api.Assertions.assertTrue(count < 250, "Too expensive to perform a find all test for 'FieldMappingValueMap', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test");
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findAllFieldMappingValueMaps();
-        org.junit.Assert.assertNotNull("Find all method for 'FieldMappingValueMap' illegally returned null", result);
-        org.junit.Assert.assertTrue("Find all method for 'FieldMappingValueMap' failed to return any data", result.size() > 0);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find all method for 'FieldMappingValueMap' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertTrue(result.size() > 0, "Find all method for 'FieldMappingValueMap' failed to return any data");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testFindFieldMappingValueMapEntries() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", dod.getRandomFieldMappingValueMap());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingValueMap(), "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.countFieldMappingValueMaps();
         if (count > 20) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMapEntries(0, (int) count);
-        org.junit.Assert.assertNotNull("Find entries method for 'FieldMappingValueMap' illegally returned null", result);
-        org.junit.Assert.assertEquals("Find entries method for 'FieldMappingValueMap' returned an incorrect number of entries", count, result.size());
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingValueMap' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingValueMap' returned an incorrect number of entries");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testFlush() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap obj = dod.getRandomFieldMappingValueMap();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingValueMap' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingValueMap' illegally returned null for id '" + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingValueMap' illegally returned null for id '" + id + "'");
         boolean modified =  dod.modifyFieldMappingValueMap(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         obj.flush();
-        org.junit.Assert.assertTrue("Version for 'FieldMappingValueMap' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingValueMap' failed to increment on flush directive");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testMerge() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap obj = dod.getRandomFieldMappingValueMap();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingValueMap' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id);
         boolean modified =  dod.modifyFieldMappingValueMap(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap merged = (com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap) obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
-        org.junit.Assert.assertTrue("Version for 'FieldMappingValueMap' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertEquals(merged.getId(), id, "Identifier of merged object not the same as identifier of original object");
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingValueMap' failed to increment on merge and flush directive");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testPersist() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", dod.getRandomFieldMappingValueMap());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingValueMap(), "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap obj = dod.getNewTransientFieldMappingValueMap(Integer.MAX_VALUE);
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'FieldMappingValueMap' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingValueMap' failed to provide a new transient entity");
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'FieldMappingValueMap' identifier to be null");
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'FieldMappingValueMap' identifier to no longer be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'FieldMappingValueMap' identifier to no longer be null");
     }
     
     @Test
     public void FieldMappingValueMapIntegrationTest.testRemove() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap obj = dod.getRandomFieldMappingValueMap();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingValueMap' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingValueMap' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingValueMap' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id);
         obj.remove();
         obj.flush();
-        org.junit.Assert.assertNull("Failed to remove 'FieldMappingValueMap' with identifier '" + id + "'", com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id));
+        org.junit.jupiter.api.Assertions.assertNull(com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMap.findFieldMappingValueMap(id), "Failed to remove 'FieldMappingValueMap' with identifier '" + id + "'");
     }
     
 }

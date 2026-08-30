@@ -197,7 +197,7 @@ public class FieldMappingRuleConverterFactoryImpl implements FieldMappingRuleCon
         public DirectValueMapConverter(final FieldMappingRule rule,
                 List<FieldMappingValueMap> valueMaps) {
             super(rule);
-            Assert.notNull(valueMaps);
+            Assert.notNull(valueMaps, "[Assertion failed] - this argument is required; it must not be null");
             this.valueMaps = valueMaps;
         }
 

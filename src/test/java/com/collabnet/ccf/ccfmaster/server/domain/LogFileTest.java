@@ -1,10 +1,10 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
@@ -36,27 +36,33 @@ public class LogFileTest {
     private Landscape           landscape;
     private Direction           direction;
 
-    @After
+    @AfterEach
     public void cleanup() throws IOException {
         FileUtils.deleteQuietly(ccfHome);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void directoryTraversalThrows() throws IOException {
-        new LogFile(ccfHome, direction, "../logs");
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            new LogFile(ccfHome, direction, "../logs");
+                });
     }
 
-    @Test(expected = FileNotFoundException.class)
+    @Test
     public void fileNotFoundThrows() throws IOException {
-        new LogFile(ccfHome, direction, "doesNotExist.txt");
+        org.junit.jupiter.api.Assertions.assertThrows(FileNotFoundException.class, () -> {    
+            new LogFile(ccfHome, direction, "doesNotExist.txt");
+                });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void nullFileNameThrows() throws IOException {
-        new LogFile(ccfHome, direction, null);
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            new LogFile(ccfHome, direction, null);
+                });
     }
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
         tf = new Participant();
         tf.setSystemKind(SystemKind.TF);
@@ -102,7 +108,7 @@ public class LogFileTest {
         LogFile logFile = new LogFile(ccfHome, direction, LOG_FILE);
         assertEquals(LOG_FILE, logFile.getName());
         assertSame(direction, logFile.getDirection());
-        assertFalse("file " + LOG_FILE + " was empty", 0L == logFile.getSize());
+        assertFalse(0L == logFile.getSize(), "file " + LOG_FILE + " was empty");
         LineIterator it = logFile.lines();
         try {
             assertTrue(it.hasNext());

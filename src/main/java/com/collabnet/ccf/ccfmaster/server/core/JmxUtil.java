@@ -2,6 +2,7 @@ package com.collabnet.ccf.ccfmaster.server.core;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.JMException;
@@ -25,7 +26,9 @@ final class JmxUtil {
     private static final String      JMX_URL_TEMPLATE = "service:jmx:rmi:///jndi/rmi://localhost:%d/jmxrmi";
     private static final Logger      log              = LoggerFactory
                                                               .getLogger(JmxUtil.class);
-    private static final TimeLimiter timeLimiter      = new SimpleTimeLimiter();
+    private static final TimeLimiter timeLimiter      = SimpleTimeLimiter
+                                                          .create(Executors
+                                                                  .newCachedThreadPool());
 
     private JmxUtil() {
         // prevent instantiation
@@ -136,7 +139,9 @@ final class JmxUtil {
 
     static <T> T callInSeparateThread(Callable<T> task, T defaultReturnValue) {
         try {
-            return timeLimiter.callWithTimeout(task, 3, TimeUnit.SECONDS, true);
+            // the removed 4th argument was amInterruptible=true, which is what
+            // callWithTimeout does; callUninterruptiblyWithTimeout is the false case
+            return timeLimiter.callWithTimeout(task, 3, TimeUnit.SECONDS);
         } catch (Exception e1) {
             return defaultReturnValue;
         }

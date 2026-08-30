@@ -5,15 +5,14 @@ package com.collabnet.ccf.ccfmaster.controller;
 
 import com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry;
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection;
-import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
@@ -122,10 +121,10 @@ privileged aspect HospitalEntryController_Roo_Controller {
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
-        try {
-            pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-        }
-        catch (UnsupportedEncodingException uee) {}
+        // Spring 6's UriUtils.encodePathSegment no longer throws
+        // UnsupportedEncodingException, so the empty catch block it used to need is now
+        // unreachable code.
+        pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
         return pathSegment;
     }
     

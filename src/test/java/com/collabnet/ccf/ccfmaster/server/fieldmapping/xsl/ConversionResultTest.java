@@ -1,11 +1,11 @@
 package com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import mockit.Mocked;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.core.CoreConfigurationException;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule;
@@ -19,11 +19,13 @@ public class ConversionResultTest {
     @Mocked
     MappingRules               mappingRules;
 
-    @Test(expected = CoreConfigurationException.class)
+    @Test
     public void badXmlThrows() {
-        FieldMappingRule fmr = new FieldMappingRule();
-        fmr.setXmlContent("not XML");
-        ConversionResult.xmlContent2Element.transform(fmr);
+        org.junit.jupiter.api.Assertions.assertThrows(CoreConfigurationException.class, () -> {    
+            FieldMappingRule fmr = new FieldMappingRule();
+            fmr.setXmlContent("not XML");
+            ConversionResult.xmlContent2Element.transform(fmr);
+                });
     }
 
     @Test

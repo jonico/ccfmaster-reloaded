@@ -4,16 +4,16 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplateDataOnDemand;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 privileged aspect FieldMappingExternalAppTemplateIntegrationTest_Roo_IntegrationTest {
     
-    declare @type: FieldMappingExternalAppTemplateIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
+    declare @type: FieldMappingExternalAppTemplateIntegrationTest: @ExtendWith(SpringExtension.class);
     
     declare @type: FieldMappingExternalAppTemplateIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext.xml");
     
@@ -24,92 +24,92 @@ privileged aspect FieldMappingExternalAppTemplateIntegrationTest_Roo_Integration
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testCountFieldMappingExternalAppTemplates() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", dod.getRandomFieldMappingExternalAppTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingExternalAppTemplate(), "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.countFieldMappingExternalAppTemplates();
-        org.junit.Assert.assertTrue("Counter for 'FieldMappingExternalAppTemplate' incorrectly reported there were no entries", count > 0);
+        org.junit.jupiter.api.Assertions.assertTrue(count > 0, "Counter for 'FieldMappingExternalAppTemplate' incorrectly reported there were no entries");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testFindFieldMappingExternalAppTemplate() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod.getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'FieldMappingExternalAppTemplate' returned the incorrect identifier", id, obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '" + id + "'");
+        org.junit.jupiter.api.Assertions.assertEquals(id, obj.getId(), "Find method for 'FieldMappingExternalAppTemplate' returned the incorrect identifier");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testFindAllFieldMappingExternalAppTemplates() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", dod.getRandomFieldMappingExternalAppTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingExternalAppTemplate(), "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.countFieldMappingExternalAppTemplates();
-        org.junit.Assert.assertTrue("Too expensive to perform a find all test for 'FieldMappingExternalAppTemplate', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
+        org.junit.jupiter.api.Assertions.assertTrue(count < 250, "Too expensive to perform a find all test for 'FieldMappingExternalAppTemplate', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test");
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findAllFieldMappingExternalAppTemplates();
-        org.junit.Assert.assertNotNull("Find all method for 'FieldMappingExternalAppTemplate' illegally returned null", result);
-        org.junit.Assert.assertTrue("Find all method for 'FieldMappingExternalAppTemplate' failed to return any data", result.size() > 0);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find all method for 'FieldMappingExternalAppTemplate' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertTrue(result.size() > 0, "Find all method for 'FieldMappingExternalAppTemplate' failed to return any data");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testFindFieldMappingExternalAppTemplateEntries() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", dod.getRandomFieldMappingExternalAppTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingExternalAppTemplate(), "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.countFieldMappingExternalAppTemplates();
         if (count > 20) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplateEntries(0, (int) count);
-        org.junit.Assert.assertNotNull("Find entries method for 'FieldMappingExternalAppTemplate' illegally returned null", result);
-        org.junit.Assert.assertEquals("Find entries method for 'FieldMappingExternalAppTemplate' returned an incorrect number of entries", count, result.size());
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingExternalAppTemplate' illegally returned null");
+        org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingExternalAppTemplate' returned an incorrect number of entries");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testFlush() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod.getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id);
-        org.junit.Assert.assertNotNull("Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '" + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'FieldMappingExternalAppTemplate' illegally returned null for id '" + id + "'");
         boolean modified =  dod.modifyFieldMappingExternalAppTemplate(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         obj.flush();
-        org.junit.Assert.assertTrue("Version for 'FieldMappingExternalAppTemplate' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingExternalAppTemplate' failed to increment on flush directive");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testMerge() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod.getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id);
         boolean modified =  dod.modifyFieldMappingExternalAppTemplate(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate merged = (com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate) obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
-        org.junit.Assert.assertTrue("Version for 'FieldMappingExternalAppTemplate' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        org.junit.jupiter.api.Assertions.assertEquals(merged.getId(), id, "Identifier of merged object not the same as identifier of original object");
+        org.junit.jupiter.api.Assertions.assertTrue((currentVersion != null && obj.getVersion() > currentVersion) || !modified, "Version for 'FieldMappingExternalAppTemplate' failed to increment on merge and flush directive");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testPersist() {
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", dod.getRandomFieldMappingExternalAppTemplate());
+        org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingExternalAppTemplate(), "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod.getNewTransientFieldMappingExternalAppTemplate(Integer.MAX_VALUE);
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'FieldMappingExternalAppTemplate' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide a new transient entity");
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'FieldMappingExternalAppTemplate' identifier to be null");
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'FieldMappingExternalAppTemplate' identifier to no longer be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'FieldMappingExternalAppTemplate' identifier to no longer be null");
     }
     
     @Test
     public void FieldMappingExternalAppTemplateIntegrationTest.testRemove() {
         com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate obj = dod.getRandomFieldMappingExternalAppTemplate();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Data on demand for 'FieldMappingExternalAppTemplate' failed to initialize correctly");
         java.lang.Long id = obj.getId();
-        org.junit.Assert.assertNotNull("Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier", id);
+        org.junit.jupiter.api.Assertions.assertNotNull(id, "Data on demand for 'FieldMappingExternalAppTemplate' failed to provide an identifier");
         obj = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id);
         obj.remove();
         obj.flush();
-        org.junit.Assert.assertNull("Failed to remove 'FieldMappingExternalAppTemplate' with identifier '" + id + "'", com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id));
+        org.junit.jupiter.api.Assertions.assertNull(com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(id), "Failed to remove 'FieldMappingExternalAppTemplate' with identifier '" + id + "'");
     }
     
 }

@@ -6,9 +6,9 @@ import static com.collabnet.ccf.ccfmaster.web.model.LandscapeModel.normalizeUrl;
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LandscapeModelTest {
 

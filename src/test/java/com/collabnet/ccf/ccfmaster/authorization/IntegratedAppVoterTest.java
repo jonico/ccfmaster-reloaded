@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.authorization;
 
 import java.util.regex.Pattern;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IntegratedAppVoterTest {
 
@@ -30,17 +30,16 @@ public class IntegratedAppVoterTest {
     @Test
     public void invalidApiUrls() {
         for (String path : invalidApiPaths)
-            assertNull("accepted path: " + path,
-                    IntegratedAppVoter.findLinkIdInUrl(path));
+            assertNull(IntegratedAppVoter.findLinkIdInUrl(path), "accepted path: " + path);
     }
 
     @Test
     public void validApiUrls() {
         for (String path : validApiPaths) {
             final String linkId = IntegratedAppVoter.findLinkIdInUrl(path);
-            assertNotNull("rejected path: " + path, linkId);
-            assertTrue("bad linkId (" + linkId + ")in path: " + path, pattern
-                    .matcher(linkId).matches());
+            assertNotNull(linkId, "rejected path: " + path);
+            assertTrue(pattern
+                    .matcher(linkId).matches(), "bad linkId (" + linkId + ")in path: " + path);
         }
     }
 

@@ -4,13 +4,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import com.collabnet.ccf.ccfmaster.server.domain.ConflictResolutionPolicy;
@@ -29,9 +28,10 @@ import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirection;
 import com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionStatus;
 import com.collabnet.ccf.ccfmaster.server.domain.SystemKind;
 import com.collabnet.ccf.ccfmaster.server.domain.Timezone;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext-test-contentresolver.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public abstract class AbstractAPISystemTest {
 
     public static String                 ccfAPIUrl    = "http://localhost:9090/CCFMaster/api";
@@ -48,7 +48,7 @@ public abstract class AbstractAPISystemTest {
     protected DirectionConfig            qc2tfconfig;
     protected ParticipantConfig          qcconfig;
 
-    @Before
+    @BeforeEach
     public void createTestData() {
 
         HttpHeaders headers = new HttpHeaders();
@@ -153,7 +153,7 @@ public abstract class AbstractAPISystemTest {
                 RepositoryMappingDirection.class);
     }
 
-    @After
+    @AfterEach
     public void wipeTestData() {
         LandscapeList landscapes = restTemplate.getForObject(ccfAPIUrl
                 + "/landscapes", LandscapeList.class);

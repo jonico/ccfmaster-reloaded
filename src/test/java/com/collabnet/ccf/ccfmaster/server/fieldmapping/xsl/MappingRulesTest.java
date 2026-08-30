@@ -1,15 +1,15 @@
 package com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMapping;
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingKind;
@@ -27,7 +27,7 @@ public class MappingRulesTest {
         Set<ConstraintViolation<MappingRules>> errors = validator
                 .validate(emptyMapping);
         // two non null, two safe xslt violations
-        Assert.assertEquals(4, errors.size());
+        Assertions.assertEquals(4, errors.size());
         int numberOfNonNull = 0;
         int numberOfSafeXsltViolatios = 0;
         for (ConstraintViolation<MappingRules> constraintViolation : errors) {
@@ -40,8 +40,8 @@ public class MappingRulesTest {
                 fail("Unexpected violation message: " + message);
             }
         }
-        Assert.assertEquals(2, numberOfNonNull);
-        Assert.assertEquals(2, numberOfSafeXsltViolatios);
+        Assertions.assertEquals(2, numberOfNonNull);
+        Assertions.assertEquals(2, numberOfSafeXsltViolatios);
     }
 
 }

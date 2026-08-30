@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -34,9 +34,7 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertTrue(
                         "Counter for 'Direction' incorrectly reported there were no entries",
                         count > 0);
-        org.junit.Assert.assertNotNull(
-                "Find entries method for 'Direction' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Direction' illegally returned null");
         org.junit.Assert
                 .assertEquals(
                         "Find entries method for 'Direction' returned an incorrect number of entries",
@@ -60,9 +58,7 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertTrue(
                         "Counter for 'Direction' incorrectly reported there were no entries",
                         count > 0);
-        org.junit.Assert.assertNotNull(
-                "Find entries method for 'Direction' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Direction' illegally returned null");
         org.junit.Assert
                 .assertEquals(
                         "Find entries method for 'Direction' returned an incorrect number of entries",
@@ -87,9 +83,7 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertTrue(
                         "Counter for 'Direction' incorrectly reported there were no entries",
                         count > 0);
-        org.junit.Assert.assertNotNull(
-                "Find entries method for 'Direction' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Direction' illegally returned null");
         org.junit.Assert
                 .assertEquals(
                         "Find entries method for 'Direction' returned an incorrect number of entries",
@@ -113,9 +107,7 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertTrue(
                         "Counter for 'Direction' incorrectly reported there were no entries",
                         count > 0);
-        org.junit.Assert.assertNotNull(
-                "Find entries method for 'Direction' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Direction' illegally returned null");
         org.junit.Assert
                 .assertEquals(
                         "Find entries method for 'Direction' returned an incorrect number of entries",
@@ -130,13 +122,10 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'Direction' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'Direction' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Direction' identifier to be null");
         obj = restTemplate.postForObject(ccfAPIUrl + "/directions/", obj,
                 Direction.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'Direction' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'Direction' identifier to no longer be null");
     }
 
     @Test
@@ -154,36 +143,37 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
                 Direction.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Direction' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Direction' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'Direction' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.Direction obj = dod
-                .getRandomDirection();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to provide an identifier",
-                        id);
-        restTemplate.delete(ccfAPIUrl + "/directions/" + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
-                    Direction.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Direction obj = dod
+                    .getRandomDirection();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Direction' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Direction' failed to provide an identifier",
+                            id);
+            restTemplate.delete(ccfAPIUrl + "/directions/" + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
+                        Direction.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -202,9 +192,8 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
                 Direction.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Direction' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Direction' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyDirection(obj);
         restTemplate.put(ccfAPIUrl + "/directions/" + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
@@ -216,27 +205,28 @@ public class DirectionAPIIntegrationTest extends AbstractAPIIntegrationTest {
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.Direction obj = dod
-                .getRandomDirection();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Direction' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
-                Direction.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Direction' illegally returned null for id '"
-                        + id + "'", obj);
-        //put with wrong id
-        restTemplate.put(ccfAPIUrl + "/directions/" + id + 42, obj);
-
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Direction obj = dod
+                    .getRandomDirection();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Direction' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Direction' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/directions/" + id,
+                    Direction.class);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Direction' illegally returned null for id '"
+                            + id + "'");
+            //put with wrong id
+            restTemplate.put(ccfAPIUrl + "/directions/" + id + 42, obj);
+    
+                });
     }
 
 }

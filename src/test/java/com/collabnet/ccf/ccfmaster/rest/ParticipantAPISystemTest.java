@@ -1,8 +1,8 @@
 package com.collabnet.ccf.ccfmaster.rest;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.domain.ParticipantList;
 
@@ -12,7 +12,7 @@ public class ParticipantAPISystemTest extends AbstractAPISystemTest {
     public void participantsExist() {
         ParticipantList participants = restTemplate.getForObject(ccfAPIUrl
                 + "/participants", ParticipantList.class);
-        assertTrue("no participants returned", !participants.isEmpty());
+        assertTrue(!participants.isEmpty(), "no participants returned");
         assertTrue(true);
     }
 

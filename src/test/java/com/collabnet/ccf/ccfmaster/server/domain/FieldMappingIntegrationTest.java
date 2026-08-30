@@ -1,8 +1,8 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.test.RooIntegrationTest;
 
@@ -22,21 +22,23 @@ public class FieldMappingIntegrationTest {
         fm.setScope(FieldMappingScope.CCF_CORE);
         assertFalse(fm.getScope() == FieldMappingScope.REPOSITORY_MAPPING_DIRECTION);
         fm.persist();
-        assertFalse("save was called on persist.", mockFmpf.calledSave);
+        assertFalse(mockFmpf.calledSave, "save was called on persist.");
 
         mockFmpf = new MockFieldMappingPersisterFactory();
         fm = FieldMapping.findFieldMapping(fm.getId());
-        assertNotNull("couldn't find fieldMapping after persist.", fm);
+        assertNotNull(fm, "couldn't find fieldMapping after persist.");
         fm.setPersisterFactory(mockFmpf);
         fm = fm.merge();
-        assertFalse("save was called on merge().", mockFmpf.calledSave);
+        assertFalse(mockFmpf.calledSave, "save was called on merge().");
     }
 
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test
     public void paramMustBeAlphaNumerical() {
-        FieldMapping fm = fmdod.getNewTransientFieldMapping(23);
-        fm.setName("illegalParam.xsl");
-        fm.persist();
+        org.junit.jupiter.api.Assertions.assertThrows(jakarta.validation.ConstraintViolationException.class, () -> {    
+            FieldMapping fm = fmdod.getNewTransientFieldMapping(23);
+            fm.setName("illegalParam.xsl");
+            fm.persist();
+                });
     }
 
     @Test
@@ -46,14 +48,14 @@ public class FieldMappingIntegrationTest {
         fm.setPersisterFactory(mockFmpf);
         assertTrue(fm.getScope() == FieldMappingScope.REPOSITORY_MAPPING_DIRECTION);
         fm.persist();
-        assertTrue("save wasn't called on persist().", mockFmpf.calledSave);
+        assertTrue(mockFmpf.calledSave, "save wasn't called on persist().");
 
         mockFmpf = new MockFieldMappingPersisterFactory();
         fm = FieldMapping.findFieldMapping(fm.getId());
-        assertNotNull("couldn't find fieldMapping after persist.", fm);
+        assertNotNull(fm, "couldn't find fieldMapping after persist.");
         fm.setPersisterFactory(mockFmpf);
         fm = fm.merge();
-        assertTrue("save wasn't called on merge().", mockFmpf.calledSave);
+        assertTrue(mockFmpf.calledSave, "save wasn't called on merge().");
     }
 
     @Test

@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -93,29 +93,31 @@ public class FieldMappingLandscapeTemplateAPIIntegrationTest extends AbstractAPI
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod
-                .getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier",
-                        id);
-        restTemplate
-                .delete(ccfAPIUrl + "/fieldmappinglandscapetemplates/" + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl
-                    + "/fieldmappinglandscapetemplates/" + id,
-                    FieldMappingLandscapeTemplate.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod
+                    .getRandomFieldMappingLandscapeTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier",
+                            id);
+            restTemplate
+                    .delete(ccfAPIUrl + "/fieldmappinglandscapetemplates/" + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl
+                        + "/fieldmappinglandscapetemplates/" + id,
+                        FieldMappingLandscapeTemplate.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -146,7 +148,7 @@ public class FieldMappingLandscapeTemplateAPIIntegrationTest extends AbstractAPI
                 + "/fieldmappinglandscapetemplates/" + id,
                 FieldMappingLandscapeTemplate.class);
         if (obj.getKind() != FieldMappingKind.MAPPING_RULES) {
-            Assert.assertFalse(obj.getRules().isEmpty());
+            Assertions.assertFalse(obj.getRules().isEmpty());
         }
         org.junit.Assert
                 .assertTrue(
@@ -155,29 +157,31 @@ public class FieldMappingLandscapeTemplateAPIIntegrationTest extends AbstractAPI
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod
-                .getRandomFieldMappingLandscapeTemplate();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl
-                + "/fieldmappinglandscapetemplates/" + id,
-                FieldMappingLandscapeTemplate.class);
-        org.junit.Assert
-                .assertNotNull(
-                        "Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '"
-                                + id + "'", obj);
-        //test with wrong id
-        restTemplate.put(ccfAPIUrl + "/fieldmappinglandscapetemplates/" + id
-                + 42, obj);
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate obj = dod
+                    .getRandomFieldMappingLandscapeTemplate();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'FieldMappingLandscapeTemplate' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl
+                    + "/fieldmappinglandscapetemplates/" + id,
+                    FieldMappingLandscapeTemplate.class);
+            org.junit.Assert
+                    .assertNotNull(
+                            "Find method for 'FieldMappingLandscapeTemplate' illegally returned null for id '"
+                                    + id + "'", obj);
+            //test with wrong id
+            restTemplate.put(ccfAPIUrl + "/fieldmappinglandscapetemplates/" + id
+                    + 42, obj);
+                });
     }
 
 }

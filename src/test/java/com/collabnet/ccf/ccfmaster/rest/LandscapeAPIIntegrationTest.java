@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -34,9 +34,7 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertTrue(
                         "Counter for 'Landscape' incorrectly reported there were no entries",
                         count > 0);
-        org.junit.Assert.assertNotNull(
-                "Find entries method for 'Landscape' illegally returned null",
-                result);
+        org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Landscape' illegally returned null");
         org.junit.Assert
                 .assertEquals(
                         "Find entries method for 'Landscape' returned an incorrect number of entries",
@@ -55,13 +53,10 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'Landscape' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'Landscape' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'Landscape' identifier to be null");
         obj = restTemplate.postForObject(ccfAPIUrl + "/landscapes/", obj,
                 Landscape.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'Landscape' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'Landscape' identifier to no longer be null");
     }
 
     @Test
@@ -79,9 +74,8 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
                 Landscape.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Landscape' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Landscape' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'Landscape' returned the incorrect identifier",
@@ -103,36 +97,37 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
                         id);
         obj = restTemplate.getForObject(
                 ccfAPIUrl + "/landscapes/" + obj.getPlugId(), Landscape.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Landscape' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Landscape' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'Landscape' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.Landscape obj = dod
-                .getRandomLandscape();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to provide an identifier",
-                        id);
-        restTemplate.delete(ccfAPIUrl + "/landscapes/" + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
-                    Landscape.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Landscape obj = dod
+                    .getRandomLandscape();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Landscape' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Landscape' failed to provide an identifier",
+                            id);
+            restTemplate.delete(ccfAPIUrl + "/landscapes/" + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
+                        Landscape.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -151,9 +146,8 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
                 Landscape.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Landscape' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Landscape' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyLandscape(obj);
         restTemplate.put(ccfAPIUrl + "/landscapes/" + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
@@ -165,25 +159,26 @@ public class LandscapeAPIIntegrationTest extends AbstractAPIIntegrationTest {
                                 || !modified);
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testWrongUpdate() {
-        com.collabnet.ccf.ccfmaster.server.domain.Landscape obj = dod
-                .getRandomLandscape();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'Landscape' failed to provide an identifier",
-                        id);
-        obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
-                Landscape.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'Landscape' illegally returned null for id '"
-                        + id + "'", obj);
-        restTemplate.put(ccfAPIUrl + "/landscapes/" + id + 42, obj);
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.Landscape obj = dod
+                    .getRandomLandscape();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Landscape' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'Landscape' failed to provide an identifier",
+                            id);
+            obj = restTemplate.getForObject(ccfAPIUrl + "/landscapes/" + id,
+                    Landscape.class);
+            org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'Landscape' illegally returned null for id '"
+                            + id + "'");
+            restTemplate.put(ccfAPIUrl + "/landscapes/" + id + 42, obj);
+                });
     }
 
 }

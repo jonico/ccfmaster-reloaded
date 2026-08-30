@@ -1,7 +1,7 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,19 +10,31 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule;
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
 import com.collabnet.ccf.ccfmaster.server.domain.LandscapeDataOnDemand;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration()
-public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTransactionalJUnit4SpringContextTests {
+/*
+ * Was: extends AbstractTransactionalJUnit4SpringContextTests. That class is JUnit 4 only
+ * (it is annotated @RunWith(SpringJUnit4ClassRunner.class) via its superclass) and
+ * deprecated for removal in Spring 6. Its whole contribution here was loading the context
+ * and wrapping each test in a rolled-back transaction - none of the 14 subclasses touched
+ * its jdbcTemplate, applicationContext or logger members - so @ExtendWith(SpringExtension)
+ * plus @Transactional is an exact replacement.
+ */
+@ExtendWith(SpringExtension.class)
+@Transactional
+public class SingleLandscapeCCFCoreInteractionStrategyTest {
 
     private String[]                                  propertyNames = {
             SingleLandscapeCCFCoreInteractionStrategy.CCF_DB_DRIVER,
@@ -48,14 +60,14 @@ public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTrans
 
     private File                                      landscapePropertiesFile;
 
-    @After
+    @AfterEach
     public void deleteDirectoryIfNecessary() throws IOException {
         if (directoryToDelete != null) {
             FileUtils.deleteDirectory(directoryToDelete);
         }
     }
 
-    @Before
+    @BeforeEach
     public void setDirectoryToDeleteToNull() {
         directoryToDelete = null;
     }
@@ -71,8 +83,7 @@ public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTrans
         landscapePropertiesFile = new File(ccfHomeDirectory, "landscape"
                 + landscape.getId() + File.separator
                 + wiredInStrategy.getImmutableLandscapePropertyFileName());
-        assertTrue(samplesDirectory + " doesn't exist.",
-                samplesDirectory.exists());
+        assertTrue(samplesDirectory.exists(), samplesDirectory + " doesn't exist.");
         Properties landscapeIdProperties = new Properties();
         FileInputStream inStream = new FileInputStream(landscapePropertiesFile);
         landscapeIdProperties.load(inStream);
@@ -116,8 +127,7 @@ public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTrans
         landscapePropertiesFile = new File(ccfHomeDirectory, "landscape"
                 + landscape.getId() + File.separator
                 + strategy.getImmutableLandscapePropertyFileName());
-        assertTrue(samplesDirectory + " doesn't exist.",
-                samplesDirectory.exists());
+        assertTrue(samplesDirectory.exists(), samplesDirectory + " doesn't exist.");
         Properties landscapeIdProperties = new Properties();
         FileInputStream inStream = new FileInputStream(landscapePropertiesFile);
         landscapeIdProperties.load(inStream);
@@ -150,8 +160,7 @@ public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTrans
         File archiveLandscapeDir = archiveDir.listFiles()[0];
         File archivedSamplesDir = new File(archiveLandscapeDir, File.separator
                 + "samples");
-        assertTrue(archivedSamplesDir.getName() + " doesn't exist.",
-                archivedSamplesDir.exists());
+        assertTrue(archivedSamplesDir.exists(), archivedSamplesDir.getName() + " doesn't exist.");
     }
 
     @Test
@@ -162,8 +171,7 @@ public class SingleLandscapeCCFCoreInteractionStrategyTest extends AbstractTrans
         File archiveLandscapeDir = archiveDir.listFiles()[0];
         File archivedSamplesDir = new File(archiveLandscapeDir, File.separator
                 + "samples");
-        assertTrue(archivedSamplesDir.getName() + " doesn't exist.",
-                archivedSamplesDir.exists());
+        assertTrue(archivedSamplesDir.exists(), archivedSamplesDir.getName() + " doesn't exist.");
     }
 
     @Test

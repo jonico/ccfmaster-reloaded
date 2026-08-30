@@ -2,22 +2,22 @@ package com.collabnet.ccf.ccfmaster.server.domain;
 
 import java.util.Date;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.OnDelete;
@@ -38,7 +38,7 @@ import org.springframework.util.Assert;
         "findRepositoryMappingDirectionsByRepositoryMapping" })
 public class RepositoryMappingDirection {
 
-    public static class XmlAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<Long, RepositoryMappingDirection> {
+    public static class XmlAdapter extends jakarta.xml.bind.annotation.adapters.XmlAdapter<Long, RepositoryMappingDirection> {
 
         @Override
         public Long marshal(RepositoryMappingDirection v) throws Exception {
@@ -280,7 +280,7 @@ public class RepositoryMappingDirection {
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<RepositoryMappingDirection> q = em
                 .createQuery(
-                        "SELECT RepositoryMappingDirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp = :externalApp ORDER BY repositorymappingdirection.id",
+                        "SELECT repositorymappingdirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp = :externalApp ORDER BY repositorymappingdirection.id",
                         RepositoryMappingDirection.class);
         q.setParameter("externalApp", externalApp);
         return q;
@@ -297,7 +297,7 @@ public class RepositoryMappingDirection {
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<RepositoryMappingDirection> q = em
                 .createQuery(
-                        "SELECT RepositoryMappingDirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp = :externalApp AND repositorymappingdirection.direction = :direction ORDER BY repositorymappingdirection.id",
+                        "SELECT repositorymappingdirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp = :externalApp AND repositorymappingdirection.direction = :direction ORDER BY repositorymappingdirection.id",
                         RepositoryMappingDirection.class);
         q.setParameter("externalApp", externalApp);
         q.setParameter("direction", direction);
@@ -312,7 +312,7 @@ public class RepositoryMappingDirection {
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<RepositoryMappingDirection> q = em
                 .createQuery(
-                        "SELECT RepositoryMappingDirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY repositorymappingdirection.id",
+                        "SELECT repositorymappingdirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY repositorymappingdirection.id",
                         RepositoryMappingDirection.class);
         q.setParameter("landscape", landscape);
         return q;
@@ -325,7 +325,7 @@ public class RepositoryMappingDirection {
         EntityManager em = RepositoryMapping.entityManager();
         TypedQuery<RepositoryMappingDirection> q = em
                 .createQuery(
-                        "SELECT RepositoryMappingDirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.direction = :direction AND repositorymappingdirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY repositorymappingdirection.id",
+                        "SELECT repositorymappingdirection FROM RepositoryMappingDirection AS repositorymappingdirection WHERE repositorymappingdirection.direction = :direction AND repositorymappingdirection.repositoryMapping.externalApp.landscape = :landscape ORDER BY repositorymappingdirection.id",
                         RepositoryMappingDirection.class);
         q.setParameter("landscape", landscape);
         q.setParameter("direction", direction);

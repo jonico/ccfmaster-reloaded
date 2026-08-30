@@ -74,7 +74,7 @@ public class CoreStateMachine {
 
         public CoreMonitor delayBetweenConnectionAttempts(long count,
                 TimeUnit timeUnit) {
-            Assert.isTrue(count > 0);
+            Assert.isTrue(count > 0, "[Assertion failed] - this expression must be true");
             this.delayUnitCount = count;
             this.delayUnit = timeUnit;
             return this;

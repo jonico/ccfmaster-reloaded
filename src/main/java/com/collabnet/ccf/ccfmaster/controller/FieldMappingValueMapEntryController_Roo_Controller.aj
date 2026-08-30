@@ -4,13 +4,12 @@
 package com.collabnet.ccf.ccfmaster.controller;
 
 import com.collabnet.ccf.ccfmaster.server.domain.FieldMappingValueMapEntry;
-import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -96,10 +95,10 @@ privileged aspect FieldMappingValueMapEntryController_Roo_Controller {
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
-        try {
-            pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-        }
-        catch (UnsupportedEncodingException uee) {}
+        // Spring 6's UriUtils.encodePathSegment no longer throws
+        // UnsupportedEncodingException, so the empty catch block it used to need is now
+        // unreachable code.
+        pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
         return pathSegment;
     }
     

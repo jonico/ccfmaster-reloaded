@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TimezoneTest {
     @Test
@@ -15,7 +15,7 @@ public class TimezoneTest {
                 .getAvailableIDs()));
         for (Timezone tz : Timezone.class.getEnumConstants()) {
             String str = tz.toString();
-            assertTrue(str, tzs.contains(str));
+            assertTrue(tzs.contains(str), str);
         }
     }
 }

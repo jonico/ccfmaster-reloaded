@@ -1,14 +1,14 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.rmi.RemoteException;
 
 import mockit.Mocked;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.domain.Landscape;
 import com.collabnet.ce.soap50.webservices.pluggable.PluggableComponentSoapDO;
@@ -92,15 +92,13 @@ public class CreateIntegratedAppStrategyTest2 {
         final boolean isCTF8Support = false;
         new CreateIntegratedAppStrategy("foo", "iafEndpoint", client,
                 fileStorageClient, isCTF8Support).beforeCreate(landscape);
-        assertFalse("createIntegratedApplication was called", createCalled);
-        assertFalse("getIntegratedApplicationByName was called",
-                getAppByNameCalled);
-        assertEquals("plugId not set correctly by beforeCreate", plugId,
-                landscape.getPlugId());
+        assertFalse(createCalled, "createIntegratedApplication was called");
+        assertFalse(getAppByNameCalled, "getIntegratedApplicationByName was called");
+        assertEquals(plugId, landscape.getPlugId(), "plugId not set correctly by beforeCreate");
 
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         createCalled = false;
         getAppByNameCalled = false;

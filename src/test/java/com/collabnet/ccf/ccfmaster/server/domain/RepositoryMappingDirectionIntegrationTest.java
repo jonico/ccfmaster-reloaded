@@ -1,8 +1,8 @@
 package com.collabnet.ccf.ccfmaster.server.domain;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.test.RooIntegrationTest;
 
@@ -14,21 +14,23 @@ public class RepositoryMappingDirectionIntegrationTest {
     @Autowired
     FieldMappingDataOnDemand                       fmDod;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidParentThrowsException() {
-        RepositoryMappingDirection rmd1 = dod
-                .getSpecificRepositoryMappingDirection(0);
-        RepositoryMappingDirection rmd2 = dod
-                .getSpecificRepositoryMappingDirection(1);
-        assertFalse(rmd1.getId().equals(rmd2.getId()));
-        FieldMapping fm = fmDod.getRandomFieldMapping();
-        if (!fm.getParent().getId().equals(rmd1.getId())) {
-            rmd1.setActiveFieldMapping(fm);
-            rmd1.merge();
-        } else {
-            rmd2.setActiveFieldMapping(fm);
-            rmd2.merge();
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> {    
+            RepositoryMappingDirection rmd1 = dod
+                    .getSpecificRepositoryMappingDirection(0);
+            RepositoryMappingDirection rmd2 = dod
+                    .getSpecificRepositoryMappingDirection(1);
+            assertFalse(rmd1.getId().equals(rmd2.getId()));
+            FieldMapping fm = fmDod.getRandomFieldMapping();
+            if (!fm.getParent().getId().equals(rmd1.getId())) {
+                rmd1.setActiveFieldMapping(fm);
+                rmd1.merge();
+            } else {
+                rmd2.setActiveFieldMapping(fm);
+                rmd2.merge();
+            }
+                });
     }
 
     @Test
@@ -60,14 +62,12 @@ public class RepositoryMappingDirectionIntegrationTest {
                 .assertNotNull(
                         "Data on demand for 'RepositoryMappingDirection' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'RepositoryMappingDirection' identifier to be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'RepositoryMappingDirection' identifier to be null");
 
         // we do not persist due to unique key constraints
         //obj.persist();
         //obj.flush();
-        //org.junit.Assert.assertNotNull("Expected 'RepositoryMappingDirection' identifier to no longer be null", obj.getId());
+        //org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'RepositoryMappingDirection' identifier to no longer be null");
     }
 
 }

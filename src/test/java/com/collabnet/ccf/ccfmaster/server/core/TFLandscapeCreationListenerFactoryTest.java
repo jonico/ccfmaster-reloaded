@@ -1,7 +1,7 @@
 package com.collabnet.ccf.ccfmaster.server.core;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TFLandscapeCreationListenerFactoryTest {
     private static final String BASE_URL = "http://localhost:8080/CCFMaster";
@@ -10,37 +10,33 @@ public class TFLandscapeCreationListenerFactoryTest {
     public void slashIsAppendedToBaseUrlTFEACLF() {
         TFExternalAppCreationListenerFactory factory = new TFExternalAppCreationListenerFactory(
                 BASE_URL);
-        assertTrue("baseUrl must end with '/'", factory.baseUrl.endsWith("/"));
-        assertFalse("unnecessary extra slash was appended",
-                factory.baseUrl.endsWith("//"));
+        assertTrue(factory.baseUrl.endsWith("/"), "baseUrl must end with '/'");
+        assertFalse(factory.baseUrl.endsWith("//"), "unnecessary extra slash was appended");
     }
 
     @Test
     public void slashIsAppendedToBaseUrlTFLCLF() {
         TFLandscapeCreationListenerFactory factory = new TFLandscapeCreationListenerFactory();
         factory.setBaseUrl(BASE_URL);
-        assertTrue("baseUrl must end with '/'",
-                factory.getBaseUrl().endsWith("/"));
-        assertFalse("unnecessary extra slash was appended", factory
-                .getBaseUrl().endsWith("//"));
+        assertTrue(factory.getBaseUrl().endsWith("/"), "baseUrl must end with '/'");
+        assertFalse(factory
+                .getBaseUrl().endsWith("//"), "unnecessary extra slash was appended");
     }
 
     @Test
     public void slashIsNotAppendedToBaseUrlUnlessNecessaryTFEACLF() {
         TFExternalAppCreationListenerFactory factory = new TFExternalAppCreationListenerFactory(
                 BASE_URL + "/");
-        assertTrue("baseUrl must end with '/'", factory.baseUrl.endsWith("/"));
-        assertFalse("unnecessary extra slash was appended",
-                factory.baseUrl.endsWith("//"));
+        assertTrue(factory.baseUrl.endsWith("/"), "baseUrl must end with '/'");
+        assertFalse(factory.baseUrl.endsWith("//"), "unnecessary extra slash was appended");
     }
 
     @Test
     public void slashIsNotAppendedToBaseUrlUnlessNecessaryTFLCLF() {
         TFLandscapeCreationListenerFactory factory = new TFLandscapeCreationListenerFactory();
         factory.setBaseUrl(BASE_URL + "/");
-        assertTrue("baseUrl must end with '/'",
-                factory.getBaseUrl().endsWith("/"));
-        assertFalse("unnecessary extra slash was appended", factory
-                .getBaseUrl().endsWith("//"));
+        assertTrue(factory.getBaseUrl().endsWith("/"), "baseUrl must end with '/'");
+        assertFalse(factory
+                .getBaseUrl().endsWith("//"), "unnecessary extra slash was appended");
     }
 }

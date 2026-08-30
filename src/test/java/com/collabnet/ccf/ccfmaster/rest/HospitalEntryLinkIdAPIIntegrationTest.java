@@ -2,8 +2,8 @@ package com.collabnet.ccf.ccfmaster.rest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -368,15 +368,12 @@ public class HospitalEntryLinkIdAPIIntegrationTest extends AbstractAPIIntegratio
                 .assertNotNull(
                         "Data on demand for 'HospitalEntry' failed to provide a new transient entity",
                         obj);
-        org.junit.Assert.assertNull(
-                "Expected 'HospitalEntry' identifier to be null", obj.getId());
+        org.junit.jupiter.api.Assertions.assertNull(obj.getId(), "Expected 'HospitalEntry' identifier to be null");
         obj.setRepositoryMappingDirection(randomObject
                 .getRepositoryMappingDirection());
         obj = restTemplate.postForObject(ccfAPIUrl + linkIdPathSegment, obj,
                 HospitalEntry.class);
-        org.junit.Assert.assertNotNull(
-                "Expected 'HospitalEntry' identifier to no longer be null",
-                obj.getId());
+        org.junit.jupiter.api.Assertions.assertNotNull(obj.getId(), "Expected 'HospitalEntry' identifier to no longer be null");
     }
 
     @Test
@@ -398,39 +395,40 @@ public class HospitalEntryLinkIdAPIIntegrationTest extends AbstractAPIIntegratio
                         .getExternalApp().getLinkId() + "/hospitalentrys/";
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 HospitalEntry.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'HospitalEntry' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'HospitalEntry' illegally returned null for id '"
+                        + id + "'");
         org.junit.Assert
                 .assertEquals(
                         "Find method for 'HospitalEntry' returned the incorrect identifier",
                         id, obj.getId());
     }
 
-    @Test(expected = HttpClientErrorException.class)
+    @Test
     public void testRemove() {
-        com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod
-                .getRandomHospitalEntry();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'HospitalEntry' failed to initialize correctly",
-                        obj);
-        java.lang.Long id = obj.getId();
-        org.junit.Assert
-                .assertNotNull(
-                        "Data on demand for 'HospitalEntry' failed to provide an identifier",
-                        id);
-        String linkIdPathSegment = "/linkid/"
-                + obj.getRepositoryMappingDirection().getRepositoryMapping()
-                        .getExternalApp().getLinkId() + "/hospitalentrys/";
-        restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
-        try {
-            obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
-                    HospitalEntry.class);
-        } catch (HttpClientErrorException e) {
-            Assert.assertEquals("Expected 404", 404, e.getStatusCode().value());
-            throw e;
-        }
+        org.junit.jupiter.api.Assertions.assertThrows(HttpClientErrorException.class, () -> {    
+            com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry obj = dod
+                    .getRandomHospitalEntry();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'HospitalEntry' failed to initialize correctly",
+                            obj);
+            java.lang.Long id = obj.getId();
+            org.junit.Assert
+                    .assertNotNull(
+                            "Data on demand for 'HospitalEntry' failed to provide an identifier",
+                            id);
+            String linkIdPathSegment = "/linkid/"
+                    + obj.getRepositoryMappingDirection().getRepositoryMapping()
+                            .getExternalApp().getLinkId() + "/hospitalentrys/";
+            restTemplate.delete(ccfAPIUrl + linkIdPathSegment + id);
+            try {
+                obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
+                        HospitalEntry.class);
+            } catch (HttpClientErrorException e) {
+                Assertions.assertEquals(404, e.getStatusCode().value(), "Expected 404");
+                throw e;
+            }
+                });
     }
 
     @Test
@@ -449,9 +447,8 @@ public class HospitalEntryLinkIdAPIIntegrationTest extends AbstractAPIIntegratio
         java.lang.Integer currentVersion = obj.getVersion();
         obj = restTemplate.getForObject(ccfAPIUrl + "/hospitalentrys/" + id,
                 HospitalEntry.class);
-        org.junit.Assert.assertNotNull(
-                "Find method for 'HospitalEntry' illegally returned null for id '"
-                        + id + "'", obj);
+        org.junit.jupiter.api.Assertions.assertNotNull(obj, "Find method for 'HospitalEntry' illegally returned null for id '"
+                        + id + "'");
         boolean modified = dod.modifyHospitalEntry(obj);
         String linkIdPathSegment = "/linkid/"
                 + obj.getRepositoryMappingDirection().getRepositoryMapping()
@@ -471,12 +468,9 @@ public class HospitalEntryLinkIdAPIIntegrationTest extends AbstractAPIIntegratio
         restTemplate.put(ccfAPIUrl + linkIdPathSegment + id, obj);
         obj = restTemplate.getForObject(ccfAPIUrl + linkIdPathSegment + id,
                 HospitalEntry.class);
-        org.junit.Assert.assertFalse("adaptor name should be immutable",
-                "foo".equals(obj.getAdaptorName()));
-        org.junit.Assert.assertFalse("artifact id should be immutable",
-                "bar".equals(obj.getSourceArtifactId()));
-        org.junit.Assert.assertTrue("error code should be changeable",
-                "foobar".equals(obj.getErrorCode()));
+        org.junit.jupiter.api.Assertions.assertFalse("foo".equals(obj.getAdaptorName()), "adaptor name should be immutable");
+        org.junit.jupiter.api.Assertions.assertFalse("bar".equals(obj.getSourceArtifactId()), "artifact id should be immutable");
+        org.junit.jupiter.api.Assertions.assertTrue("foobar".equals(obj.getErrorCode()), "error code should be changeable");
     }
 
 }

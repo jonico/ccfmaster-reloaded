@@ -8,75 +8,48 @@
 	<name>CCFMaster</name>
 	<properties>
 		<roo.version>1.1.3.RELEASE</roo.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<aspectj.version>1.9.7</aspectj.version>
-		<slf4j.version>1.6.1</slf4j.version>
-		<cobertura.version>1.9.4.1</cobertura.version>
+		<spring.version>6.2.19</spring.version>
+		<spring-security.version>6.5.11</spring-security.version>
+		<spring-webflow.version>3.0.2</spring-webflow.version>
+		<hibernate.version>6.6.56.Final</hibernate.version>
+		<hibernate-validator.version>8.0.5.Final</hibernate-validator.version>
+		<aspectj.version>1.9.25.1</aspectj.version>
+		<slf4j.version>2.0.17</slf4j.version>
+		<logback.version>1.5.18</logback.version>
+		<jackson.version>2.18.3</jackson.version>
+		<junit.jupiter.version>5.11.4</junit.jupiter.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-security.version>3.0.2.RELEASE</spring-security.version>
+		<java.release>25</java.release>
 		<skipUnitTests>false</skipUnitTests>
+		<!--
+			Selenium is deliberately left at 2.37.0. The three *SystemTest suites drive
+			com.thoughtworks.selenium (Selenium RC), which was deleted in Selenium 3, so any
+			upgrade would mean rewriting them rather than migrating them. They are excluded from
+			surefire at the baseline and only have to keep compiling.
+		-->
 		<selenium.version>2.37.0</selenium.version>
 	</properties>
+	<!--
+		Five of the eight repositories the recovered POM declared are dead
+		(maven.springframework.org release + milestone, spring-roo-repository,
+		ccf.open.collab.net/mvnrepo, download.java.net/maven/2) and every artifact that is
+		still obtainable is on Maven Central. All three pluginRepositories were dead too, so
+		the whole block is gone.
+	-->
 	<repositories>
-		<repository>
-			<id>spring-maven-release</id>
-			<name>Spring Maven Release Repository</name>
-			<url>http://maven.springframework.org/release</url>
-		</repository>
-		<repository>
-			<id>spring-maven-milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-		</repository>
-		<repository>
-			<id>spring-roo-repository</id>
-			<name>Spring Roo Repository</name>
-			<url>http://spring-roo-repository.springsource.org/release</url>
-		</repository>
-		<repository>
-			<id>maven2-repository.dev.java.net</id>
-			<name>Java.net Repository for Maven</name>
-			<url>http://download.java.net/maven/2/</url>
-			<layout>default</layout>
-		</repository>
 		<repository>
 			<id>JBoss Repo</id>
 			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 			<name>JBoss Repo</name>
 		</repository>
-		<repository>
-			<id>ccf-repo</id>
-			<url>http://ccf.open.collab.net/mvnrepo</url>
-		</repository>
-		<repository>
-			<id>repo.maven.apache.org</id>
-			<name>repo.maven.apache.org</name>
-			<url>https://repository.apache.org/content/repositories/releases</url>
-		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-maven-release</id>
-			<name>Spring Maven Release Repository</name>
-			<url>http://maven.springframework.org/release</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-maven-milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-roo-repository</id>
-			<name>Spring Roo Repository</name>
-			<url>http://spring-roo-repository.springsource.org/release</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<dependencyManagement>
 		<dependencies>
+			<!-- selenium-java 2.37 drags in guava 15; pin the whole graph to one version -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>15.0</version>
+				<version>33.4.0-jre</version>
 			</dependency>
 			<dependency>
 				<groupId>xml-apis</groupId>
@@ -86,12 +59,56 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<!-- General dependencies for standard applications -->
+		<!-- ============================ test platform ============================ -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
 		</dependency>
+		<!--
+			junit:junit and the vintage engine stay on the test classpath for the Selenium
+			system tests: SeleniumSuite is a custom org.junit.runners.Suite Runner, and JUnit 5
+			has no Runner concept to port it to. They are excluded from surefire at the
+			baseline and only have to keep compiling.
+		-->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>2.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!--
+			org.springframework.mock.staticmock, carved out of spring-aspects 3.2.18.RELEASE.
+			Spring 4.0 deleted the package and nothing replaced it; nine Roo-generated entity
+			tests are built on it. See legacy/bootstrap.sh, and
+			src/test/java/org/springframework/mock/staticmock/ for the one class that had to be
+			recompiled from source rather than reused as bytecode.
+		-->
+		<dependency>
+			<groupId>com.collabnet.ccf.ccfmaster.legacy</groupId>
+			<artifactId>spring-mock-staticmock</artifactId>
+			<version>3.2.18.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<!--
+			jmockit is deliberately left at 0.999.4. 1.x deleted mockit.Mockit and
+			@MockClass, which is the whole API these five test classes use, so an upgrade is a
+			rewrite. Six of the twelve pre-existing baseline failures are these tests failing
+			on a modern JDK (legacy/README.md); they still compile and still fail the same way.
+		-->
 		<dependency>
 			<groupId>mockit</groupId>
 			<artifactId>jmockit</artifactId>
@@ -99,11 +116,31 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+				<!-- same java.xml split-package problem as axis-jaxrpc, on the test classpath -->
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>${selenium.version}</version>
+			<type>pom</type>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- ============================== logging =============================== -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -115,6 +152,18 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<!-- ============================== AspectJ =============================== -->
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
@@ -124,47 +173,115 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.flexjson</groupId>
-			<artifactId>flexjson</artifactId>
-			<version>2.0</version>
-		</dependency>
-		<!-- ROO dependencies -->
+		<!-- Roo annotations: @Retention(SOURCE), reconstructed under legacy/ -->
 		<dependency>
 			<groupId>org.springframework.roo</groupId>
 			<artifactId>org.springframework.roo.annotations</artifactId>
 			<version>${roo.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Spring dependencies -->
+
+		<!-- ========================= Jakarta EE APIs ============================ -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
+			<version>3.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
+			<version>5.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+			<version>3.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<!-- JAXB, removed from the JDK by JEP 320; jakarta namespace, 4.x -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>4.0.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+			The three javax-namespace APIs that could NOT follow the rest to jakarta, each
+			because a vendored, binary-only SDK exposes it in a signature we compile against:
+
+			  javax.xml.ws + javax.jws  - com.danube.scrumworks.api2.client.ScrumWorksAPIService
+			    is a JAX-WS SEI annotated with javax.jws.WebService, used through
+			    javax.xml.ws.Service.create(...).getPort(...) in
+			    LandscapeParticipantSettingsController.
+			  javax.xml.bind (2.3.1, provided) - the same ScrumWorks classes carry
+			    javax.xml.bind.annotation.* annotations, and ajc refuses to complete their type
+			    bindings if the annotation types are absent. Compile-time only.
+			  javax.activation - com.collabnet.teamforge:integratedapps takes a
+			    javax.activation.DataHandler in the icon-upload call used by IconUploader.
+
+			They coexist with the jakarta.* artifacts above without conflict; the namespaces
+			are disjoint.
+		-->
+		<dependency>
+			<groupId>jakarta.xml.ws</groupId>
+			<artifactId>jakarta.xml.ws-api</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.jws</groupId>
+			<artifactId>jakarta.jws-api</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>jakarta.activation</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<!-- =============================== Spring ============================== -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -187,66 +304,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>3.5.5-Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.5.5-Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>dom4j</groupId>
-					<artifactId>dom4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.xml.bind</groupId>
-					<artifactId>jaxb-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-impl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
@@ -257,163 +314,35 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>1.5.4</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.3</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-pool</groupId>
-					<artifactId>commons-pool</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xerces</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-core</artifactId>
-			<version>2.2.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>2.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>el-api</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-jaxrs</artifactId>
-			<version>1.5.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-xc</artifactId>
-			<version>1.5.6</version>
-		</dependency>
-		<!--<dependency> <groupId>com.sun.syndication</groupId> <artifactId>com.springsource.com.sun.syndication</artifactId> 
-			<version>1.0.0</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring-security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring-security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -425,14 +354,75 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.collabnet.sf</groupId> <artifactId>saturn-client</artifactId> 
-			<version>6.1-SNAPSHOT</version> </dependency> -->
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-webflow.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-js-resources</artifactId>
+			<version>${spring-webflow.version}</version>
+		</dependency>
+
+		<!-- =========================== persistence ============================= -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		<!-- hibernate-validator needs a Jakarta EL implementation for message interpolation -->
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.13.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ============================== JSON/XML ============================= -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- successor of org.codehaus.jackson:jackson-xc -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.flexjson</groupId>
+			<artifactId>flexjson</artifactId>
+			<version>3.3</version>
+		</dependency>
+
+		<!-- ========================= vendored CollabNet ======================== -->
 		<dependency>
 			<groupId>com.collabnet.teamforge</groupId>
 			<artifactId>tfapi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -444,8 +434,6 @@
 			<groupId>com.collabnet.teamforge</groupId>
 			<artifactId>integratedapps</artifactId>
 			<version>5.4.0-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -457,108 +445,118 @@
 			<groupId>scrumworks_sdk</groupId>
 			<artifactId>scrumworks_sdk</artifactId>
 			<version>4.5.0-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
+				<!--
+					axis-jaxrpc 1.4 is Axis's repackaging of the JAX-RPC 1.1 API, and it bundles
+					its own copy of javax.xml.namespace, which splits the JDK's java.xml module.
+					That was invisible under -source 8, where module rules are off, but at
+					release 25 ajc rejects it outright: "the package javax.xml.namespace is
+					accessible from more than one module: <unnamed>, java.xml". Note that javac
+					is quieter here and silently prefers the platform module, which is why the
+					sibling core and gui repositories compile with the same jar in place.
+
+					It is replaced below by javax.xml:jaxrpc-api:1.1, the canonical JAX-RPC API
+					artifact, which carries the identical javax.xml.rpc.* packages and nothing
+					else. The only other thing axis-jaxrpc adds is javax.xml.messaging (JAXM),
+					and axis-1.4.jar contains no reference to it.
+				-->
+				<exclusion>
+					<groupId>org.apache.axis</groupId>
+					<artifactId>axis-jaxrpc</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxrpc-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- ============================== the rest ============================= -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>4.5.14</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.6.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>0.9.26</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>r09</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.webflow</groupId>
-			<artifactId>spring-js-resources</artifactId>
-			<version>2.2.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jaxen</groupId>
-			<artifactId>jaxen</artifactId>
-			<version>1.1.2</version>
+			<version>2.18.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.4</version>
+			<version>1.17.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
-			<scope>test</scope>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--
+			dom4j and commons-collections used to arrive transitively (through hibernate-core
+			3.5 and tiles/commons-digester respectively). Hibernate 6 no longer uses dom4j and
+			the Tiles stack is gone, but the sources import both directly, so they are declared
+			here. dom4j moves to the org.dom4j groupId at 2.x.
+		-->
 		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-support</artifactId>
-			<version>${selenium.version}</version>
-			<type>pom</type>
-			<scope>test</scope>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.4</version>
 		</dependency>
-	<dependency>
-            <groupId>org.springframework.webflow</groupId>
-            <artifactId>spring-webflow</artifactId>
-            <version>2.2.1.RELEASE</version>
-        </dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.13.0</version>
+		</dependency>
 	</dependencies>
+
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>3.4.0</version>
 				<configuration>
           		<webResources>
             		<resource>
@@ -566,7 +564,7 @@
              	     	<includes>
                				 <include>**/ccf.png</include>
              			</includes>
-             		     <targetPath>\WEB-INF\classes\com\collabnet\ccf\core\utils</targetPath>
+             		     <targetPath>WEB-INF/classes/com/collabnet/ccf/core/utils</targetPath>
            			</resource>
          		</webResources>
         		</configuration>
@@ -582,14 +580,13 @@
 					<execution><id>default-testCompile</id><phase>none</phase></execution>
 				</executions>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<release>${java.release}</release>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
+				<groupId>dev.aspectj</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.14.0</version>
+				<version>1.14.1</version>
 				<dependencies>
 					<!-- NB: You must use Maven 2.0.9 or above or these are ignored (see 
 						MNG-2972) -->
@@ -614,6 +611,20 @@
 						<id>aspectj-test-compile</id>
 						<phase>test-compile</phase>
 						<goals><goal>test-compile</goal></goals>
+						<configuration>
+							<aspectLibraries>
+								<aspectLibrary>
+									<groupId>org.springframework</groupId>
+									<artifactId>spring-aspects</artifactId>
+								</aspectLibrary>
+								<!-- holds the abstract AbstractMethodMockingControl aspect that
+								     AnnotationDrivenStaticEntityMockingControl extends -->
+								<aspectLibrary>
+									<groupId>com.collabnet.ccf.ccfmaster.legacy</groupId>
+									<artifactId>spring-mock-staticmock</artifactId>
+								</aspectLibrary>
+							</aspectLibraries>
+						</configuration>
 					</execution>
 				</executions>
 				<configuration>
@@ -624,16 +635,15 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
-					<source>8</source>
-					<target>8</target>
-					<!-- defaults to 1.4, which ajc rejects against source 8 -->
-					<complianceLevel>8</complianceLevel>
+					<complianceLevel>${java.release}</complianceLevel>
+					<source>${java.release}</source>
+					<target>${java.release}</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.2</version>
+				<version>3.3.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
@@ -641,20 +651,24 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.8.1</version>
+				<version>3.5.2</version>
 				<configuration>
 					<excludes>
+						<!-- unchanged from the baseline: Roo ITDs are not test classes, and the
+						     Selenium system tests need a browser and a deployed server -->
 						<exclude>**/*_Roo_*</exclude>
 						<exclude>**/*SystemTest*</exclude>
 					</excludes>
 					<skipTests>${skipUnitTests}</skipTests>
-					<forkMode>always</forkMode>
+					<!-- forkMode=always was removed in surefire 3; this is its replacement -->
+					<forkCount>1</forkCount>
+					<reuseForks>false</reuseForks>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
+				<version>3.7.1</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
@@ -664,74 +678,40 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.5</version>
+				<version>3.1.3</version>
 			</plugin>
-			<!-- IDE -->
+			<!--
+				cobertura-maven-plugin 2.5.1 replaced by JaCoCo. Cobertura instruments with an
+				ASM that cannot read class files newer than major 50, so it cannot run on any
+				JDK past 8, and the project is dead. Its `clean` goal was also bound into the
+				lifecycle, which made `mvn clean` fail outright once the plugin could not be
+				resolved.
+			-->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.7</version>  <!-- Note 2.8 does not work with AspectJ aspect path -->
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.13</version>
 				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>false</downloadJavadocs>
-					<wtpversion>2.0</wtpversion>
-					<additionalBuildcommands>
-						<buildCommand>
-							<name>org.eclipse.ajdt.core.ajbuilder</name>
-							<arguments>
-								<aspectPath>org.springframework.aspects</aspectPath>
-							</arguments>
-						</buildCommand>
-						<buildCommand>
-							<name>org.springframework.ide.eclipse.core.springbuilder</name>
-						</buildCommand>
-					</additionalBuildcommands>
-					<additionalProjectnatures>
-						<projectnature>org.eclipse.ajdt.ui.ajnature</projectnature>
-						<projectnature>com.springsource.sts.roo.core.nature</projectnature>
-						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
-					</additionalProjectnatures>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-idea-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<dependenciesAsLibraries>true</dependenciesAsLibraries>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.0</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<instrumentation>
-						<ignores>
-						</ignores>
-						<excludes>
-							<exclude>**/*_Roo_*</exclude>
-						</excludes>
-					</instrumentation>
+					<excludes>
+						<exclude>**/*_Roo_*</exclude>
+					</excludes>
 				</configuration>
 				<executions>
 					<execution>
-						<goals>
-							<goal>clean</goal>
-						</goals>
+						<id>prepare-agent</id>
+						<goals><goal>prepare-agent</goal></goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals><goal>report</goal></goals>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.8.1</version>
+				<version>3.5.2</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>
@@ -752,145 +732,19 @@
 	<profiles>
 
 		<!-- from http://jira.codehaus.org/browse/MCOBERTURA-86#comment-250278 -->
-		<profile>
-			<!-- Build with IntegrationTestcoverage => instrument classes with cobertura 
-				before integrationtests starts. -->
-			<id>buildWithIntegrationTestCoverage</id>
-			<activation>
-				<property>
-					<name>buildWithIntegrationTestCoverage</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.sonatype.maven.plugin</groupId>
-						<artifactId>cobertura4it-maven-plugin</artifactId>
-						<version>1.0</version>
-
-						<configuration>
-							<datafile>${basedir}/target/cobertura/cobertura4it.ser</datafile>
-							<!-- <systemProperties> <name>net.sourceforge.cobertura.datafile</name> 
-								<value>${basedir}/target/cobertura/cobertura4it-m-p.ser</value> </systemProperties> -->
-							<instrumentation>
-								<ignores>
-								</ignores>
-								<excludes>
-									<exclude>**/*_Roo_*</exclude>
-								</excludes>
-							</instrumentation>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>instrument</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.mortbay.jetty</groupId>
-						<artifactId>jetty-maven-plugin</artifactId>
-						<version>7.1.2.v20100523</version>
-						<configuration>
-							<scanIntervalSeconds>0</scanIntervalSeconds>
-							<stopPort>28005</stopPort>
-							<stopKey>STOP</stopKey>
-							<webAppConfig>
-								<contextPath>/${project.name}</contextPath>
-							</webAppConfig>
-							<classesDirectory>${basedir}/target/generated-classes/cobertura</classesDirectory>
-							<systemProperties>
-								<systemProperty>
-									<name>net.sourceforge.cobertura.datafile</name>
-									<value>${basedir}/target/cobertura/cobertura4it.ser</value>
-								</systemProperty>
-							</systemProperties>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>net.sourceforge.cobertura</groupId>
-								<artifactId>cobertura-runtime</artifactId>
-								<version>${cobertura.version}</version>
-								<scope>runtime</scope>
-								<type>pom</type>
-							</dependency>
-						</dependencies>
-						<executions>
-							<execution>
-								<id>start-jetty</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<!-- stop any previous instance to free up the port -->
-									<goal>stop</goal>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<scanIntervalSeconds>0</scanIntervalSeconds>
-									<daemon>true</daemon>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-jetty</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>buildRunnableWar</id>
-			<activation>
-				<property>
-					<name>runnableWar</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<repositories>
-				<repository>
-					<id>kos</id>
-					<url>http://opensource.kantega.no/nexus/content/groups/public/</url>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>kos</id>
-					<url>http://opensource.kantega.no/nexus/content/groups/public/</url>
-				</pluginRepository>
-			</pluginRepositories>
-			<dependencies>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- from http://simplericity.com/2009/11/10/1257880778509.html -->
-						<groupId>org.simplericity.jettyconsole</groupId>
-						<artifactId>jetty-console-maven-plugin</artifactId>
-						<version>1.23</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>createconsole</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<!-- backgroundImage>${basedir}/src/main/jettyconsole/puffin.jpg</backgroundImage -->
-							<additionalDependencies>
-								<additionalDependency>
-									<artifactId>jetty-console-jsp-plugin</artifactId>
-								</additionalDependency>
-							</additionalDependencies>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+		<!--
+			The buildWithIntegrationTestCoverage profile is gone. It combined
+			cobertura4it-maven-plugin 1.0 (a Sonatype plugin last released in 2010, on top of
+			Cobertura, which cannot instrument class files newer than major 50) with
+			jetty-maven-plugin 7.1.2, a Servlet 2.5 container. Neither can be pointed at
+			anything on this stack, and there is no drop-in replacement for the pair - JaCoCo's
+			prepare-agent-integration goal plus a Servlet 6 container would be a new profile,
+			not a migrated one.
+		-->
+		<!--
+			The buildRunnableWar profile is gone: jetty-console-maven-plugin 1.23 came from
+			opensource.kantega.no, which no longer exists, and it embeds a Servlet 2.5 Jetty.
+		-->
 		<!-- Creating profile to build Generic participant needed implementation as jar -->
 		<profile>
 			<id>buildGenericParticipantJar</id>
@@ -905,7 +759,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
-						<version>2.4</version>
+						<version>3.4.2</version>
 						<executions>
 							<execution>
 					        <id>genericParticipant</id>

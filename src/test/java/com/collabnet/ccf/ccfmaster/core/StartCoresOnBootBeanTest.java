@@ -5,7 +5,7 @@ import java.util.Arrays;
 import mockit.Expectations;
 import mockit.Mocked;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.ccfmaster.server.core.StartCoresOnBootBean;
 import com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus;

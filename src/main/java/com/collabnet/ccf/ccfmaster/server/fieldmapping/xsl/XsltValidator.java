@@ -3,8 +3,8 @@ package com.collabnet.ccf.ccfmaster.server.fieldmapping.xsl;
 import java.util.Collection;
 import java.util.List;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import javax.xml.XMLConstants;
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.Source;
@@ -166,7 +166,8 @@ public class XsltValidator implements ConstraintValidator<SafeXslt, Element> {
         XPath xpath = buildXpath(xslt, functionName);
         @SuppressWarnings("unchecked")
         // jaxen doesn't do generics
-        List<Element> nodes = xpath.selectNodes(xslt);
+        // dom4j 2.x narrowed XPath.selectNodes() from raw List to List<Node>
+        List<Element> nodes = (List<Element>) (List<?>) xpath.selectNodes(xslt);
         return nodes;
     }
 
