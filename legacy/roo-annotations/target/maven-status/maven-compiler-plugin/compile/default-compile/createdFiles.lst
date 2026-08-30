@@ -1,7 +1,0 @@
-org/springframework/roo/addon/tostring/RooToString.class
-org/springframework/roo/addon/web/mvc/controller/RooWebScaffold.class
-org/springframework/roo/addon/javabean/RooJavaBean.class
-org/springframework/roo/addon/dod/RooDataOnDemand.class
-org/springframework/roo/addon/web/mvc/controller/RooConversionService.class
-org/springframework/roo/addon/entity/RooEntity.class
-org/springframework/roo/addon/test/RooIntegrationTest.class
