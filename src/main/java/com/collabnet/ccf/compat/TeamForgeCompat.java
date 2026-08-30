@@ -30,7 +30,7 @@ public final class TeamForgeCompat {
      *         the classpath predates the check, which is the case for the vendored jar.
      */
     public static boolean supports65(Object connection) {
-        if (connection == null) {
+        if (null == connection) {
             return false;
         }
         try {

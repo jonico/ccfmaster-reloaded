@@ -78,10 +78,10 @@ public abstract class AbstractProjectController extends AbstractLandscapeControl
     public ExternalApp currentExternalApp() throws RemoteException {
         final Authentication authentication = securityContextHolderStrategy
                 .getContext().getAuthentication();
-        if (authentication == null)
+        if (null == authentication)
             throw new AccessDeniedException("Not authenticated at all.");
         Object user = authentication.getPrincipal();
-        if (user == null || !(user instanceof IafUserDetails))
+        if (null == user || !(user instanceof IafUserDetails))
             throw new AccessDeniedException(
                     "Not logged in via IAF, cannot determine current external app.");
         IafUserDetails iafUser = (IafUserDetails) user;

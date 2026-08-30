@@ -48,7 +48,7 @@ public class TFLandscapeCreationListenerFactory implements LandscapeCreationList
     public String getIafServiceEndpoint(TeamForgeClient tfClient)
             throws RemoteException {
         String apiVersion = tfClient.getApiVersion();
-        if (apiVersion.compareTo(CTF6_API_VERSION) > 0) {
+        if (0 < apiVersion.compareTo(CTF6_API_VERSION)) {
             return CTF7_DUMMY_SERVICE_URL;
         } else {
             return getIafServiceEndpoint();

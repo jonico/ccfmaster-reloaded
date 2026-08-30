@@ -211,7 +211,7 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
                 fieldMappingLandscapeTemplateList
                         .add(fieldMappingLandscapeTemplateModel);
             }
-            if (fieldMappingLandscapeTemplateList.size() == 1) {
+            if (1 == fieldMappingLandscapeTemplateList.size()) {
                 defaultFileName = fieldMappingLandscapeTemplateModel.getName()
                         + ".xml";
             } else {
@@ -394,10 +394,10 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
     private boolean isTemplateExists(String templateName, Directions directions) {
         Landscape landscape = ControllerHelper.findLandscape();
         boolean templateexists = false;
-        if (FieldMappingLandscapeTemplate
+        if (0 != FieldMappingLandscapeTemplate
                 .findFieldMappingLandscapeTemplatesByParentAndNameAndDirection(
                         landscape, templateName, directions).getResultList()
-                .size() != 0) {
+                .size()) {
             templateexists = true;
         } else {
             templateexists = false;
@@ -523,14 +523,14 @@ public class LandscapeFieldMappingTemplatesController extends AbstractLandscapeC
         Integer page = (Integer) session
                 .getAttribute(ControllerConstants.PAGE_IN_SESSION);
         // if page in session is null.get the default value of page
-        if (page == null) {
+        if (null == page) {
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (page <= 0) {
+        } else if (0 >= page) {
             // in case if current page value is less than or equal to zero get
             // default value of page (on deleting the last record of the first
             // page)
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (Math.ceil(nrOfPages) != 0.0 && page >= Math.ceil(nrOfPages)) {
+        } else if (0.0 != Math.ceil(nrOfPages) && page >= Math.ceil(nrOfPages)) {
             // in case if current page value is greater than no of page (on
             // deleting last record from the current page.traverse to the
             // previous page)

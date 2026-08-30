@@ -54,7 +54,7 @@ public class ApiParticipantConfigController extends AbstractApiController<Partic
     }
 
     private void validateRequestBody(Long id, ParticipantConfig requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

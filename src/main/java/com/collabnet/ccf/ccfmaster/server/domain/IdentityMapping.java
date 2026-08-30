@@ -134,7 +134,7 @@ public class IdentityMapping {
     }
 
     public static long countIdentityMappingsByLandscape(Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -148,7 +148,7 @@ public class IdentityMapping {
 
     public static long countIdentityMappingsByRepositoryMapping(
             RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
         EntityManager em = entityManager();
@@ -162,7 +162,7 @@ public class IdentityMapping {
 
     public static TypedQuery<IdentityMapping> findIdentityMappingsByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = entityManager();
@@ -176,7 +176,7 @@ public class IdentityMapping {
 
     public static TypedQuery<IdentityMapping> findIdentityMappingsByLandscape(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -190,7 +190,7 @@ public class IdentityMapping {
 
     public static TypedQuery<IdentityMapping> findIdentityMappingsByRepositoryMapping(
             RepositoryMapping repositoryMapping) {
-        if (repositoryMapping == null)
+        if (null == repositoryMapping)
             throw new IllegalArgumentException(
                     "The repositoryMapping argument is required");
         EntityManager em = IdentityMapping.entityManager();

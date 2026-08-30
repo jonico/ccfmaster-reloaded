@@ -13,9 +13,9 @@ import jakarta.persistence.TypedQuery;
 privileged aspect FieldMapping_Roo_Finder {
     
     public static TypedQuery<FieldMapping> FieldMapping.findFieldMappingsByNameAndParentAndScope(String name, RepositoryMappingDirection parent, FieldMappingScope scope) {
-        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
-        if (scope == null) throw new IllegalArgumentException("The scope argument is required");
+        if (null == name || 0 == name.length()) throw new IllegalArgumentException("The name argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
+        if (null == scope) throw new IllegalArgumentException("The scope argument is required");
         EntityManager em = FieldMapping.entityManager();
         TypedQuery<FieldMapping> q = em.createQuery("SELECT o FROM FieldMapping AS o WHERE o.name = :name AND o.parent = :parent AND o.scope = :scope", FieldMapping.class);
         q.setParameter("name", name);
@@ -25,7 +25,7 @@ privileged aspect FieldMapping_Roo_Finder {
     }
     
     public static TypedQuery<FieldMapping> FieldMapping.findFieldMappingsByParent(RepositoryMappingDirection parent) {
-        if (parent == null) throw new IllegalArgumentException("The parent argument is required");
+        if (null == parent) throw new IllegalArgumentException("The parent argument is required");
         EntityManager em = FieldMapping.entityManager();
         TypedQuery<FieldMapping> q = em.createQuery("SELECT o FROM FieldMapping AS o WHERE o.parent = :parent", FieldMapping.class);
         q.setParameter("parent", parent);

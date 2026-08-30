@@ -49,7 +49,7 @@ privileged aspect DirectionIntegrationTest_Roo_IntegrationTest {
     public void DirectionIntegrationTest.testFindDirectionEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomDirection(), "Data on demand for 'Direction' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.Direction.countDirections();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.Direction> result = com.collabnet.ccf.ccfmaster.server.domain.Direction.findDirectionEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Direction' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'Direction' returned an incorrect number of entries");

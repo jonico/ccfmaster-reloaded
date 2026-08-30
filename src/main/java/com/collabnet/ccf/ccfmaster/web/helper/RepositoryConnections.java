@@ -227,10 +227,10 @@ public class RepositoryConnections {
      * @return project id
      */
     public static String extractProjectFromRepositoryId(String repositoryId) {
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             String[] splitRepo = repositoryId.split("-");
-            if (splitRepo != null) {
-                if (splitRepo.length != 2) {
+            if (null != splitRepo) {
+                if (2 != splitRepo.length) {
                     throw new IllegalArgumentException(
                             "Repository id is not valid.");
                 } else {
@@ -250,10 +250,10 @@ public class RepositoryConnections {
      */
     public static String extractTrackerFromMetaDataRepositoryId(
             String repositoryId) {
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             String[] splitRepo = repositoryId.split("-");
-            if (splitRepo != null) {
-                if (splitRepo.length != 2) {
+            if (null != splitRepo) {
+                if (2 != splitRepo.length) {
                     throw new IllegalArgumentException(
                             "MetaData Repository id is not valid.");
                 } else {

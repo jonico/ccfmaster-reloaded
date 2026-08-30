@@ -20,7 +20,7 @@ privileged aspect ParticipantDataOnDemand_Roo_DataOnDemand {
     
     private void ParticipantDataOnDemand.setSystemId(Participant obj, int index) {
         java.lang.String systemId = "systemId_" + index;
-        if (systemId.length() > 128) {
+        if (128 < systemId.length()) {
             systemId = systemId.substring(0, 128);
         }
         obj.setSystemId(systemId);
@@ -28,7 +28,7 @@ privileged aspect ParticipantDataOnDemand_Roo_DataOnDemand {
     
     private void ParticipantDataOnDemand.setEncoding(Participant obj, int index) {
         java.lang.String encoding = "encoding_" + index;
-        if (encoding.length() > 128) {
+        if (128 < encoding.length()) {
             encoding = encoding.substring(0, 128);
         }
         obj.setEncoding(encoding);
@@ -51,7 +51,7 @@ privileged aspect ParticipantDataOnDemand_Roo_DataOnDemand {
     
     public Participant ParticipantDataOnDemand.getSpecificParticipant(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         Participant obj = data.get(index);
         return Participant.findParticipant(obj.getId());
@@ -69,7 +69,7 @@ privileged aspect ParticipantDataOnDemand_Roo_DataOnDemand {
     
     public void ParticipantDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.Participant.findParticipantEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Participant' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'Participant' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

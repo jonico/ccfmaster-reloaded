@@ -50,7 +50,7 @@ public class LinkedAppAuthenticationFilter extends AbstractPreAuthenticatedProce
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
         String loginToken = request.getParameter(SF_LOGIN_TOKEN);
-        if (loginToken != null) {
+        if (null != loginToken) {
             return new LinkedAppCredentials(loginToken,
                     request.getParameter(SF_USERNAME));
         } else {
@@ -75,7 +75,7 @@ public class LinkedAppAuthenticationFilter extends AbstractPreAuthenticatedProce
             Authentication currentUser = SecurityContextHolder.getContext()
                     .getAuthentication();
 
-            if (currentUser != null) {
+            if (null != currentUser) {
                 // if there is a user logged in and we do not have a preauthenticated user, return the currently logged in user
                 // to indicate that no change happened
                 return currentUser.getName();

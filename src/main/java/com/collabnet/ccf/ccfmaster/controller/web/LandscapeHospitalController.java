@@ -66,9 +66,9 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
                     .getAttribute("targetFilterArtifactId");
         }
         //if filter got applied with paging get the filter ids from request, page and size from session
-        else if (page != null && size != null
-                && request.getParameter(SOURCE_FILTER_ARTIFACT_ID) != null
-                && request.getParameter(TARGET_FILTER_ARTIFACT_ID) != null) {
+        else if (null != page && null != size
+                && null != request.getParameter(SOURCE_FILTER_ARTIFACT_ID)
+                && null != request.getParameter(TARGET_FILTER_ARTIFACT_ID)) {
             sourceFilterArtifactId = request
                     .getParameter(SOURCE_FILTER_ARTIFACT_ID);
             targetFilterArtifactId = request
@@ -79,9 +79,9 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
                     .getAttribute(ControllerConstants.SIZE_IN_SESSION);
         }
         //if filter got applied with paging and while navigating thru pages get the old filter ids from the session
-        else if (page != null && size != null
-                && session.getAttribute("sourceFilterArtifactId") != null
-                && session.getAttribute("targetFilterArtifactId") != null) {
+        else if (null != page && null != size
+                && null != session.getAttribute("sourceFilterArtifactId")
+                && null != session.getAttribute("targetFilterArtifactId")) {
             sourceFilterArtifactId = (String) session
                     .getAttribute("sourceFilterArtifactId");
             targetFilterArtifactId = (String) session
@@ -135,7 +135,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
             @RequestParam(RMD_ID_REQUEST_PARAM) String rmdid, Model model,
             HttpServletRequest request, HttpSession session) {
         String[] items = request.getParameterValues(HOSPITALID);
-        if (items == null)
+        if (null == items)
             items = new String[0];
         try {
             for (String hospitalId : items) {
@@ -290,7 +290,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         Landscape landscape = ControllerHelper.findLandscape();
         String tfUrl = ccfRuntimePropertyHolder.getTfUrl();
         List<HospitalEntry> hospitalEntry = new ArrayList<HospitalEntry>();
-        if (hospitalId == null) {
+        if (null == hospitalId) {
             hospitalEntry = HospitalEntry.findHospitalEntrysByDirection(
                     directions).getResultList();
         } else {
@@ -318,7 +318,7 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         Landscape landscape = ControllerHelper.findLandscape();
         String tfUrl = ccfRuntimePropertyHolder.getTfUrl();
         List<HospitalEntry> hospitalEntry = new ArrayList<HospitalEntry>();
-        if (hospitalId == null) {
+        if (null == hospitalId) {
             hospitalEntry = pageHospitalEntries(model, directions, page, size,
                     session);
         } else {
@@ -529,14 +529,14 @@ public class LandscapeHospitalController extends AbstractLandscapeController {
         Integer page = (Integer) session
                 .getAttribute(ControllerConstants.PAGE_IN_SESSION);
         // if page in session is null.get the default value of page
-        if (page == null) {
+        if (null == page) {
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (page <= 0) {
+        } else if (0 >= page) {
             // in case if current page value is less than or equal to zero get
             // default value of page (on deleting the last record of the first
             // page)
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (Math.ceil(nrOfPages) != 0.0 && page >= Math.ceil(nrOfPages)) {
+        } else if (0.0 != Math.ceil(nrOfPages) && page >= Math.ceil(nrOfPages)) {
             // in case if current page value is greater than no of page (on
             // deleting last record from the current page.traverse to the
             // previous page)

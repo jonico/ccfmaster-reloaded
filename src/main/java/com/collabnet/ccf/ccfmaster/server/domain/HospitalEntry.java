@@ -112,7 +112,7 @@ public class HospitalEntry {
     public static long countHospitalEntrysByByDirectionAndSourceArtifactIdOrTargetArtifactId(
             Directions direction, String sourceArtifactId,
             String targetArtifactId) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -147,10 +147,10 @@ public class HospitalEntry {
 
     public static long countHospitalEntrysByExternalAppAndDirection(
             ExternalApp externalApp, Directions direction) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -164,7 +164,7 @@ public class HospitalEntry {
     }
 
     public static long countHospitalEntrysByLandscape(Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -192,7 +192,7 @@ public class HospitalEntry {
 
     public static long countHospitalEntrysByRepositoryMapping(
             RepositoryMapping rm) {
-        if (rm == null)
+        if (null == rm)
             throw new IllegalArgumentException("The rm argument is required");
         EntityManager em = entityManager();
         TypedQuery<Long> q = em
@@ -205,9 +205,9 @@ public class HospitalEntry {
 
     public static long countHospitalEntrysByRepositoryMappingAndDirection(
             RepositoryMapping rm, Directions direction) {
-        if (rm == null)
+        if (null == rm)
             throw new IllegalArgumentException("The rm argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -222,7 +222,7 @@ public class HospitalEntry {
 
     public static long countHospitalEntrysByRepositoryMappingDirection(
             RepositoryMappingDirection repositoryMappingDirection) {
-        if (repositoryMappingDirection == null)
+        if (null == repositoryMappingDirection)
             throw new IllegalArgumentException(
                     "The repositoryMappingDirection argument is required");
         EntityManager em = entityManager();
@@ -249,7 +249,7 @@ public class HospitalEntry {
     public static TypedQuery<HospitalEntry> findHospitalEntrysByDirectionAndSourceArtifactIdOrTargetArtifactId(
             Directions direction, String sourceArtifactId,
             String targetArtifactId) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = HospitalEntry.entityManager();
@@ -265,7 +265,7 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = entityManager();
@@ -279,10 +279,10 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByExternalAppAndDirection(
             ExternalApp externalApp, Directions direction) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -297,7 +297,7 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByLandscape(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -325,7 +325,7 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByRepositoryMapping(
             RepositoryMapping rm) {
-        if (rm == null)
+        if (null == rm)
             throw new IllegalArgumentException("The rm argument is required");
         EntityManager em = entityManager();
         TypedQuery<HospitalEntry> q = em
@@ -338,9 +338,9 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByRepositoryMappingAndDirection(
             RepositoryMapping rm, Directions direction) {
-        if (rm == null)
+        if (null == rm)
             throw new IllegalArgumentException("The rm argument is required");
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         EntityManager em = entityManager();
@@ -355,7 +355,7 @@ public class HospitalEntry {
 
     public static TypedQuery<HospitalEntry> findHospitalEntrysByRepositoryMappingDirection(
             RepositoryMappingDirection repositoryMappingDirection) {
-        if (repositoryMappingDirection == null)
+        if (null == repositoryMappingDirection)
             throw new IllegalArgumentException(
                     "The repositoryMappingDirection argument is required");
         EntityManager em = HospitalEntry.entityManager();

@@ -123,7 +123,7 @@ public class CoreZipFileTest {
             out = new FileOutputStream(propFile);
             props.store(out, null);
         } finally {
-            if (out != null)
+            if (null != out)
                 out.close();
         }
     }

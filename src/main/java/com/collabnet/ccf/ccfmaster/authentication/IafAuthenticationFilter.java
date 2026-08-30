@@ -97,7 +97,7 @@ public class IafAuthenticationFilter extends AbstractPreAuthenticatedProcessingF
             Authentication currentUser = SecurityContextHolder.getContext()
                     .getAuthentication();
 
-            if (currentUser != null) {
+            if (null != currentUser) {
                 // if there is a user logged in and we do not have a preauthenticated user, return the currently logged in user
                 // to indicate that no change happened
                 return currentUser.getName();

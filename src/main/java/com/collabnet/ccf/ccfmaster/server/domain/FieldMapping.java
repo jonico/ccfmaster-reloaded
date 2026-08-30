@@ -104,7 +104,7 @@ public class FieldMapping implements Mapping<RepositoryMappingDirection> {
 
     public static TypedQuery<FieldMapping> findFieldMappingsByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = RepositoryMapping.entityManager();

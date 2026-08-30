@@ -57,13 +57,13 @@ privileged aspect FieldMappingExternalAppTemplate_Roo_Entity {
     
     @Transactional
     public void FieldMappingExternalAppTemplate.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
     public void FieldMappingExternalAppTemplate.remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
@@ -74,19 +74,19 @@ privileged aspect FieldMappingExternalAppTemplate_Roo_Entity {
     
     @Transactional
     public void FieldMappingExternalAppTemplate.flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
     public void FieldMappingExternalAppTemplate.clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
     public FieldMappingExternalAppTemplate FieldMappingExternalAppTemplate.merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
+        if (null == this.entityManager) this.entityManager = entityManager();
         FieldMappingExternalAppTemplate merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
@@ -94,7 +94,7 @@ privileged aspect FieldMappingExternalAppTemplate_Roo_Entity {
     
     public static final EntityManager FieldMappingExternalAppTemplate.entityManager() {
         EntityManager em = new FieldMappingExternalAppTemplate().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        if (null == em) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
@@ -107,7 +107,7 @@ privileged aspect FieldMappingExternalAppTemplate_Roo_Entity {
     }
     
     public static FieldMappingExternalAppTemplate FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(Long id) {
-        if (id == null) return null;
+        if (null == id) return null;
         return entityManager().find(FieldMappingExternalAppTemplate.class, id);
     }
     

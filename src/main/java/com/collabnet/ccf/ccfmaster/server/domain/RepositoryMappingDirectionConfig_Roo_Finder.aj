@@ -11,7 +11,7 @@ import jakarta.persistence.TypedQuery;
 privileged aspect RepositoryMappingDirectionConfig_Roo_Finder {
     
     public static TypedQuery<RepositoryMappingDirectionConfig> RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfigsByRepositoryMappingDirection(RepositoryMappingDirection repositoryMappingDirection) {
-        if (repositoryMappingDirection == null) throw new IllegalArgumentException("The repositoryMappingDirection argument is required");
+        if (null == repositoryMappingDirection) throw new IllegalArgumentException("The repositoryMappingDirection argument is required");
         EntityManager em = RepositoryMappingDirectionConfig.entityManager();
         TypedQuery<RepositoryMappingDirectionConfig> q = em.createQuery("SELECT o FROM RepositoryMappingDirectionConfig AS o WHERE o.repositoryMappingDirection = :repositoryMappingDirection", RepositoryMappingDirectionConfig.class);
         q.setParameter("repositoryMappingDirection", repositoryMappingDirection);

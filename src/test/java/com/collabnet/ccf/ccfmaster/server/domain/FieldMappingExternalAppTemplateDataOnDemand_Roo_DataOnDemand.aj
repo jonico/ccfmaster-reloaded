@@ -35,7 +35,7 @@ privileged aspect FieldMappingExternalAppTemplateDataOnDemand_Roo_DataOnDemand {
     
     public FieldMappingExternalAppTemplate FieldMappingExternalAppTemplateDataOnDemand.getSpecificFieldMappingExternalAppTemplate(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         FieldMappingExternalAppTemplate obj = data.get(index);
         return FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplate(obj.getId());
@@ -53,7 +53,7 @@ privileged aspect FieldMappingExternalAppTemplateDataOnDemand_Roo_DataOnDemand {
     
     public void FieldMappingExternalAppTemplateDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingExternalAppTemplate.findFieldMappingExternalAppTemplateEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'FieldMappingExternalAppTemplate' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'FieldMappingExternalAppTemplate' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

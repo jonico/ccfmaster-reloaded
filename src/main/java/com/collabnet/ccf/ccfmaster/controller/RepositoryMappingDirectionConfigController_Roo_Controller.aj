@@ -40,7 +40,7 @@ privileged aspect RepositoryMappingDirectionConfigController_Roo_Controller {
     public String RepositoryMappingDirectionConfigController.createForm(Model uiModel) {
         uiModel.addAttribute("repositoryMappingDirectionConfig", new RepositoryMappingDirectionConfig());
         List dependencies = new ArrayList();
-        if (RepositoryMappingDirection.countRepositoryMappingDirections() == 0) {
+        if (0 == RepositoryMappingDirection.countRepositoryMappingDirections()) {
             dependencies.add(new String[]{"repositorymappingdirection", "repositorymappingdirections"});
         }
         uiModel.addAttribute("dependencies", dependencies);
@@ -56,7 +56,7 @@ privileged aspect RepositoryMappingDirectionConfigController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String RepositoryMappingDirectionConfigController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
+        if (null != page || null != size) {
             int sizeNo = size == null ? 10 : size.intValue();
             uiModel.addAttribute("repositorymappingdirectionconfigs", RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfigEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) RepositoryMappingDirectionConfig.countRepositoryMappingDirectionConfigs() / sizeNo;
@@ -105,7 +105,7 @@ privileged aspect RepositoryMappingDirectionConfigController_Roo_Controller {
     
     String RepositoryMappingDirectionConfigController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
+        if (null == enc) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         // Spring 6's UriUtils.encodePathSegment no longer throws

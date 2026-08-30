@@ -146,7 +146,7 @@ public class CoreStateMachine {
     public static class NotRespondingTransitionObserver extends ProcessTransitionObserver {
 
         public void kill(final Process proc) {
-            if (proc != null) {
+            if (null != proc) {
                 proc.destroy();
                 try {
                     proc.waitFor();
@@ -160,7 +160,7 @@ public class CoreStateMachine {
 
         @Override
         void handleTransition(CcfCoreStatus status, ExecutedCommand command) {
-            if (status.currentStatus() != CoreState.NOT_RESPONDING) {
+            if (CoreState.NOT_RESPONDING != status.currentStatus()) {
                 // not interested
                 return;
             }
@@ -206,8 +206,8 @@ public class CoreStateMachine {
         @Override
         void handleTransition(CcfCoreStatus status, ExecutedCommand command) {
             final CoreState state = status.currentStatus();
-            if (state == CoreState.STOPPED
-                    && (command == START || command == RESTART)) {
+            if (CoreState.STOPPED == state
+                    && (START == command || RESTART == command)) {
                 try {
                     Process proc = startCore(status);
                     status.setCurrentStatus(STARTING);
@@ -231,7 +231,7 @@ public class CoreStateMachine {
         @Override
         void handleTransition(CcfCoreStatus status, ExecutedCommand command) {
             final CoreState state = status.currentStatus();
-            if (state == STARTED && (command == STOP || command == RESTART)) {
+            if (STARTED == state && (STOP == command || RESTART == command)) {
                 stopCore(status);
                 status.setCurrentStatus(STOPPING);
                 status.setExecutedCommand(command);
@@ -431,7 +431,7 @@ public class CoreStateMachine {
         final CoreState currentStatus = status.currentStatus();
         final int jmxPort = status.getDirection().getDirection() == Directions.FORWARD ? getJmxForwardPort()
                 : getJmxReversePort();
-        if (currentStatus == STARTING || currentStatus == STOPPING) {
+        if (STARTING == currentStatus || STOPPING == currentStatus) {
             return currentStatus;
         } else {
             long currentTime = System.currentTimeMillis();
@@ -521,7 +521,7 @@ public class CoreStateMachine {
         } catch (IOException e) {
             return false;
         } finally {
-            if (socket != null)
+            if (null != socket)
                 try {
                     socket.close();
                 } catch (IOException e) {

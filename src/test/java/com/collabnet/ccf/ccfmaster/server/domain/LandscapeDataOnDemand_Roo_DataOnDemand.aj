@@ -38,7 +38,7 @@ privileged aspect LandscapeDataOnDemand_Roo_DataOnDemand {
     
     public Landscape LandscapeDataOnDemand.getSpecificLandscape(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         Landscape obj = data.get(index);
         return Landscape.findLandscape(obj.getId());
@@ -52,7 +52,7 @@ privileged aspect LandscapeDataOnDemand_Roo_DataOnDemand {
     
     public void LandscapeDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.Landscape.findLandscapeEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Landscape' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'Landscape' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

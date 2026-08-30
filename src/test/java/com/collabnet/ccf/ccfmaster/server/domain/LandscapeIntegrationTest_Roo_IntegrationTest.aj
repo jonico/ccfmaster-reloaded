@@ -54,7 +54,7 @@ privileged aspect LandscapeIntegrationTest_Roo_IntegrationTest {
     public void LandscapeIntegrationTest.testFindLandscapeEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomLandscape(), "Data on demand for 'Landscape' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.Landscape.countLandscapes();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.Landscape> result = com.collabnet.ccf.ccfmaster.server.domain.Landscape.findLandscapeEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'Landscape' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'Landscape' returned an incorrect number of entries");

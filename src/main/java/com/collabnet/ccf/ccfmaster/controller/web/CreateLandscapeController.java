@@ -89,11 +89,11 @@ public class CreateLandscapeController {
     public String index(Model model, HttpServletRequest request) {
         RequestContext ctx = new RequestContext(request);
         //If there is no landscape exists show create landscape wizard
-        if (Landscape.countLandscapes() == 0) {
+        if (0 == Landscape.countLandscapes()) {
             //	if there is no participants show create landscape wizard
-            if (Participant.countParticipants() == 0) {
+            if (0 == Participant.countParticipants()) {
                 Participant participant = new Participant();
-                if (genericParticipant != null) {
+                if (null != genericParticipant) {
                     model.addAttribute("genericParticipantName",
                             genericParticipant.getName());
                 }
@@ -123,7 +123,7 @@ public class CreateLandscapeController {
             //if all the required entities are available show landscape settings screen
             else {
                 ParticipantSettingsModel participantSettingsModel = new ParticipantSettingsModel();
-                if (genericParticipant != null) {
+                if (null != genericParticipant) {
                     participantSettingsModel
                             .setLandscapeConfigList(genericParticipant
                                     .getGenericParticipantConfigItemFactory()
@@ -202,7 +202,7 @@ public class CreateLandscapeController {
             return UIPathConstants.CREATELANDSCAPE_DISPLAYERROR;
         }
         ParticipantSettingsModel participantSettingsModel = new ParticipantSettingsModel();
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             participantSettingsModel.setLandscapeConfigList(genericParticipant
                     .getGenericParticipantConfigItemFactory()
                     .getLandscapeFieldList());
@@ -264,15 +264,15 @@ public class CreateLandscapeController {
     }
 
     private void populateGenericParticipantToModel(LandscapeModel landscapemodel) {
-        if (genericParticipant != null) {
-            if (genericParticipant.getGenericParticipantConfigItemFactory()
-                    .getLandscapeFieldList() != null) {
+        if (null != genericParticipant) {
+            if (null != genericParticipant.getGenericParticipantConfigItemFactory()
+                    .getLandscapeFieldList()) {
                 landscapemodel.setLandscapeConfigList(genericParticipant
                         .getGenericParticipantConfigItemFactory()
                         .getLandscapeFieldList());
             }
-            if (genericParticipant.getGenericParticipantConfigItemFactory()
-                    .getParticipantFieldList() != null) {
+            if (null != genericParticipant.getGenericParticipantConfigItemFactory()
+                    .getParticipantFieldList()) {
                 landscapemodel.setParticipantConfigList(genericParticipant
                         .getGenericParticipantConfigItemFactory()
                         .getParticipantFieldList());
@@ -282,12 +282,12 @@ public class CreateLandscapeController {
 
     private void validateGenericParticipant(LandscapeModel landscapeModel,
             BindingResult bindingResult) {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             IGenericParticipantConfigItemValidator participantValidator = genericParticipant
                     .getGenericParticipantConfigItemFactory()
                     .getCustomValidator();
-            if (genericParticipant.getGenericParticipantConfigItemFactory()
-                    .getCustomValidator() == null) {
+            if (null == genericParticipant.getGenericParticipantConfigItemFactory()
+                    .getCustomValidator()) {
                 participantValidator = new DefaultGenericParticipantConfigValidator();
                 participantValidator.validate(landscapeModel, bindingResult);
             } else {

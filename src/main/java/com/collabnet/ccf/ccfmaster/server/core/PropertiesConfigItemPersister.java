@@ -94,7 +94,7 @@ public class PropertiesConfigItemPersister<T extends ConfigItem> implements Pers
                 in.close();
             }
         } finally {
-            if (in != null)
+            if (null != in)
                 in.close();
         }
         return props;
@@ -106,7 +106,7 @@ public class PropertiesConfigItemPersister<T extends ConfigItem> implements Pers
             out = new FileOutputStream(propFile);
             props.store(out, null);
         } finally {
-            if (out != null)
+            if (null != out)
                 out.close();
         }
     }

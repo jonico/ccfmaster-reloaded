@@ -54,7 +54,7 @@ privileged aspect FieldMappingRuleIntegrationTest_Roo_IntegrationTest {
     public void FieldMappingRuleIntegrationTest.testFindFieldMappingRuleEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingRule(), "Data on demand for 'FieldMappingRule' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule.countFieldMappingRules();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingRule.findFieldMappingRuleEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingRule' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingRule' returned an incorrect number of entries");

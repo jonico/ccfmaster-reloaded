@@ -23,13 +23,13 @@ public class FlashMapFilter extends OncePerRequestFilter {
             HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        if (null != session) {
             Map<String, ?> flash = (Map<String, ?>) session
                     .getAttribute(FlashMap.FLASH_MAP_ATTRIBUTE);
-            if (flash != null) {
+            if (null != flash) {
                 for (Map.Entry<String, ?> entry : flash.entrySet()) {
                     Object currentValue = request.getAttribute(entry.getKey());
-                    if (currentValue == null) {
+                    if (null == currentValue) {
                         request.setAttribute(entry.getKey(), entry.getValue());
                     }
                 }

@@ -61,7 +61,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setTimestamp(HospitalEntry obj, int index) {
         java.lang.String timestamp = "timestamp_" + index;
-        if (timestamp.length() > 128) {
+        if (128 < timestamp.length()) {
             timestamp = timestamp.substring(0, 128);
         }
         obj.setTimestamp(timestamp);
@@ -69,7 +69,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setExceptionClassName(HospitalEntry obj, int index) {
         java.lang.String exceptionClassName = "exceptionClassName_" + index;
-        if (exceptionClassName.length() > 256) {
+        if (256 < exceptionClassName.length()) {
             exceptionClassName = exceptionClassName.substring(0, 256);
         }
         obj.setExceptionClassName(exceptionClassName);
@@ -77,7 +77,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setExceptionMessage(HospitalEntry obj, int index) {
         java.lang.String exceptionMessage = "exceptionMessage_" + index;
-        if (exceptionMessage.length() > 65536) {
+        if (65536 < exceptionMessage.length()) {
             exceptionMessage = exceptionMessage.substring(0, 65536);
         }
         obj.setExceptionMessage(exceptionMessage);
@@ -85,7 +85,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setCauseExceptionClassName(HospitalEntry obj, int index) {
         java.lang.String causeExceptionClassName = "causeExceptionClassName_" + index;
-        if (causeExceptionClassName.length() > 128) {
+        if (128 < causeExceptionClassName.length()) {
             causeExceptionClassName = causeExceptionClassName.substring(0, 128);
         }
         obj.setCauseExceptionClassName(causeExceptionClassName);
@@ -93,7 +93,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setCauseExceptionMessage(HospitalEntry obj, int index) {
         java.lang.String causeExceptionMessage = "causeExceptionMessage_" + index;
-        if (causeExceptionMessage.length() > 65536) {
+        if (65536 < causeExceptionMessage.length()) {
             causeExceptionMessage = causeExceptionMessage.substring(0, 65536);
         }
         obj.setCauseExceptionMessage(causeExceptionMessage);
@@ -101,7 +101,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setStackTrace(HospitalEntry obj, int index) {
         java.lang.String stackTrace = "stackTrace_" + index;
-        if (stackTrace.length() > 65536) {
+        if (65536 < stackTrace.length()) {
             stackTrace = stackTrace.substring(0, 65536);
         }
         obj.setStackTrace(stackTrace);
@@ -109,7 +109,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setAdaptorName(HospitalEntry obj, int index) {
         java.lang.String adaptorName = "adaptorName_" + index;
-        if (adaptorName.length() > 128) {
+        if (128 < adaptorName.length()) {
             adaptorName = adaptorName.substring(0, 128);
         }
         obj.setAdaptorName(adaptorName);
@@ -117,7 +117,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setOriginatingComponent(HospitalEntry obj, int index) {
         java.lang.String originatingComponent = "originatingComponent_" + index;
-        if (originatingComponent.length() > 128) {
+        if (128 < originatingComponent.length()) {
             originatingComponent = originatingComponent.substring(0, 128);
         }
         obj.setOriginatingComponent(originatingComponent);
@@ -125,7 +125,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setDataType(HospitalEntry obj, int index) {
         java.lang.String dataType = "dataType_" + index;
-        if (dataType.length() > 128) {
+        if (128 < dataType.length()) {
             dataType = dataType.substring(0, 128);
         }
         obj.setDataType(dataType);
@@ -133,7 +133,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setData(HospitalEntry obj, int index) {
         java.lang.String data = "data_" + index;
-        if (data.length() > 65536) {
+        if (65536 < data.length()) {
             data = data.substring(0, 65536);
         }
         obj.setData(data);
@@ -151,7 +151,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setSourceArtifactId(HospitalEntry obj, int index) {
         java.lang.String sourceArtifactId = "sourceArtifactId_" + index;
-        if (sourceArtifactId.length() > 128) {
+        if (128 < sourceArtifactId.length()) {
             sourceArtifactId = sourceArtifactId.substring(0, 128);
         }
         obj.setSourceArtifactId(sourceArtifactId);
@@ -159,7 +159,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setTargetArtifactId(HospitalEntry obj, int index) {
         java.lang.String targetArtifactId = "targetArtifactId_" + index;
-        if (targetArtifactId.length() > 128) {
+        if (128 < targetArtifactId.length()) {
             targetArtifactId = targetArtifactId.substring(0, 128);
         }
         obj.setTargetArtifactId(targetArtifactId);
@@ -167,7 +167,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setErrorCode(HospitalEntry obj, int index) {
         java.lang.String errorCode = "errorCode_" + index;
-        if (errorCode.length() > 128) {
+        if (128 < errorCode.length()) {
             errorCode = errorCode.substring(0, 128);
         }
         obj.setErrorCode(errorCode);
@@ -185,7 +185,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setSourceArtifactVersion(HospitalEntry obj, int index) {
         java.lang.String sourceArtifactVersion = "sourceArtifactVersion_" + index;
-        if (sourceArtifactVersion.length() > 128) {
+        if (128 < sourceArtifactVersion.length()) {
             sourceArtifactVersion = sourceArtifactVersion.substring(0, 128);
         }
         obj.setSourceArtifactVersion(sourceArtifactVersion);
@@ -193,7 +193,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setTargetArtifactVersion(HospitalEntry obj, int index) {
         java.lang.String targetArtifactVersion = "targetArtifactVersion_" + index;
-        if (targetArtifactVersion.length() > 128) {
+        if (128 < targetArtifactVersion.length()) {
             targetArtifactVersion = targetArtifactVersion.substring(0, 128);
         }
         obj.setTargetArtifactVersion(targetArtifactVersion);
@@ -201,7 +201,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setArtifactType(HospitalEntry obj, int index) {
         java.lang.String artifactType = "artifactType_" + index;
-        if (artifactType.length() > 128) {
+        if (128 < artifactType.length()) {
             artifactType = artifactType.substring(0, 128);
         }
         obj.setArtifactType(artifactType);
@@ -209,7 +209,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     private void HospitalEntryDataOnDemand.setGenericArtifact(HospitalEntry obj, int index) {
         java.lang.String genericArtifact = "genericArtifact_" + index;
-        if (genericArtifact.length() > 10485760) {
+        if (10485760 < genericArtifact.length()) {
             genericArtifact = genericArtifact.substring(0, 10485760);
         }
         obj.setGenericArtifact(genericArtifact);
@@ -217,7 +217,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     public HospitalEntry HospitalEntryDataOnDemand.getSpecificHospitalEntry(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         HospitalEntry obj = data.get(index);
         return HospitalEntry.findHospitalEntry(obj.getId());
@@ -231,7 +231,7 @@ privileged aspect HospitalEntryDataOnDemand_Roo_DataOnDemand {
     
     public void HospitalEntryDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.HospitalEntry.findHospitalEntryEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'HospitalEntry' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'HospitalEntry' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

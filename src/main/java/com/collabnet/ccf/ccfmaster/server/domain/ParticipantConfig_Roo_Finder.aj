@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 privileged aspect ParticipantConfig_Roo_Finder {
     
     public static TypedQuery<ParticipantConfig> ParticipantConfig.findParticipantConfigsByParticipant(Participant participant) {
-        if (participant == null) throw new IllegalArgumentException("The participant argument is required");
+        if (null == participant) throw new IllegalArgumentException("The participant argument is required");
         EntityManager em = ParticipantConfig.entityManager();
         TypedQuery<ParticipantConfig> q = em.createQuery("SELECT o FROM ParticipantConfig AS o WHERE o.participant = :participant", ParticipantConfig.class);
         q.setParameter("participant", participant);
@@ -20,8 +20,8 @@ privileged aspect ParticipantConfig_Roo_Finder {
     }
     
     public static TypedQuery<ParticipantConfig> ParticipantConfig.findParticipantConfigsByParticipantAndName(Participant participant, String name) {
-        if (participant == null) throw new IllegalArgumentException("The participant argument is required");
-        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
+        if (null == participant) throw new IllegalArgumentException("The participant argument is required");
+        if (null == name || 0 == name.length()) throw new IllegalArgumentException("The name argument is required");
         EntityManager em = ParticipantConfig.entityManager();
         TypedQuery<ParticipantConfig> q = em.createQuery("SELECT o FROM ParticipantConfig AS o WHERE o.participant = :participant AND o.name = :name", ParticipantConfig.class);
         q.setParameter("participant", participant);

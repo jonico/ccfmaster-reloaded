@@ -95,11 +95,11 @@ public class MockServletClientHttpRequestFactory implements ClientHttpRequestFac
             }
 
             // now add query parameters
-            if (query != null) {
+            if (null != query) {
                 String params[] = query.split("&");
                 for (String param : params) {
                     String temp[] = param.split("=");
-                    if (temp.length == 2) {
+                    if (2 == temp.length) {
                         request.addParameter(temp[0],
                                 java.net.URLDecoder.decode(temp[1], "UTF-8"));
                     }

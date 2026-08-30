@@ -40,10 +40,10 @@ privileged aspect LandscapeController_Roo_Controller {
     public String LandscapeController.createForm(Model uiModel) {
         uiModel.addAttribute("landscape", new Landscape());
         List dependencies = new ArrayList();
-        if (Participant.countParticipants() == 0) {
+        if (0 == Participant.countParticipants()) {
             dependencies.add(new String[]{"participant", "participants"});
         }
-        if (Participant.countParticipants() == 0) {
+        if (0 == Participant.countParticipants()) {
             dependencies.add(new String[]{"participant", "participants"});
         }
         uiModel.addAttribute("dependencies", dependencies);
@@ -59,7 +59,7 @@ privileged aspect LandscapeController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String LandscapeController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
+        if (null != page || null != size) {
             int sizeNo = size == null ? 10 : size.intValue();
             uiModel.addAttribute("landscapes", Landscape.findLandscapeEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) Landscape.countLandscapes() / sizeNo;
@@ -108,7 +108,7 @@ privileged aspect LandscapeController_Roo_Controller {
     
     String LandscapeController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
+        if (null == enc) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         // Spring 6's UriUtils.encodePathSegment no longer throws

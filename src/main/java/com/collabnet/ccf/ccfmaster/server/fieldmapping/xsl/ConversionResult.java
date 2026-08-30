@@ -141,7 +141,7 @@ public class ConversionResult {
 
         @SafeXslt
         public Element getXml() {
-            if (this.mainXml == null) {
+            if (null == this.mainXml) {
                 try {
                     final SAXReader saxReader = new SAXReader();
                     final InputStream in = getClass().getResourceAsStream(
@@ -358,7 +358,7 @@ public class ConversionResult {
         public boolean equals(Object obj) {
             if (this == obj)
                 return true;
-            if ((obj == null) || (obj.getClass() != this.getClass()))
+            if ((null == obj) || (obj.getClass() != this.getClass()))
                 return false;
             Source test = (Source) obj;
             return source.equals(test.source)
@@ -367,7 +367,7 @@ public class ConversionResult {
 
         public int hashCode() {
             final int multiplier = 23;
-            if (hashCode == 0) {
+            if (0 == hashCode) {
                 int code = 133;
                 code = multiplier * code
                         + (source == null ? 0 : source.hashCode());

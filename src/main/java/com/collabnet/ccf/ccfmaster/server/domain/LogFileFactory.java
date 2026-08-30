@@ -47,7 +47,7 @@ public class LogFileFactory {
             throws IOException {
         final File logDir = logDirectory(direction);
         final File[] logFiles = logDir.listFiles(readableRegularFiles);
-        if (logFiles == null) {
+        if (null == logFiles) {
             // the logs directory is created when CCF is run for the first time.
             // listFiles returns null if dir doesn't exist => we return empty list.
             return Collections.emptyList();

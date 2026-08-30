@@ -40,7 +40,7 @@ privileged aspect CcfCoreStatusController_Roo_Controller {
     public String CcfCoreStatusController.createForm(Model uiModel) {
         uiModel.addAttribute("ccfCoreStatus", new CcfCoreStatus());
         List dependencies = new ArrayList();
-        if (Direction.countDirections() == 0) {
+        if (0 == Direction.countDirections()) {
             dependencies.add(new String[]{"direction", "directions"});
         }
         uiModel.addAttribute("dependencies", dependencies);
@@ -56,7 +56,7 @@ privileged aspect CcfCoreStatusController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String CcfCoreStatusController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
+        if (null != page || null != size) {
             int sizeNo = size == null ? 10 : size.intValue();
             uiModel.addAttribute("ccfcorestatuses", CcfCoreStatus.findCcfCoreStatusEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) CcfCoreStatus.countCcfCoreStatuses() / sizeNo;
@@ -105,7 +105,7 @@ privileged aspect CcfCoreStatusController_Roo_Controller {
     
     String CcfCoreStatusController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
+        if (null == enc) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         // Spring 6's UriUtils.encodePathSegment no longer throws

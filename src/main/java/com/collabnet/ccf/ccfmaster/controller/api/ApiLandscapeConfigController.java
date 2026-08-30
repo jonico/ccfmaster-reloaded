@@ -54,7 +54,7 @@ public class ApiLandscapeConfigController extends AbstractApiController<Landscap
     }
 
     private void validateRequestBody(Long id, LandscapeConfig requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

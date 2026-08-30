@@ -171,7 +171,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
             @RequestParam(value = DIRECTION_REQUEST_PARAM, defaultValue = "FORWARD") Directions direction,
             HttpServletResponse response) {
         String defaultFileName = null;
-        if (entries.length == 1) {
+        if (1 == entries.length) {
             defaultFileName = entries[0].getName() + ".xml";
         } else {
             defaultFileName = "field_mapping_templates" + ".xml";
@@ -337,9 +337,9 @@ public class ProjectFieldMappingController extends AbstractProjectController {
     private boolean isTemplateExists(Model model, String templateName,
             Directions directions, ExternalApp eapp) {
         boolean templateexists = false;
-        if (FieldMappingExternalAppTemplate
+        if (0 != FieldMappingExternalAppTemplate
                 .findFieldMappingExternalAppTemplatesByParentAndNameAndDirection(
-                        eapp, templateName, directions).getResultList().size() != 0) {
+                        eapp, templateName, directions).getResultList().size()) {
             templateexists = true;
         } else {
             templateexists = false;
@@ -457,14 +457,14 @@ public class ProjectFieldMappingController extends AbstractProjectController {
         Integer page = (Integer) session
                 .getAttribute(ControllerConstants.PAGE_IN_SESSION);
         // if page in session is null.get the default value of page
-        if (page == null) {
+        if (null == page) {
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (page <= 0) {
+        } else if (0 >= page) {
             // in case if current page value is less than or equal to zero get
             // default value of page (on deleting the last record of the first
             // page)
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (Math.ceil(nrOfPages) != 0.0 && page >= Math.ceil(nrOfPages)) {
+        } else if (0.0 != Math.ceil(nrOfPages) && page >= Math.ceil(nrOfPages)) {
             // in case if current page value is greater than no of page (on
             // deleting last record from the current page.traverse to the
             // previous page)
@@ -480,7 +480,7 @@ public class ProjectFieldMappingController extends AbstractProjectController {
 
             @Override
             public boolean apply(FieldMappingExternalAppTemplate input) {
-                if (input == null)
+                if (null == input)
                     return false;
                 final ExternalApp externalApp = input.getParent();
                 return input.getDirection() == direction

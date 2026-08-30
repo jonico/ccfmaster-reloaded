@@ -77,7 +77,7 @@ public class StartCoresOnBootBean {
         Assert.isTrue(numDirections <= 2, String.format(
                 "found too many (%d) directions, bailing out.", numDirections));
         for (Direction dir : allDirections) {
-            if (dir.getShouldStartAutomatically() != null
+            if (null != dir.getShouldStartAutomatically()
                     && dir.getShouldStartAutomatically()) {
                 log.info(
                         "core for Direction ({}, {}) is configured to start automatically, booting it now...",

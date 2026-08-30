@@ -69,9 +69,9 @@ public abstract class Maybe<T> implements Iterable<T> {
         @Override
         public boolean equals(Object other) {
 
-            if (other != null && other instanceof Some) {
+            if (null != other && other instanceof Some) {
                 final Some<?> someOther = (Some<?>) other;
-                if (this.value == null) {
+                if (null == this.value) {
                     return someOther.value == null;
                 } else {
                     return this.value.equals(someOther.value);
@@ -156,7 +156,7 @@ public abstract class Maybe<T> implements Iterable<T> {
     }
 
     public static <T> Maybe<T> maybe(T val) {
-        if (val == null) {
+        if (null == val) {
             return Maybe.none();
         } else {
             return Maybe.some(val);

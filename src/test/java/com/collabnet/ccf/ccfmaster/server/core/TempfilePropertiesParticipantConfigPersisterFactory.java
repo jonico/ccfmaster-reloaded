@@ -25,7 +25,7 @@ public class TempfilePropertiesParticipantConfigPersisterFactory implements Part
                     "test-" + participant.getSystemKind(), ".properties");
             newFile.deleteOnExit();
             File cacheFile = fileCache.putIfAbsent(participant, newFile);
-            if (cacheFile == null) {
+            if (null == cacheFile) {
                 return new PropertiesConfigItemPersister<ParticipantConfig>(
                         newFile);
             } else {

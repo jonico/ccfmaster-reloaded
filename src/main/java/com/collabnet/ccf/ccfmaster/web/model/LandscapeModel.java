@@ -99,9 +99,9 @@ public class LandscapeModel extends AbstractGenericParticipantModel {
     }
 
     public void normalizeParticipantUrl() {
-        if (participantUrlParticipantConfig == null
+        if (null == participantUrlParticipantConfig
                 || Strings.isNullOrEmpty(participantUrlParticipantConfig
-                        .getVal()) || participant == null) {
+                        .getVal()) || null == participant) {
             // do nothing.
             return;
         }

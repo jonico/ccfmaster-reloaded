@@ -82,7 +82,7 @@ public class ProjectRepositoryMappingsPage extends ProjectScopeTestBase {
             assertTrue(String.format("no next last on page %d/%d", myPage,
                     numPages), pagination.hasLastLink());
         }
-        if (myPage > 1) {
+        if (1 < myPage) {
             assertTrue(String.format("no prev link on page %d/%d", myPage,
                     numPages), pagination.hasPrevLink());
             assertTrue(String.format("no first link on page %d/%d", myPage,

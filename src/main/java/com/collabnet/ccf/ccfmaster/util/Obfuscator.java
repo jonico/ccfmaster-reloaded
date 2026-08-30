@@ -8,9 +8,9 @@ public class Obfuscator {
 
     public static String decodePassword(String password) {
         String decodedPassword = password;
-        if (decodedPassword != null
+        if (null != decodedPassword
                 && decodedPassword.startsWith(OBFUSCATED_PASSWORD_PREFIX)) {
-            if (decodedPassword.length() > 4) {
+            if (4 < decodedPassword.length()) {
                 decodedPassword = decode(decodedPassword.substring(4));
             } else {
                 decodedPassword = "";
@@ -29,7 +29,7 @@ public class Obfuscator {
     }
 
     public static String encode(String string) {
-        if (string == null) {
+        if (null == string) {
             return null;
         }
         return Obfuscator.obfuscateString(string);
@@ -37,7 +37,7 @@ public class Obfuscator {
 
     public static String encodePassword(String password) {
         String encodedPassword = password;
-        if (encodedPassword != null && encodedPassword.length() > 0) {
+        if (null != encodedPassword && 0 < encodedPassword.length()) {
             encodedPassword = OBFUSCATED_PASSWORD_PREFIX
                     + encode(encodedPassword);
         }
@@ -54,29 +54,29 @@ public class Obfuscator {
     }
 
     private static byte cyclicShiftBitsLeft(int b, int i) {
-        if (b < 0) {
+        if (0 > b) {
             b += 256;
         }
         int j = ((b << i) | ((b >>> (8 - i)) % 256));
-        if (j > 127) {
+        if (127 < j) {
             j -= 256;
         }
         return (byte) j;
     }
 
     private static byte cyclicShiftBitsRight(int b, int i) {
-        if (b < 0) {
+        if (0 > b) {
             b += 256;
         }
         int j = (((b >>> i) % 256) | (b << (8 - i)));
-        if (j > 127) {
+        if (127 < j) {
             j -= 256;
         }
         return (byte) j;
     }
 
     private static String decode(String string) {
-        if (string == null) {
+        if (null == string) {
             return null;
         }
         return Obfuscator.deObfuscateString(string);

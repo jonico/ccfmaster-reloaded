@@ -93,7 +93,7 @@ public class CoreConfigLoader {
 
     private static Direction buildDirection(Directions directionEnum,
             Direction direction) {
-        if (directionEnum == null
+        if (null == directionEnum
                 || directionEnum.equals(direction.getDirection())) {
             return direction;
         }
@@ -105,11 +105,11 @@ public class CoreConfigLoader {
         List<CCFCoreProperty> corePropertyList = new ArrayList<CCFCoreProperty>();
         SystemKind systemkind = direction.getLandscape().getParticipant()
                 .getSystemKind();
-        if (properties != null) {
+        if (null != properties) {
             for (CCFCoreProperty prop : properties.getCcfCoreProperties()) {
                 Direction propDirection = buildDirection(prop.getDirection(),
                         direction);
-                if (propDirection != null
+                if (null != propDirection
                         && systemkind.equals(prop.getSystemKind())) {
                     corePropertyList.add(prop);
                 }

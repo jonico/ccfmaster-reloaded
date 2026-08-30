@@ -41,7 +41,7 @@ public aspect FieldMappingPersistingAspect {
 	
 	void around(FieldMapping cfg) : execution(void FieldMapping.persist()) && target(cfg) {
 		proceed(cfg);
-		if (cfg.getScope() == FieldMappingScope.REPOSITORY_MAPPING_DIRECTION) {
+		if (FieldMappingScope.REPOSITORY_MAPPING_DIRECTION == cfg.getScope()) {
 			ConversionResult cr = cfg.conversionResultFactory.get(cfg);
 			Persister<FieldMapping> persister = cfg.persisterFactory.get(cr);
 			persister.save(cfg);
@@ -49,7 +49,7 @@ public aspect FieldMappingPersistingAspect {
 	}
 	FieldMapping around(FieldMapping cfg) : execution(FieldMapping FieldMapping.merge()) && target(cfg) {
 		FieldMapping result = proceed(cfg);
-		if (result.getScope() == FieldMappingScope.REPOSITORY_MAPPING_DIRECTION) {
+		if (FieldMappingScope.REPOSITORY_MAPPING_DIRECTION == result.getScope()) {
 			ConversionResult cr = result.conversionResultFactory.get(result);
 			Persister<FieldMapping> persister = result.persisterFactory.get(cr);
 			persister.save(result);

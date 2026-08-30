@@ -62,7 +62,7 @@ public class ApiCcfCorePropertiesController extends AbstractBaseApiController {
         CCFCorePropertyList properties = new CCFCorePropertyList();
         try {
             Direction direction = getValidateDirection(id);
-            if (direction == null) {
+            if (null == direction) {
                 throw new DataRetrievalFailureException(
                         "For given id, Direction does not exist");
             }
@@ -89,7 +89,7 @@ public class ApiCcfCorePropertiesController extends AbstractBaseApiController {
     }
 
     private Direction getValidateDirection(Long id) {
-        if (id == null) {
+        if (null == id) {
             throw new DataRetrievalFailureException("Invalid id");
         }
         return Direction.findDirection(id);

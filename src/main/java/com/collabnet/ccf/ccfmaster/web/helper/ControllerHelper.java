@@ -14,7 +14,7 @@ public class ControllerHelper {
     public static String landscapeDirName(String ccfHome) {
         String dirName = ccfHome;
         Landscape landscape = findLandscape();
-        if (landscape != null) {
+        if (null != landscape) {
             dirName = String.format("%s/landscape%d", ccfHome,
                     landscape.getId());
         }

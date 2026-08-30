@@ -54,7 +54,7 @@ privileged aspect FieldMappingIntegrationTest_Roo_IntegrationTest {
     public void FieldMappingIntegrationTest.testFindFieldMappingEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMapping(), "Data on demand for 'FieldMapping' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMapping.countFieldMappings();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMapping> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMapping.findFieldMappingEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMapping' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMapping' returned an incorrect number of entries");

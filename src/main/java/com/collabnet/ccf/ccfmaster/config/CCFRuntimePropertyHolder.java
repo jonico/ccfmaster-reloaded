@@ -138,11 +138,11 @@ public class CCFRuntimePropertyHolder {
                 .values()) {
             String propertyName = propEnum.getPropertyName();
             String runtimeValue = getConfiguredPropertyValue(propertyName);
-            if (runtimeValue != null) {
+            if (null != runtimeValue) {
                 setPropertyValues(propEnum, runtimeValue);
             }
         }
-        if (getCcfHome() == null) {
+        if (null == getCcfHome()) {
             String fallbackDir = getFallBackCcfHomePath();
             log.info("Set fallback directory as CCF home runtime property : "
                     + fallbackDir);
@@ -262,10 +262,10 @@ public class CCFRuntimePropertyHolder {
                 .values()) {
             String key = propEnum.getPropertyName();
             String newValue = null;
-            if (props != null) {
+            if (null != props) {
                 newValue = props.getProperty(key);
             }
-            if (newValue == null) { //getting the default value
+            if (null == newValue) { //getting the default value
                 newValue = getDefaultRuntimePropvalues().getProperty(key);
                 log.debug("Default value for property- " + key + " : "
                         + newValue);
@@ -281,56 +281,56 @@ public class CCFRuntimePropertyHolder {
      */
     private void setPropertyValues(RuntimePropertyNameEnum propName,
             String value) {
-        if (propName == null)
+        if (null == propName)
             return;
         switch (propName) {
             case CCF_HOME:
-                if (ccfHome == null) {
+                if (null == ccfHome) {
                     setCcfHome(value);
                 }
                 break;
             case CCF_BASE_URL:
-                if (ccfBaseUrl == null) {
+                if (null == ccfBaseUrl) {
                     setCcfBaseUrl(value);
                 }
                 break;
             case CCF_DB_PORT:
-                if (ccfDBPort == null) {
+                if (null == ccfDBPort) {
                     setCcfDBPort(value);
                 }
                 break;
             case CCF_TF_URL:
-                if (tfUrl == null) {
+                if (null == tfUrl) {
                     setTfUrl(value);
                 }
                 break;
             case CCF_IAF_SERVICE_ENDPOINT:
-                if (iafServiceEndpoint == null) {
+                if (null == iafServiceEndpoint) {
                     setIafServiceEndpoint(value);
                 }
                 break;
             case CCF_FORWARD_JMXPORT:
-                if (jmxForwardPort == null) {
+                if (null == jmxForwardPort) {
                     setJmxForwardPort(value);
                 }
                 break;
             case CCF_REVERSE_JMXPORT:
-                if (jmxReversePort == null) {
+                if (null == jmxReversePort) {
                     setJmxReversePort(value);
                 }
                 break;
             case CCF_SAASMODE:
-                if (saasMode == null) {
+                if (null == saasMode) {
                     setSaasMode(value);
                 }
                 break;
             case CCF_IS_ARCHIVE_REQUIRED:
-                if (isArchiveRequired == null) {
+                if (null == isArchiveRequired) {
                     setIsArchiveRequired(value);
                 }
                 break;
             case CCF_MAX_ATTACHMENT_SIZE:
-                if (maxAttachmentSize == null) {
+                if (null == maxAttachmentSize) {
                     setMaxAttachmentSize(value);
                 }
                 break;

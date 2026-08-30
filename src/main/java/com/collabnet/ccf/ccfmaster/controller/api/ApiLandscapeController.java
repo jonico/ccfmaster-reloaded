@@ -172,7 +172,7 @@ public class ApiLandscapeController extends AbstractApiController<Landscape> {
     }
 
     private void validateRequestBody(Long id, Landscape requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != landscape.id (%s)", id, requestBody.getId()));
         }

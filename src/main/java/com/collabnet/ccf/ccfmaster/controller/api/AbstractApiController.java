@@ -40,7 +40,7 @@ public abstract class AbstractApiController<T> extends AbstractBaseApiController
 
     @RequestMapping(value = "/{id}", method = GET, headers = "Accept=application/xml")
     public T show(@PathVariable("id") T id) {
-        if (id == null) {
+        if (null == id) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }

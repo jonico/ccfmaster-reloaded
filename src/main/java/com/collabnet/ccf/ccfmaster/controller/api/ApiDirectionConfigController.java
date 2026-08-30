@@ -54,7 +54,7 @@ public class ApiDirectionConfigController extends AbstractApiController<Directio
     }
 
     private void validateRequestBody(Long id, DirectionConfig requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

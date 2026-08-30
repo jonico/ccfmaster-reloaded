@@ -184,7 +184,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     }
 
     private void validateRepositoryMapping(RepositoryMapping requestBody) {
-        if (requestBody == null) {
+        if (null == requestBody) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }
@@ -195,7 +195,7 @@ public class LinkIdApiRepositoryMappingController extends AbstractApiLinkIdContr
     }
 
     private void validateRequestBody(Long id, RepositoryMapping requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

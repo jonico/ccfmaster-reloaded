@@ -51,11 +51,11 @@ public final class CoreProperties implements Supplier<Properties>, Serializable 
             try {
                 zipFile = new ZipFile(file);
                 ZipEntry entry = zipFile.getEntry(META_INFORMATION_FILENAME);
-                if (entry != null) {
+                if (null != entry) {
                     props.load(zipFile.getInputStream(entry));
                 }
             } finally {
-                if (zipFile != null)
+                if (null != zipFile)
                     zipFile.close();
             }
         } catch (ZipException e) {
@@ -75,7 +75,7 @@ public final class CoreProperties implements Supplier<Properties>, Serializable 
                     is = new FileInputStream(propFile);
                     props.load(is);
                 } finally {
-                    if (is != null)
+                    if (null != is)
                         is.close();
                 }
             } catch (IOException ignored) {

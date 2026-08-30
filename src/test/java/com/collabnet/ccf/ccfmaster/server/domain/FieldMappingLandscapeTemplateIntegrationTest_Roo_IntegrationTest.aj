@@ -54,7 +54,7 @@ privileged aspect FieldMappingLandscapeTemplateIntegrationTest_Roo_IntegrationTe
     public void FieldMappingLandscapeTemplateIntegrationTest.testFindFieldMappingLandscapeTemplateEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomFieldMappingLandscapeTemplate(), "Data on demand for 'FieldMappingLandscapeTemplate' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.countFieldMappingLandscapeTemplates();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate> result = com.collabnet.ccf.ccfmaster.server.domain.FieldMappingLandscapeTemplate.findFieldMappingLandscapeTemplateEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'FieldMappingLandscapeTemplate' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'FieldMappingLandscapeTemplate' returned an incorrect number of entries");

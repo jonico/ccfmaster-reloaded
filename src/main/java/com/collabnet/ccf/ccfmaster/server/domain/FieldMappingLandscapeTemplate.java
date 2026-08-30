@@ -79,7 +79,7 @@ public class FieldMappingLandscapeTemplate implements Template<Landscape> {
 
     public static long countFieldMappingLandscapeTemplatesByDirection(
             Directions direction) {
-        if (direction == null)
+        if (null == direction)
             throw new IllegalArgumentException(
                     "The direction argument is required");
         TypedQuery<Long> q = entityManager()

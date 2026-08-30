@@ -151,7 +151,7 @@ public class LogFile {
 
     private static LogFileFactory logFileFactory() {
         LogFileFactory logFileFactory = new LogFile().logFileFactory;
-        if (logFileFactory == null) {
+        if (null == logFileFactory) {
             throw new IllegalStateException(
                     "Logfile factory has not been injected");
         }

@@ -57,8 +57,8 @@ public class LandscapeRMDController extends AbstractLandscapeController {
             + UIPathConstants.RMD_CONFIGURE_PARTICIPANT_SETTINGS, method = RequestMethod.POST)
     public String intializeParticipantSettings(Model model,
             @ModelAttribute(value = "rmdModel") RMDModel rmdmodel) {
-        if (genericParticipant != null
-                && rmdmodel.getParticipantSelectorFieldList() == null) {
+        if (null != genericParticipant
+                && null == rmdmodel.getParticipantSelectorFieldList()) {
             rmdmodel.setParticipantSelectorFieldList(genericParticipant
                     .getGenericParticipantRMDFactory()
                     .getParticipantSelectorFieldList());
@@ -148,11 +148,11 @@ public class LandscapeRMDController extends AbstractLandscapeController {
 
     @ModelAttribute(value = "gpConflictPolicies")
     protected String[] getParticipantConfilictPolicies() {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             ICustomizeRMDParticipant customizeParticipantRMDInfo = genericParticipant
                     .getGenericParticipantRMDFactory()
                     .getCustomParticipantRMD();
-            if (customizeParticipantRMDInfo != null) {
+            if (null != customizeParticipantRMDInfo) {
                 return customizeParticipantRMDInfo
                         .getCustomConflictResolutionPolicy();
             }

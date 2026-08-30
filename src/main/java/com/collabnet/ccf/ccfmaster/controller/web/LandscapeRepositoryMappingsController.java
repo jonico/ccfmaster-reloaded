@@ -48,7 +48,7 @@ public class LandscapeRepositoryMappingsController extends AbstractLandscapeCont
             @RequestParam(ControllerConstants.DIRECTION) String paramdirection,
             Model model, HttpServletRequest request, HttpSession session) {
         String[] items = request.getParameterValues(RMDID);
-        if (items == null)
+        if (null == items)
             items = new String[0];
         Directions directions = FORWARD.equals(paramdirection) ? Directions.FORWARD
                 : Directions.REVERSE;
@@ -241,14 +241,14 @@ public class LandscapeRepositoryMappingsController extends AbstractLandscapeCont
         Integer page = (Integer) session
                 .getAttribute(ControllerConstants.PAGE_IN_SESSION);
         // if page in session is null.get the default value of page
-        if (page == null) {
+        if (null == page) {
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (page <= 0) {
+        } else if (0 >= page) {
             // in case if current page value is less than or equal to zero get
             // default value of page (on deleting the last record of the first
             // page)
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (Math.ceil(nrOfPages) != 0.0 && page >= Math.ceil(nrOfPages)) {
+        } else if (0.0 != Math.ceil(nrOfPages) && page >= Math.ceil(nrOfPages)) {
             // in case if current page value is greater than no of page (on
             // deleting last record from the current page.traverse to the
             // previous page)
@@ -279,7 +279,7 @@ public class LandscapeRepositoryMappingsController extends AbstractLandscapeCont
     private static List<RepositoryMappingDirection> setStatusForRMDs(
             String[] rmIds, Directions direction,
             RepositoryMappingDirectionStatus status) {
-        if (rmIds == null)
+        if (null == rmIds)
             rmIds = new String[0];
         ArrayList<RepositoryMappingDirection> ret = new ArrayList<RepositoryMappingDirection>(
                 rmIds.length);

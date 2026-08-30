@@ -76,7 +76,7 @@ public class ExternalApp {
     private String        projectTitle;
 
     public static long countExternalAppsByLandscape(Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();
@@ -126,7 +126,7 @@ public class ExternalApp {
 
     public static TypedQuery<ExternalApp> findExternalAppsByLandscape(
             Landscape landscape) {
-        if (landscape == null)
+        if (null == landscape)
             throw new IllegalArgumentException(
                     "The landscape argument is required");
         EntityManager em = entityManager();

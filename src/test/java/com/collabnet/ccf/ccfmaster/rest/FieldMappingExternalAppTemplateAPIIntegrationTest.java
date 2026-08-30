@@ -115,7 +115,7 @@ public class FieldMappingExternalAppTemplateAPIIntegrationTest extends AbstractA
         obj = restTemplate.getForObject(ccfAPIUrl
                 + "/fieldmappingexternalapptemplates/" + id,
                 FieldMappingExternalAppTemplate.class);
-        if (obj.getKind() != FieldMappingKind.MAPPING_RULES) {
+        if (FieldMappingKind.MAPPING_RULES != obj.getKind()) {
             Assertions.assertFalse(obj.getRules().isEmpty());
         }
         org.junit.jupiter.api.Assertions

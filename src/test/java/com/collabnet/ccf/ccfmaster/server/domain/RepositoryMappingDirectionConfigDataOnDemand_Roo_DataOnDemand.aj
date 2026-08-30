@@ -41,7 +41,7 @@ privileged aspect RepositoryMappingDirectionConfigDataOnDemand_Roo_DataOnDemand 
     
     private void RepositoryMappingDirectionConfigDataOnDemand.setVal(RepositoryMappingDirectionConfig obj, int index) {
         java.lang.String val = "val_" + index;
-        if (val.length() > 10485760) {
+        if (10485760 < val.length()) {
             val = val.substring(0, 10485760);
         }
         obj.setVal(val);
@@ -49,7 +49,7 @@ privileged aspect RepositoryMappingDirectionConfigDataOnDemand_Roo_DataOnDemand 
     
     public RepositoryMappingDirectionConfig RepositoryMappingDirectionConfigDataOnDemand.getSpecificRepositoryMappingDirectionConfig(int index) {
         init();
-        if (index < 0) index = 0;
+        if (0 > index) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         RepositoryMappingDirectionConfig obj = data.get(index);
         return RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfig(obj.getId());
@@ -67,7 +67,7 @@ privileged aspect RepositoryMappingDirectionConfigDataOnDemand_Roo_DataOnDemand 
     
     public void RepositoryMappingDirectionConfigDataOnDemand.init() {
         data = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfigEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'RepositoryMappingDirectionConfig' illegally returned null");
+        if (null == data) throw new IllegalStateException("Find entries implementation for 'RepositoryMappingDirectionConfig' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }

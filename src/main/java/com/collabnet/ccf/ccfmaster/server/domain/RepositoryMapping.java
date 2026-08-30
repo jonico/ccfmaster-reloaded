@@ -82,7 +82,7 @@ public class RepositoryMapping {
 
     public static TypedQuery<RepositoryMapping> findRepositoryMappingsByExternalApp(
             ExternalApp externalApp) {
-        if (externalApp == null)
+        if (null == externalApp)
             throw new IllegalArgumentException(
                     "The externalApp argument is required");
         EntityManager em = RepositoryMapping.entityManager();

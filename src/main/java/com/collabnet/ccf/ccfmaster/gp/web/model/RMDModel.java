@@ -33,68 +33,68 @@ public class RMDModel {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (null == obj)
             return false;
         if (getClass() != obj.getClass())
             return false;
         RMDModel other = (RMDModel) obj;
-        if (direction == null) {
-            if (other.direction != null)
+        if (null == direction) {
+            if (null != other.direction)
                 return false;
         } else if (!direction.equals(other.direction))
             return false;
-        if (forwardConflictPolicies == null) {
-            if (other.forwardConflictPolicies != null)
+        if (null == forwardConflictPolicies) {
+            if (null != other.forwardConflictPolicies)
                 return false;
         } else if (!forwardConflictPolicies
                 .equals(other.forwardConflictPolicies))
             return false;
-        if (forwardFieldMappingTemplateName == null) {
-            if (other.forwardFieldMappingTemplateName != null)
+        if (null == forwardFieldMappingTemplateName) {
+            if (null != other.forwardFieldMappingTemplateName)
                 return false;
         } else if (!forwardFieldMappingTemplateName
                 .equals(other.forwardFieldMappingTemplateName))
             return false;
-        if (landscapeConfigMap == null) {
-            if (other.landscapeConfigMap != null)
+        if (null == landscapeConfigMap) {
+            if (null != other.landscapeConfigMap)
                 return false;
         } else if (!landscapeConfigMap.equals(other.landscapeConfigMap))
             return false;
-        if (participantConfigMap == null) {
-            if (other.participantConfigMap != null)
+        if (null == participantConfigMap) {
+            if (null != other.participantConfigMap)
                 return false;
         } else if (!participantConfigMap.equals(other.participantConfigMap))
             return false;
-        if (participantSelectorFieldList == null) {
-            if (other.participantSelectorFieldList != null)
+        if (null == participantSelectorFieldList) {
+            if (null != other.participantSelectorFieldList)
                 return false;
         } else if (!participantSelectorFieldList
                 .equals(other.participantSelectorFieldList))
             return false;
-        if (reverseFieldMappingTemplateName == null) {
-            if (other.reverseFieldMappingTemplateName != null)
+        if (null == reverseFieldMappingTemplateName) {
+            if (null != other.reverseFieldMappingTemplateName)
                 return false;
         } else if (!reverseFieldMappingTemplateName
                 .equals(other.reverseFieldMappingTemplateName))
             return false;
-        if (reversedConflictPolicies == null) {
-            if (other.reversedConflictPolicies != null)
+        if (null == reversedConflictPolicies) {
+            if (null != other.reversedConflictPolicies)
                 return false;
         } else if (!reversedConflictPolicies
                 .equals(other.reversedConflictPolicies))
             return false;
-        if (teamForgeMappingType == null) {
-            if (other.teamForgeMappingType != null)
+        if (null == teamForgeMappingType) {
+            if (null != other.teamForgeMappingType)
                 return false;
         } else if (!teamForgeMappingType.equals(other.teamForgeMappingType))
             return false;
-        if (teamforgeProjectId == null) {
-            if (other.teamforgeProjectId != null)
+        if (null == teamforgeProjectId) {
+            if (null != other.teamforgeProjectId)
                 return false;
         } else if (!teamforgeProjectId.equals(other.teamforgeProjectId))
             return false;
-        if (teamforgeTracker == null) {
-            if (other.teamforgeTracker != null)
+        if (null == teamforgeTracker) {
+            if (null != other.teamforgeTracker)
                 return false;
         } else if (!teamforgeTracker.equals(other.teamforgeTracker))
             return false;

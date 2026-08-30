@@ -54,7 +54,7 @@ privileged aspect RepositoryMappingDirectionConfigIntegrationTest_Roo_Integratio
     public void RepositoryMappingDirectionConfigIntegrationTest.testFindRepositoryMappingDirectionConfigEntries() {
         org.junit.jupiter.api.Assertions.assertNotNull(dod.getRandomRepositoryMappingDirectionConfig(), "Data on demand for 'RepositoryMappingDirectionConfig' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig.countRepositoryMappingDirectionConfigs();
-        if (count > 20) count = 20;
+        if (20 < count) count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig> result = com.collabnet.ccf.ccfmaster.server.domain.RepositoryMappingDirectionConfig.findRepositoryMappingDirectionConfigEntries(0, (int) count);
         org.junit.jupiter.api.Assertions.assertNotNull(result, "Find entries method for 'RepositoryMappingDirectionConfig' illegally returned null");
         org.junit.jupiter.api.Assertions.assertEquals(count, result.size(), "Find entries method for 'RepositoryMappingDirectionConfig' returned an incorrect number of entries");

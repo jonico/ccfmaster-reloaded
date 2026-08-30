@@ -235,7 +235,7 @@ public class FieldMappingRuleConverterFactoryImpl implements FieldMappingRuleCon
             }
             if (vm.isHasDefault()) {
                 Element otherwise = choose.addElement(XSL_OTHERWISE);
-                if (vm.getDefaultValue() != null) {
+                if (null != vm.getDefaultValue()) {
                     otherwise.addText(vm.getDefaultValue());
                 } else {
                     otherwise.add(xslValueOf("$input"));

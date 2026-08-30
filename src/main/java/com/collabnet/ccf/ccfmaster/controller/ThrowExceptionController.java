@@ -17,7 +17,7 @@ public class ThrowExceptionController {
             @RequestParam(required = false) String message) throws Exception {
         Class<?> cls = Class.forName(className);
         if (Exception.class.isAssignableFrom(cls)) {
-            if (message == null) {
+            if (null == message) {
                 throw (Exception) cls.getConstructor().newInstance();
             } else {
                 throw (Exception) cls.getConstructor(String.class).newInstance(

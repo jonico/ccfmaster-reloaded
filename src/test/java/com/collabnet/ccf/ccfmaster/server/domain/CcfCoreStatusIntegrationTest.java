@@ -73,7 +73,7 @@ public class CcfCoreStatusIntegrationTest {
                 .assertNotNull(dod.getRandomCcfCoreStatus(), "Data on demand for 'CcfCoreStatus' failed to initialize correctly");
         long count = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
                 .countCcfCoreStatuses();
-        if (count > 20)
+        if (20 < count)
             count = 20;
         java.util.List<com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus> result = com.collabnet.ccf.ccfmaster.server.domain.CcfCoreStatus
                 .findCcfCoreStatusEntries(0, (int) count);

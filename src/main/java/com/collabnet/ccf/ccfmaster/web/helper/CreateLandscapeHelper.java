@@ -118,7 +118,7 @@ public class CreateLandscapeHelper {
             directionConfigLogTemplateTFtoGeneric.persist();
             directionConfigLogTemplateGenerictoTF.persist();
 
-            if (genericParticipant != null
+            if (null != genericParticipant
                     && !isGenericParticipantMaxAttachmentExist(
                             reverseDirection, genericParticipant.getPrefix())) {
                 DirectionConfig directionConfigTFMaxSize = new DirectionConfig();
@@ -282,7 +282,7 @@ public class CreateLandscapeHelper {
             participant.setPrefix(SystemKind.SWP.toString());
         }
         if (participant.getSystemKind().equals(SystemKind.GENERIC)) {
-            if (genericParticipant != null) {
+            if (null != genericParticipant) {
                 participant.setSystemId(genericParticipant.getPrefix());
                 participant.setDescription(genericParticipant.getName());
                 participant.setPrefix(genericParticipant.getPrefix());
@@ -300,29 +300,29 @@ public class CreateLandscapeHelper {
 
     public boolean verifyDirectionEntities(Landscape landscape, Model model,
             RequestContext context) {
-        if (Direction
+        if (0 != Direction
                 .findDirectionsByLandscapeEqualsAndDirectionEquals(landscape,
-                        Directions.FORWARD).getResultList().size() != 0
-                && Direction
+                        Directions.FORWARD).getResultList().size()
+                && 0 != Direction
                         .findDirectionsByLandscapeEqualsAndDirectionEquals(
                                 landscape, Directions.REVERSE).getResultList()
-                        .size() != 0) {
+                        .size()) {
             Direction reverseDirection = Direction
                     .findDirectionsByLandscapeEqualsAndDirectionEquals(
                             landscape, Directions.REVERSE).getSingleResult();
             Direction forwardDirection = Direction
                     .findDirectionsByLandscapeEqualsAndDirectionEquals(
                             landscape, Directions.FORWARD).getSingleResult();
-            if (DirectionConfig
+            if (0 != DirectionConfig
                     .findDirectionConfigsByDirectionAndName(
                             reverseDirection,
                             ControllerConstants.CCF_DIRECTION_LOGMESSAGETEMPLATE)
-                    .getResultList().size() != 0
-                    && DirectionConfig
+                    .getResultList().size()
+                    && 0 != DirectionConfig
                             .findDirectionConfigsByDirectionAndName(
                                     forwardDirection,
                                     ControllerConstants.CCF_DIRECTION_LOGMESSAGETEMPLATE)
-                            .getResultList().size() != 0
+                            .getResultList().size()
                     && isTFMaxAttachmentExist(forwardDirection)) {
                 return true;
             } else {
@@ -368,7 +368,7 @@ public class CreateLandscapeHelper {
 
     public boolean verifyGenericEntities(Landscape landscape,
             Direction reverseDirection, Model model, RequestContext context) {
-        if (genericParticipant != null) {
+        if (null != genericParticipant) {
             if (!checkParticipantConfigItemExist(landscape)
                     && !checkLandscapeConfigItemExist(landscape)
                     && !isGenericParticipantMaxAttachmentExist(
@@ -385,15 +385,15 @@ public class CreateLandscapeHelper {
 
     public boolean verifyQCEntities(Landscape landscape,
             Direction reverseDirection, Model model, RequestContext context) {
-        if (ParticipantConfig
+        if (0 != ParticipantConfig
                 .findParticipantConfigsByParticipantAndName(
                         landscape.getParticipant(),
                         ControllerConstants.CCF_PARTICIPANT_QC_URL)
-                .getResultList().size() != 0
-                && LandscapeConfig
+                .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(landscape,
                                 ControllerConstants.CCF_LANDSCAPE_QC_USERNAME)
-                        .getResultList().size() != 0
+                        .getResultList().size()
                 && isQCMaxAttachmentExist(reverseDirection)) {
             return true;
         } else {
@@ -406,29 +406,29 @@ public class CreateLandscapeHelper {
 
     public boolean verifySWPEntities(Landscape landscape,
             Direction reverseDirection, Model model, RequestContext context) {
-        if (ParticipantConfig
+        if (0 != ParticipantConfig
                 .findParticipantConfigsByParticipantAndName(
                         landscape.getParticipant(),
                         ControllerConstants.CCF_PARTICIPANT_SWP_URL)
-                .getResultList().size() != 0
-                && LandscapeConfig
+                .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(landscape,
                                 ControllerConstants.CCF_LANDSCAPE_SWP_USERNAME)
-                        .getResultList().size() != 0
-                && LandscapeConfig
+                        .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(landscape,
                                 ControllerConstants.CCF_LANDSCAPE_SWP_PASSWORD)
-                        .getResultList().size() != 0
-                && LandscapeConfig
+                        .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(
                                 landscape,
                                 ControllerConstants.CCF_LANDSCAPE_SWP_RESYNC_USERNAME)
-                        .getResultList().size() != 0
-                && LandscapeConfig
+                        .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(
                                 landscape,
                                 ControllerConstants.CCF_LANDSCAPE_SWP_RESYNC_PASSWORD)
-                        .getResultList().size() != 0
+                        .getResultList().size()
                 && isSWPMaxAttachmentExist(reverseDirection)) {
             return true;
         } else {
@@ -441,14 +441,14 @@ public class CreateLandscapeHelper {
 
     public boolean verifyTFEntities(Landscape landscape, Model model,
             RequestContext context) {
-        if (LandscapeConfig
+        if (0 != LandscapeConfig
                 .findLandscapeConfigsByLandscapeAndName(landscape,
                         ControllerConstants.CCF_LANDSCAPE_TF_USERNAME)
-                .getResultList().size() != 0
-                && LandscapeConfig
+                .getResultList().size()
+                && 0 != LandscapeConfig
                         .findLandscapeConfigsByLandscapeAndName(landscape,
                                 ControllerConstants.CCF_LANDSCAPE_TF_PASSWORD)
-                        .getResultList().size() != 0) {
+                        .getResultList().size()) {
             return false;
         } else {
             model.addAttribute("errormessage", context

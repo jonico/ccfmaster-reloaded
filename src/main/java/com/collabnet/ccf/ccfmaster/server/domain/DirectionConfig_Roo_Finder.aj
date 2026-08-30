@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 privileged aspect DirectionConfig_Roo_Finder {
     
     public static TypedQuery<DirectionConfig> DirectionConfig.findDirectionConfigsByDirection(Direction direction) {
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
         EntityManager em = DirectionConfig.entityManager();
         TypedQuery<DirectionConfig> q = em.createQuery("SELECT o FROM DirectionConfig AS o WHERE o.direction = :direction", DirectionConfig.class);
         q.setParameter("direction", direction);
@@ -20,8 +20,8 @@ privileged aspect DirectionConfig_Roo_Finder {
     }
     
     public static TypedQuery<DirectionConfig> DirectionConfig.findDirectionConfigsByDirectionAndName(Direction direction, String name) {
-        if (direction == null) throw new IllegalArgumentException("The direction argument is required");
-        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
+        if (null == direction) throw new IllegalArgumentException("The direction argument is required");
+        if (null == name || 0 == name.length()) throw new IllegalArgumentException("The name argument is required");
         EntityManager em = DirectionConfig.entityManager();
         TypedQuery<DirectionConfig> q = em.createQuery("SELECT o FROM DirectionConfig AS o WHERE o.direction = :direction AND o.name = :name", DirectionConfig.class);
         q.setParameter("direction", direction);

@@ -67,7 +67,7 @@ public class LandscapeFieldMappingController extends AbstractLandscapeController
             @RequestParam(RMD_ID_REQUEST_PARAM) RepositoryMappingDirection rmd,
             @RequestParam(FIELD_MAPPING_ID) String[] items, Model model,
             HttpServletRequest request) {
-        if (items == null)
+        if (null == items)
             items = new String[0];
         try {
             for (String fieldMappingId : items) {
@@ -334,9 +334,9 @@ public class LandscapeFieldMappingController extends AbstractLandscapeController
     public static boolean isTemplateExists(String templateName,
             RepositoryMappingDirection rmd, FieldMappingScope scope) {
         boolean templateexists = false;
-        if (FieldMapping
+        if (0 != FieldMapping
                 .findFieldMappingsByNameAndParentAndScope(templateName, rmd,
-                        scope).getResultList().size() != 0) {
+                        scope).getResultList().size()) {
             templateexists = true;
         } else {
             templateexists = false;
@@ -378,14 +378,14 @@ public class LandscapeFieldMappingController extends AbstractLandscapeController
         Integer page = (Integer) session
                 .getAttribute(ControllerConstants.PAGE_IN_SESSION);
         // if page in session is null.get the default value of page
-        if (page == null) {
+        if (null == page) {
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (page <= 0) {
+        } else if (0 >= page) {
             // in case if current page value is less than or equal to zero get
             // default value of page (on deleting the last record of the first
             // page)
             page = Integer.valueOf(ControllerConstants.DEFAULT_PAGE);
-        } else if (Math.ceil(nrOfPages) != 0.0 && page >= Math.ceil(nrOfPages)) {
+        } else if (0.0 != Math.ceil(nrOfPages) && page >= Math.ceil(nrOfPages)) {
             // in case if current page value is greater than no of page (on
             // deleting last record from the current page.traverse to the
             // previous page)

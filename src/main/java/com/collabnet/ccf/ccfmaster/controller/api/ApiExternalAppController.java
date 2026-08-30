@@ -52,7 +52,7 @@ public class ApiExternalAppController extends AbstractApiController<ExternalApp>
     }
 
     private void validateRequestBody(Long id, ExternalApp requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

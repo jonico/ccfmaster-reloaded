@@ -84,7 +84,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
 
     private void validateRepositoryMappingDirectionConfig(
             RepositoryMappingDirectionConfig requestBody) {
-        if (requestBody == null) {
+        if (null == requestBody) {
             throw new DataRetrievalFailureException(
                     "requested entity not found.");
         }
@@ -97,7 +97,7 @@ public class LinkIdApiRepositoryMappingDirectionConfigController extends Abstrac
 
     private void validateRequestBody(Long id,
             RepositoryMappingDirectionConfig requestBody) {
-        if (id == null || !id.equals(requestBody.getId())) {
+        if (null == id || !id.equals(requestBody.getId())) {
             throw new BadRequestException(String.format(
                     "id (%s) != requestBody.id (%s)", id, requestBody.getId()));
         }

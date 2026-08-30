@@ -21,7 +21,7 @@ public class FieldMappingPersister extends AbstractPersister<Mapping<RepositoryM
 
     @Override
     public void save(FieldMapping cfg) {
-        if (cfg.getScope() == FieldMappingScope.REPOSITORY_MAPPING_DIRECTION) {
+        if (FieldMappingScope.REPOSITORY_MAPPING_DIRECTION == cfg.getScope()) {
             // templates and static mappings are handled elsewhere.
             doSave(cfg);
         }

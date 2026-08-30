@@ -127,10 +127,10 @@ public class LandscapeLogsController extends AbstractLandscapeController {
             log.error("Error writing log file: " + exception.getMessage(),
                     exception);
         } finally {
-            if (out != null) {
+            if (null != out) {
                 out.close();
             }
-            if (fi != null) {
+            if (null != fi) {
                 fi.close();
             }
         }
@@ -209,7 +209,7 @@ public class LandscapeLogsController extends AbstractLandscapeController {
         LogFile log = getLogFile(paramDirection, fileName);
         int skippedKiloBytes = 0;
         long filesize = log.logFile().length();
-        if (filesize > MAX_FILE_SIZE) {
+        if (MAX_FILE_SIZE < filesize) {
             skippedKiloBytes = ((int) filesize - (int) MAX_FILE_SIZE) / 1024;
         }
         StringBuffer linebuffer = readPartofFiletoString(log);
@@ -247,10 +247,10 @@ public class LandscapeLogsController extends AbstractLandscapeController {
                     String.format("Error getting File %s content: %s", file,
                             e.getMessage()), e);
         } finally {
-            if (isr != null) {
+            if (null != isr) {
                 isr.close();
             }
-            if (fis != null) {
+            if (null != fis) {
                 fis.close();
             }
         }
@@ -336,10 +336,10 @@ public class LandscapeLogsController extends AbstractLandscapeController {
             log.debug(exception.getMessage());
             throw exception;
         } finally {
-            if (br != null) {
+            if (null != br) {
                 br.close();
             }
-            if (fr != null) {
+            if (null != fr) {
                 fr.close();
             }
         }
@@ -363,7 +363,7 @@ public class LandscapeLogsController extends AbstractLandscapeController {
             long filesize = file.length();
             randomAccessFile = new RandomAccessFile(file, "r");
             //If file size is greater than 100KB.Skip the remaining bytes and read only last 100 KB of data
-            if (filesize > MAX_FILE_SIZE) {
+            if (MAX_FILE_SIZE < filesize) {
                 randomAccessFile
                         .skipBytes((int) filesize - (int) MAX_FILE_SIZE);
             }
@@ -384,7 +384,7 @@ public class LandscapeLogsController extends AbstractLandscapeController {
             log.debug(exception.getMessage());
             throw exception;
         } finally {
-            if (randomAccessFile != null) {
+            if (null != randomAccessFile) {
                 randomAccessFile.close();
             }
         }

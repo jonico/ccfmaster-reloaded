@@ -102,7 +102,7 @@ public class TFAuthenticationProvider extends AbstractUserDetailsAuthenticationP
                 // See {@link org.springframework.security.web.authentication.www.BasicAuthenticationFilter.authenticationIsRequired(String)}
                 String tfUsername = username;
                 String linkId = null;
-                if (userParts.length > 1) {
+                if (1 < userParts.length) {
                     tfUsername = userParts[0];
                     linkId = userParts[1];
                 }
@@ -132,7 +132,7 @@ public class TFAuthenticationProvider extends AbstractUserDetailsAuthenticationP
             String linkId) throws RemoteException {
         connection.login();
         String password = token.getCredentials().toString();
-        if (linkId != null) {
+        if (null != linkId) {
             String projectPath = connection.getIntegratedAppClient()
                     .getProjectPathByIntegratedAppId(linkId);
             return IafUserDetails.fromConnection(connection, username,
